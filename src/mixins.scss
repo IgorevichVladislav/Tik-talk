@@ -1,0 +1,11 @@
+@mixin label-text {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+@mixin input-text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+}

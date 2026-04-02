@@ -1,0 +1,75 @@
+<header class="tt-sidebar__header">
+  <svg class="tt-sidebar__logo" icon="tik-talk-logo-small"></svg>
+</header>
+
+<nav>
+  <ul class="tt-sidebar__list">
+    @for (menuItem of menuItems; track menuItem.description) {
+      <li class="tt-sidebar__item" routerLinkActive="tt-sidebar__active-menu-item">
+        <a class="tt-sidebar__link" [routerLink]="menuItem.link">
+          <svg class="svg16" [icon]="menuItem.icon"></svg>
+          {{ menuItem.description }}
+        </a>
+      </li>
+    }
+  </ul>
+</nav>
+
+<section class="tt-sidebar__subscribers-section">
+  <p>Подписчики</p>
+
+  <div class="tt-sidebar__my-subscribers">
+    @for (subscriber of subscribers(); track subscriber.id) {
+      <tt-subscriber-card [profile]="subscriber"/>
+    }
+  </div>
+
+  <ul class="tt-sidebar__subscribers-list">
+    <li class="tt-sidebar__subscriber-item">
+      <a class="tt-sidebar__subscribers-link" routerLink="/subscribers">
+        Все подписчики
+        <svg class="svg16" icon="arrow"></svg>
+      </a>
+    </li>
+    <li class="tt-sidebar__subscriber-item">
+      <a class="tt-sidebar__subscribers-link" routerLink="/subscriptions">
+        Мои подписки
+        <svg class="svg16" icon="arrow"></svg>
+      </a>
+    </li>
+  </ul>
+
+</section>
+
+<footer class="tt-sidebar__footer">
+  @if (me(); as me) {
+    @if (showFooterMenu()) {
+      <ul class="tt-sidebar__footer-menu-list" ttClickOutside (onClickOutside)="showFooterMenu.set(false)">
+
+        <li class="tt-sidebar__footer-menu-item">
+          <a class="tt-sidebar__footer-settings" [routerLink]="['/profile', me.id]" (click)="showFooterMenu.set(false)">
+            <svg class="svg16" icon="settings"></svg>
+            Настройка</a>
+        </li>
+
+        <li class="tt-sidebar__footer-menu-item">
+          <button class="tt-sidebar__footer-logout" type="button" (click)="logout">
+            <svg class="svg16" icon="logout"></svg>
+            Выйти
+          </button>
+        </li>
+      </ul>
+    }
+
+    <div class="tt-sidebar__footer-info"
+         [class.tt-sidebar__active-menu-item]="router.url === '/profile/' + me.id">
+
+      <tt-avatar-circle [avatarData]="me"/>
+      <strong class="tt-sidebar__username">{{ me.username }}</strong>
+      <button class="tt-sidebar__footer-icon" type="button" (click)="showFooterMenu.set(!showFooterMenu())">
+        <svg class="svg14" icon="settings" [class.tt-sidebar__footer-icon--active]="showFooterMenu()"></svg>
+      </button>
+    </div>
+
+  }
+</footer>

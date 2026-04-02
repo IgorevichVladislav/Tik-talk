@@ -1,0 +1,51 @@
+<form class="tt-login__form" [formGroup]='loginForm' (ngSubmit)="loginFormSubmit()">
+  <h1 class="tt-login__title">Вход</h1>
+
+  <div class="tt-login__input-container">
+    <label class="tt-login__label">
+      Telegram username
+      <input class="tt-login__input"
+             [class.tt-login__input-error]="loginForm.controls.username.invalid && loginForm.controls.username.touched"
+             formControlName="username"
+             placeholder="Введите логин"
+             type="text">
+      <svg class="svg20 tt-login__form-icon" icon="telegram-icon"></svg>
+    </label>
+
+    @if (loginForm.controls.username.getError('required') && loginForm.controls.username.touched) {
+      <tt-error>Это поле обязательно для заполнения.</tt-error>
+    }
+  </div>
+
+  <div class="tt-login__input-container">
+    <label class="tt-login__label">
+      Пароль
+      <input class="tt-login__input"
+             [class.tt-login__input-error]="isFormValid() && loginForm.controls.password.invalid"
+             formControlName="password"
+             placeholder="Введите пароль"
+             [type]="isPasswordVisible() ? 'text' : 'password'">
+      <button type="button" (click)="isPasswordVisible.set(!isPasswordVisible())">
+        <svg class="svg20 tt-login__form-icon"
+             icon="eye"
+             [class.tt-login__show-password]="isPasswordVisible()"
+        ></svg>
+      </button>
+
+    </label>
+
+    @if (loginForm.controls.password.getError('required') && loginForm.controls.password.touched) {
+      <tt-error>Это поле обязательно для заполнения.</tt-error>
+    }
+
+    @if (loginForm.controls.password.getError('minlength') && isFormValid()) {
+      <tt-error>Пароль должен содержать не менее 8 символов.</tt-error>
+    }
+
+  </div>
+
+  <tt-button class="tt-login__btn" (click)="loginFormSubmit()">Войти</tt-button>
+
+</form>
+
+<img src="/assets/svg/tik-talk-logo.svg" alt="Logo">

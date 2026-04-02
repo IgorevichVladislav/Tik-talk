@@ -1,0 +1,38 @@
+:host {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+:host(.tt-profile-header__profile-info--horizontal) {
+  .tt-profile-header__profile-info {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+:host(.tt-profile-header__profile-info--vertical) {
+  .tt-profile-header__profile-info {
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+  }
+}
+
+.tt-profile-header {
+  &__profile-info {
+    display: flex;
+  }
+
+  &__profile-name {
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  &__profile-username {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+  }
+}

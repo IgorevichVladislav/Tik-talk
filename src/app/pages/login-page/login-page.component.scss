@@ -1,0 +1,81 @@
+@use "mixins" as mixin;
+
+:host {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  height: 100dvh;
+  margin: 0 5%;
+}
+
+.tt-login {
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    max-width: 440px;
+    width: 100%;
+  }
+
+  &__title {
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 56px;
+    margin-bottom: 60px;
+  }
+
+  &__label {
+    @include mixin.label-text;
+    color: var(--light-color);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  &__input {
+    @include mixin.input-text;
+    background-color: var(--dark-color);
+    border: var(--light-border);
+    border-radius: 2px;
+    color: inherit;
+    margin-top: 8px;
+    padding: 12px 20px;
+
+    &::placeholder {
+      color: var(--light-transparent);
+    }
+  }
+
+  &__input-error {
+    border: 1px solid var(--error-color);
+  }
+
+  &__form-icon {
+    color: var(--light-transparent);
+    position: absolute;
+    right: 20px;
+    top: 50%;
+  }
+
+  &__input-container:first-of-type {
+    margin-bottom: 16px;
+  }
+
+  &__input-container:last-of-type {
+    margin-bottom: 32px;
+  }
+
+  &__password-icon {
+    color: var(--light-transparent);
+  }
+
+  &__show-password {
+    color: var(--primary-color);
+  }
+
+  &__btn {
+    justify-content: center;
+  }
+}
+

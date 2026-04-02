@@ -1,0 +1,4 @@
+@if (profile(); as profile) {
+  <tt-avatar-circle [avatarData]="profile"/>
+  <p class="tt-subscriber-card__info">{{ profile.firstName }} {{ profile.lastName }}</p>
+}

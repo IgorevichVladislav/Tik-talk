@@ -1,0 +1,10 @@
+:host {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+}
+
+.tt-layout {
+  &__router-wrapper {
+    padding: 24px;
+  }
+}

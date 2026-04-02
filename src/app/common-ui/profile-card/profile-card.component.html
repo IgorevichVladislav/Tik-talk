@@ -1,0 +1,27 @@
+@if (profile(); as profile) {
+  <div class="tt-profile-card__user-block">
+
+    <tt-avatar-circle [avatarData]="profile" size="71"/>
+
+    <div class="tt-profile-card__user-info">
+      <p class="tt-profile-card__user-name">{{ profile.firstName }} {{ profile.lastName }}</p>
+      <span class="tt-profile-card__user-login">{{ profile.username }}</span>
+    </div>
+  </div>
+
+  <div class="tt-profile-card__description">{{ profile.description }}</div>
+
+  <ul class="tags-list">
+    @for (stack of profile.stack; track stack) {
+      <li class="tags-list__item">{{ stack }}</li>
+    }
+  </ul>
+
+  <div class="tt-profile-card__button-wrapper">
+    @if (false) {
+      <span class="tt-profile-card__subscriber-icon"></span>
+    }
+    <tt-button icon="send-message">Написать</tt-button>
+    <tt-button class="tt-profile-card__follow-links" icon="navigation-arrow"></tt-button>
+  </div>
+}

@@ -1,0 +1,8 @@
+@if (profile(); as profile) {
+  <tt-avatar-circle size="112" [avatarData]="profile"/>
+
+  <div class="tt-profile-header__profile-info">
+    <h1 class="tt-profile-header__profile-name">{{ profile.firstName }} {{ profile.lastName }}</h1>
+    <p class="tt-profile-header__profile-username">{{ profile.username }}</p>
+  </div>
+}

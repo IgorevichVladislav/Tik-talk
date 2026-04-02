@@ -1,1 +1,104 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --dark-color: #000000;
+  --light-color: #ffffff;
+  --primary-color: #ae7aff;
+  --red-primary-color: #e99898;
+  --light-transparent: rgba(255, 255, 255, 0.75);
+  --dark-hover-color: #161616;
+  --dark-message: #404040;
+  --light-border: 1px solid var(--light-color);
+  --dark-border: 1px solid var(--dark-color);
+  --error-color: #d32f2f;
+  --success-color: #4CAF50;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+ul {
+  list-style: none;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background-color: transparent;
+  outline: transparent;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+//------------------------------------------ Reset
+
+body {
+  height: 100dvh;
+  font-family: 'JetBrains Mono', sans-serif;
+  color: var(--light-color);
+  background-image: url('/assets/img/background.webp');
+  background-size: cover;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 24px;
+}
+
+.tags-list {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    border: var(--light-border);
+    border-radius: 2px;
+    padding: 4px 8px;
+    height: 24px;
+  }
+}
+
+.svg14 {
+  width: 14px;
+  height: 14px;
+}
+
+.svg16 {
+  width: 16px;
+  height: 16px;
+}
+
+.svg18 {
+  width: 18px;
+  height: 18px;
+}
+
+.svg20 {
+  width: 20px;
+  height: 20px;
+}

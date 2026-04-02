@@ -1,0 +1,146 @@
+:host {
+  background-color: var(--dark-color);
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  padding: 20px 12px;
+  height: 100dvh;
+  width: 300px;
+}
+
+.tt-sidebar {
+  &__header {
+    padding-left: 16px;
+  }
+
+  &__logo {
+    width: 61px;
+    height: 74px;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__item {
+    border-radius: 2px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      background-color: var(--dark-hover-color);
+      color: var(--primary-color);
+    }
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+
+  &__subscribers-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 20px;
+    padding: 0 16px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  &__subscribers-link {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: var(--primary-color);
+  }
+
+  &__my-subscribers {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__subscribers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__footer-info {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    border-radius: 2px;
+    padding: 4px 16px;
+  }
+
+  &__username {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 24px;
+    flex: 1;
+  }
+
+  &__footer-icon {
+    color: var(--light-color);
+    line-height: 0;
+
+    &--active {
+      color: var(--primary-color);
+    }
+  }
+
+  &__footer-menu-list {
+    border: var(--light-border);
+    border-radius: 2px;
+    box-shadow: 4px 4px 0 0 #FFFFFF40;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 12px;
+  }
+
+  &__footer-menu-item {
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px 0 4px 24px;
+
+    &:hover {
+      background-color: var(--dark-hover-color);
+      color: var(--primary-color);
+    }
+  }
+
+  &__footer-settings,
+  &__footer-logout {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    width: 100%;
+    color: inherit;
+  }
+
+  &__active-menu-item {
+    background-color: var(--dark-hover-color);
+    color: var(--primary-color);
+
+    .tt-sidebar__footer-icon {
+      color: var(--primary-color);
+    }
+  }
+}

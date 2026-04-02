@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  gap: 8px;
+  background-color: var(--primary-color);
+  border: var(--dark-border);
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 10px 20px;
+  height: 44px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.tt-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+  }
+}

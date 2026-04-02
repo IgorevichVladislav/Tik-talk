@@ -1,0 +1,22 @@
+<label class="tt-input__label">
+  {{ label() }}
+
+  <div class="tt-input__control">
+    <ng-content select="[prefix]"></ng-content>
+
+    <input
+      #input
+      class="tt-input__input"
+      [attr.autocomplete]="autocomplete()"
+      [name]="name()"
+      [type]="type()"
+      [placeholder]="placeholder()"
+      [value]="value() ?? ''"
+      (input)="onInput(input.value)"
+      (blur)="onBlur()"
+      [disabled]="disabled()"
+    />
+
+    <ng-content select="[suffix]"></ng-content>
+  </div>
+</label>
