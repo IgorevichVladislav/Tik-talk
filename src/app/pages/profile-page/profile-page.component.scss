@@ -1,54 +1,75 @@
+@use "mixins" as mixin;
+
 :host {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  display: flex;
+  flex-direction: column;
 }
 
 .tt-profile-page {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 24px;
+  }
 
-  &__user-info {
+  &__header-button {
+    margin-right: 142px;
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 64px;
+  }
+
+  &__subscribers-info {
     display: flex;
     flex-direction: column;
     gap: 32px;
     padding: 0 24px;
   }
 
-  &__dotted-line {
-    border-top: 1px dashed #fff;
-    width: 100%;
-  }
-
   &__title {
     font-weight: 800;
   }
 
-  &__skills,
-  &__description {
+  &__subscribers-length-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__subscribers-length {
+    background-color: var(--green-primary-color);
+    color: var(--dark-color);
+    line-height: 16px;
+    padding: 1px 6px;
+  }
+
+  &__serach-link {
+    @include mixin.main-transition(color);
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+
+  &__subscribers-info-wrapper {
     display: flex;
     flex-direction: column;
     gap: 16px;
   }
 
-  &__description {
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
-  }
-
-  //Стили формы
-  &__user-form {
-    background-color: var(--dark-color);
-    border: var(--light-border);
+  &__subscribers-list {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    height: calc(100vh - 48px);
-    padding: 32px;
+    flex-wrap: wrap;
+    gap: 6px;
   }
 
-  &__firstname-and-lastname {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+  &__subscribers-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 }

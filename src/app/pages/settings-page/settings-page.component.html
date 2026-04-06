@@ -1,0 +1,54 @@
+@if (profile(); as profile) {
+  <div class="tt-settings-page__user-info">
+    <tt-profile-header [profile]="profile"/>
+
+    <div class="tt-settings-page__dotted-line"></div>
+
+    <section class="tt-settings-page__skills">
+      <h2 class="tt-settings-page__title">Навыки</h2>
+      <ul class="tags-list">
+        @for (skill of profile.stack; track skill) {
+          <li class="tags-list__item">{{ skill }}</li>
+        }
+      </ul>
+    </section>
+
+    <section class="tt-settings-page__description">
+      <h2 class="tt-settings-page__title">О себе</h2>
+      <p>{{ profile.description }}</p>
+    </section>
+  </div>
+
+  <form class="tt-settings-page__user-form" [formGroup]="settingsForm" (ngSubmit)="onSaveSettings()">
+    <div class="tt-settings-page__two-columns">
+      <tt-input formControlName="firstName" label="Имя"/>
+      <tt-input formControlName="lastName" label="Фамилия"/>
+    </div>
+    <tt-input formControlName="username" label="Telegram username"/>
+
+    <label>О себе
+      <textarea formControlName="description"></textarea>
+    </label>
+
+    <tt-avatar-upload [avatarData]="profile"/>
+
+    <tt-input class="tt-settings-page__input" formControlName="stack" label="Навыки" mode="search"/>
+
+    <ul class="tt-settings-page__buttons-list">
+      <li class="tt-settings-page__buttons-item">
+        <tt-button class="tt-settings-page__tt-buttons tt-settings-page__tt-buttons--delete-account"
+                   icon="delete"
+                   mode="black"></tt-button>
+        <tt-button class="tt-settings-page__tt-buttons"
+                   icon="logout"
+                   mode="black" (click)="logout"></tt-button>
+      </li>
+      <li class="tt-settings-page__buttons-item">
+        <tt-button mode="black" (click)="toProfilePage">Отмена</tt-button>
+        <tt-button type="submit">Сохранить</tt-button>
+
+      </li>
+    </ul>
+
+  </form>
+}

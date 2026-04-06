@@ -2,6 +2,7 @@
   --dark-color: #000000;
   --light-color: #ffffff;
   --primary-color: #ae7aff;
+  --green-primary-color: #98E9ab;
   --red-primary-color: #e99898;
   --light-transparent: rgba(255, 255, 255, 0.75);
   --dark-hover-color: #161616;
@@ -9,7 +10,6 @@
   --light-border: 1px solid var(--light-color);
   --dark-border: 1px solid var(--dark-color);
   --error-color: #d32f2f;
-  --success-color: #4CAF50;
 }
 
 html {
@@ -101,4 +101,9 @@ body {
 .svg20 {
   width: 20px;
   height: 20px;
+}
+
+.svg32 {
+  width: 32px;
+  height: 32px;
 }

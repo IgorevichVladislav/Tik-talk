@@ -17,6 +17,9 @@
       [disabled]="disabled()"
     />
 
+    @if (mode()) {
+      <svg class="svg18 tt-input__mode-icon" icon="search"></svg>
+    }
     <ng-content select="[suffix]"></ng-content>
   </div>
 </label>

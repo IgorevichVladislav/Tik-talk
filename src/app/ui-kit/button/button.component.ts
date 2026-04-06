@@ -11,9 +11,13 @@ type ButtonType = 'button' | 'reset' | 'submit';
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {class: 'tt-button'}
+  host: {
+    class: 'tt-button',
+    '[attr.data-mode]': 'mode()',
+  }
 })
 export class ButtonComponent {
-  type = input<ButtonType | null>("button");
+  type = input<ButtonType>("button");
+  mode = input<'default' | 'black'>('default');
   icon = input<string | null>(null);
 }

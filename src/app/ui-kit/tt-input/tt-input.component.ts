@@ -1,4 +1,5 @@
 import {
+  booleanAttribute,
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   ElementRef,
@@ -9,10 +10,13 @@ import {
   viewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {SvgIconComponent} from '@tt/ui-kit';
 
 @Component({
   selector: 'tt-input',
-  imports: [],
+  imports: [
+    SvgIconComponent
+  ],
   templateUrl: './tt-input.component.html',
   styleUrl: './tt-input.component.scss',
   changeDetection: ChangeDetectionStrategy.Default,
@@ -21,7 +25,11 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
     useExisting: forwardRef(() => TtInputComponent),
     multi: true
   }],
-  host: {'class': 'tt-input'},
+  host: {
+    'class': 'tt-input',
+    '[attr.data-mode]': 'this.mode()',
+    '[class.filled-active]': 'this.filledActive()'
+  },
 })
 export class TtInputComponent implements ControlValueAccessor {
   private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef, {self: true});
@@ -31,9 +39,14 @@ export class TtInputComponent implements ControlValueAccessor {
 
   label = input<string | null>(null);
   type = input<'text' | 'password' | 'number'>('text');
-  placeholder = input<string>('');
+  placeholder = input<string>('Введите данные');
   autocomplete = input<string>('');
   name = input<string>('');
+
+  /** Позволяет подсвечивать border-color, когда данные введены в input и пользователь ушел из формы. Используется для поисковых форм. */
+  filledActive = input(false, {transform: booleanAttribute});
+  /** Добавляет иконки в input */
+  mode = input<'search' | null>(null);
 
   private onChange = (_: any) => {
   };

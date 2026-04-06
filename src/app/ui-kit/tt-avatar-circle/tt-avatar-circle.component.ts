@@ -1,9 +1,7 @@
 import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 
-import {Profile} from '@tt/data-access/profile';
+import {Avatar} from '@tt/data-access/profile';
 import {ImgUrlPipe} from '../pipes/index';
-
-type Avatar = Pick<Profile, 'avatarUrl' | 'username' | 'id'>
 
 @Component({
   selector: 'tt-avatar-circle',

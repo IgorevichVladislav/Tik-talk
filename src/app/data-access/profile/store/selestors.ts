@@ -14,3 +14,13 @@ export const selectAccount = createSelector(
   profileFeature.selectAccount,
   (account) => account
 )
+
+export const selectSubscribers = createSelector(
+  profileFeature.selectSubscribers,
+  (subscribers) => subscribers
+)
+
+export const selectSubscribersLimit = (subscribersLimit: number) => createSelector(
+  profileFeature.selectSubscribers,
+  (subscribers) => subscribers.slice(0, subscribersLimit)
+)

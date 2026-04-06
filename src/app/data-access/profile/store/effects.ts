@@ -36,4 +36,22 @@ export class ProfileEffects {
         map(account => profileActions.accountLoaded({account: account}))
       )
   })
+
+  updateMe = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(profileActions.updateMe),
+        switchMap(({updateDto}) => this.profileService.updateMe(updateDto)),
+        map(update => profileActions.updateMeSuccess({profile: update}))
+      )
+  })
+
+  getSubscribers = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(profileActions.getSubscribers),
+        switchMap(({subscribersFilter}) => this.profileService.getSubscribers(subscribersFilter)),
+        map(subscribers => profileActions.subscribersLoaded({subscribers: subscribers.items}))
+      )
+  })
 }
