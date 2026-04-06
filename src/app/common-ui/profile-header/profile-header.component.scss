@@ -4,16 +4,17 @@
   align-items: center;
 }
 
-:host(.tt-profile-header__profile-info--horizontal) {
+:host(.tt-profile-header__profile-info--vertical) {
   .tt-profile-header__profile-info {
     flex-direction: column;
     gap: 4px;
   }
 }
 
-:host(.tt-profile-header__profile-info--vertical) {
+:host(.tt-profile-header__profile-info--horizontal) {
   .tt-profile-header__profile-info {
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     gap: 24px;
   }

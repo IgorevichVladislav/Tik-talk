@@ -1,3 +1,5 @@
+@use 'mixins' as mixin;
+
 :host {
   background-color: var(--dark-color);
   display: flex;
@@ -29,6 +31,7 @@
     padding: 8px 16px;
     cursor: pointer;
     font-size: 14px;
+    @include mixin.main-transition-list((background-color, color));
 
     &:hover {
       background-color: var(--dark-hover-color);
@@ -119,6 +122,7 @@
     cursor: pointer;
     font-size: 14px;
     padding: 4px 0 4px 24px;
+    @include mixin.main-transition-list((background-color, color));
 
     &:hover {
       background-color: var(--dark-hover-color);

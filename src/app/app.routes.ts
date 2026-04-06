@@ -5,26 +5,51 @@ import {provideEffects} from '@ngrx/effects';
 import {LoginPageComponent} from '@tt/pages/login-page';
 import {canActivateAuth} from '@tt/data-access/auth/access.guard';
 import {ProfileEffects, profileFeature} from '@tt/data-access/profile';
+import {SearchPageComponent} from '@tt/pages/search-page';
 
 export const routes: Routes = [
   {
-    path: '', loadComponent: () => import('@tt/common-ui').then(m => m.LayoutComponent), children: [
+    path: '', loadComponent: () => import('@tt/common-ui').then(m => m.LayoutComponent),
+    providers: [
+      provideState(profileFeature),
+      provideEffects(ProfileEffects)
+    ], children: [
       {
-        path: 'search',
-        loadComponent: () => import('@tt/pages/search-page').then(m => m.SearchPageComponent),
-        providers: [
-          provideState(profileFeature),
-          provideEffects(ProfileEffects)
-        ]
+        path: '',
+        redirectTo: 'profile/me',
+        pathMatch: 'full',
       },
       {
         path: 'profile/:profileId',
         loadComponent: () => import('@tt/pages/profile-page').then(m => m.ProfilePageComponent),
-        providers: [
-          provideState(profileFeature),
-          provideEffects(ProfileEffects)
-        ]
       },
+      {
+        path: 'profile/:profileId/settings',
+        loadComponent: () => import('@tt/pages/settings-page').then(m => m.SettingsPageComponent),
+      },
+      {
+        path: 'chats',
+        loadComponent: () => import('@tt/pages/chats-page').then(m => m.ChatsPageComponent),
+      },
+      {
+        path: 'search',
+        loadComponent: () => import('@tt/pages/search-page').then(m => m.SearchPageComponent),
+        data: {pageMode: 'search'},
+      },
+      {
+        path: 'subscribers',
+        loadComponent: () => import('@tt/pages/search-page').then(m => m.SearchPageComponent),
+        data: {pageMode: 'subscribers'}
+      },
+      {
+        path: 'subscriptions',
+        loadComponent: () => import('@tt/pages/search-page').then(m => m.SearchPageComponent),
+        data: {pageMode: 'subscriptions'}
+      },
+      {
+        path: 'community',
+        loadComponent: () => import('@tt/pages/community-page').then(m => m.CommunityPageComponent),
+      }
     ], canActivate: [canActivateAuth]
   },
   {path: 'login', component: LoginPageComponent}

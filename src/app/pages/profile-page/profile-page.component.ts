@@ -1,41 +1,73 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
 import {switchMap} from 'rxjs';
 import {Store} from '@ngrx/store';
 
+import {
+  profileActions,
+  selectAccount,
+  selectProfile,
+  selectSubscribers,
+  selectSubscribersLimit
+} from '@tt/data-access/profile';
 import {ProfileHeaderComponent} from '@tt/common-ui';
-import {profileActions, selectAccount, selectProfile} from '@tt/data-access/profile';
-import {TtInputComponent} from '@tt/ui-kit';
+import {ButtonComponent, SvgIconComponent, TtAvatarCircleComponent} from '@tt/ui-kit';
+import {NavigationList} from '@tt/data-access/shared';
+import {PostFeedComponent} from '../../common-ui/post';
 
 @Component({
   selector: 'tt-profile-page',
   imports: [
     ProfileHeaderComponent,
-    TtInputComponent,
-    AsyncPipe
+    AsyncPipe,
+    ButtonComponent,
+    RouterLink,
+    TtAvatarCircleComponent,
+    SvgIconComponent,
+    PostFeedComponent,
   ],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {"class": "tt-profile-page"}
 })
-export class ProfilePageComponent implements OnInit {
-  private readonly route = inject(ActivatedRoute);
+export class ProfilePageComponent {
   private readonly store = inject(Store);
+  private readonly route = inject(ActivatedRoute);
+
+  readonly isMyPage = signal<boolean>(false);
+
+  readonly subscribersLimit = this.store.selectSignal(selectSubscribersLimit(6));
+  readonly subscribers = this.store.selectSignal(selectSubscribers);
 
   profile$ = this.route.params
     .pipe(switchMap(({profileId}) => {
-      if (profileId === 'me') return this.me$;
 
-      this.store.dispatch(profileActions.getAccount({accountId: +profileId}));
+      if (profileId || profileId === 'me') {
+        this.isMyPage.set(true);
+        return this.store.select(selectProfile)
+      }
+
+      this.isMyPage.set(false);
+      this.store.dispatch(profileActions.getAccount({accountId: Number(profileId)}));
 
       return this.store.select(selectAccount);
     }))
 
-  me$ = this.store.select(selectProfile);
+  profileActionRedirect = computed<NavigationList>(() => {
+    if (this.isMyPage()) {
+      return {
+        description: 'Редактировать',
+        icon: 'settings',
+        link: ['settings']
+      }
+    }
 
-  ngOnInit() {
-    this.store.dispatch(profileActions.getMe());
-  }
+    return {
+      description: 'Написать',
+      icon: 'send-message',
+      link: ['']
+    }
+  })
 }

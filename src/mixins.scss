@@ -1,3 +1,9 @@
+@mixin dark-facade {
+  background-color: var(--dark-color);
+  border: var(--light-border);
+  border-radius: 2px;
+}
+
 @mixin label-text {
   font-weight: 500;
   font-size: 12px;
@@ -8,4 +14,16 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
+}
+
+@mixin main-transition($property: color, $duration: 0.2s, $timing: ease) {
+  transition: $property $duration $timing;
+}
+
+@mixin main-transition-list($properties: color, $duration: 0.2s, $timing: ease) {
+  $transitions: ();
+  @each $property in $properties {
+    $transitions: append($transitions, #{$property} #{$duration} #{$timing}, comma);
+  }
+  transition: $transitions;
 }

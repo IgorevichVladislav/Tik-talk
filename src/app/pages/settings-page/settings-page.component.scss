@@ -1,0 +1,83 @@
+@use "mixins" as mixin;
+
+:host {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+.tt-settings-page {
+
+  &__user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 0 24px;
+  }
+
+  &__dotted-line {
+    border-top: 1px dashed #fff;
+    width: 100%;
+  }
+
+  &__title {
+    font-weight: 800;
+  }
+
+  &__skills,
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__description {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  //Стили формы
+  &__user-form {
+    @include mixin.dark-facade;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: calc(100vh - 48px);
+    padding: 32px;
+  }
+
+  &__two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  &__input {
+    flex: 1;
+  }
+
+  &__tt-buttons {
+    width: 44px;
+
+    &--delete-account {
+      color: var(--red-primary-color);
+
+      &:hover {
+        color: var(--error-color);
+      }
+    }
+  }
+
+  &__buttons-list {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  &__buttons-item {
+    display: flex;
+    gap: 20px;
+  }
+}

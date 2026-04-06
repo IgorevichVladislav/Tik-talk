@@ -1,5 +1,15 @@
 @use 'mixins' as mixin;
 
+:host(.filled-active) {
+  .tt-input__control:has(.tt-input__input:not(:placeholder-shown)) {
+    border-color: var(--primary-color);
+
+    .tt-input__mode-icon {
+      color: var(--primary-color);
+    }
+  }
+}
+
 .tt-input {
   &__control {
     background-color: var(--dark-color);
@@ -8,11 +18,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 20px 12px 0;
+    padding: 12px 0;
 
     /** Стиль, чтобы приминился цвет автокомплит браузера */
     &:has(input:-webkit-autofill) {
       background-color: #e8f0fe;
+    }
+
+    &:has(.tt-input__input) {
+      @include mixin.main-transition(border-color);
+
+      &:focus-within,
+      &:hover {
+        border-color: var(--primary-color);
+      }
     }
   }
 
@@ -20,7 +39,7 @@
     @include mixin.label-text;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
     line-height: 16px;
   }
 

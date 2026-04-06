@@ -1,5 +1,9 @@
+@use "mixins" as mixin;
+
 :host {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 8px;
   background-color: var(--primary-color);
   border: var(--dark-border);
@@ -10,6 +14,22 @@
   font-weight: 700;
   font-size: 14px;
   line-height: 24px;
+}
+
+:host([data-mode="black"]) {
+  @include mixin.dark-facade;
+
+  &:hover {
+    .tt-button__icon {
+      color: inherit;
+    }
+  }
+
+  .tt-button,
+  .tt-button__icon {
+    color: inherit;
+    @include mixin.main-transition(color);
+  }
 }
 
 .tt-button {

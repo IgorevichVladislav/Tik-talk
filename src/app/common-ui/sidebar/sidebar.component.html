@@ -19,7 +19,7 @@
   <p>Подписчики</p>
 
   <div class="tt-sidebar__my-subscribers">
-    @for (subscriber of subscribers(); track subscriber.id) {
+    @for (subscriber of subscribersLimit(); track subscriber.id) {
       <tt-subscriber-card [profile]="subscriber"/>
     }
   </div>
@@ -47,7 +47,7 @@
       <ul class="tt-sidebar__footer-menu-list" ttClickOutside (onClickOutside)="showFooterMenu.set(false)">
 
         <li class="tt-sidebar__footer-menu-item">
-          <a class="tt-sidebar__footer-settings" [routerLink]="['/profile', me.id]" (click)="showFooterMenu.set(false)">
+          <a class="tt-sidebar__footer-settings" [routerLink]="['profile', 'me', 'settings']" (click)="showFooterMenu.set(false)">
             <svg class="svg16" icon="settings"></svg>
             Настройка</a>
         </li>

@@ -6,12 +6,14 @@ export interface ProfileState {
   account: Profile | null;
   profile: Profile | null;
   profiles: Profile[];
+  subscribers: Profile[];
 }
 
 export const profileInitialState: ProfileState = {
   account: null,
   profile: null,
-  profiles: []
+  profiles: [],
+  subscribers: [],
 }
 
 export const profileFeature = createFeature({
@@ -25,12 +27,14 @@ export const profileFeature = createFeature({
       }
     }),
 
-    on(profileActions.getMeLoaded, (state, {profile}) => {
-      return {
-        ...state,
-        profile
-      }
-    }),
+    on(profileActions.getMeLoaded,
+      profileActions.updateMeSuccess,
+      (state, {profile}) => {
+        return {
+          ...state,
+          profile
+        }
+      }),
 
     on(profileActions.accountLoaded, (state, {account}) => {
       return {
@@ -38,5 +42,12 @@ export const profileFeature = createFeature({
         account
       }
     }),
+
+    on(profileActions.subscribersLoaded, (state, {subscribers}) => {
+      return {
+        ...state,
+        subscribers
+      }
+    })
   ),
 })

@@ -1,0 +1,18 @@
+@use "mixins" as mixin;
+
+:host {
+  @include mixin.dark-facade;
+  display: grid;
+  grid-template-columns: 32px 1fr 40px 44px;
+  gap: 8px;
+  align-items: center;
+  padding: 16px;
+
+}
+
+.tt-text-input {
+  &__smile-btn {
+    color: red;
+    border: transparent;
+  }
+}

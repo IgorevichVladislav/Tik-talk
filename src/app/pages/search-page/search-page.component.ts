@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 
 import {ProfileCardComponent} from '@tt/common-ui';
@@ -17,6 +17,7 @@ import {profileActions, selectTestAccounts} from '@tt/data-access/profile';
 export class SearchPageComponent implements OnInit {
   private readonly store = inject(Store);
 
+  readonly pageMode = input<'search' | 'subscribers' | 'subscriptions'>('search');
   testAccountsStorage = this.store.selectSignal(selectTestAccounts);
 
   ngOnInit() {

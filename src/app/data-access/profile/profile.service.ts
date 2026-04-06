@@ -1,9 +1,10 @@
-import {inject, Injectable, signal} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map, tap} from 'rxjs';
+
 import {BASE_API_URL} from '@tt/tokens/base-api-url.token';
-import {Profile, ProfileUpdate} from './profile.interface';
+import {Profile, ProfileFilter, ProfileUpdate} from './profile.interface';
 import {Pageable} from '@tt/data-access/shared';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,6 @@ import {Pageable} from '@tt/data-access/shared';
 export class ProfileService {
   private readonly http = inject(HttpClient);
   private readonly baseApiUrl = inject(BASE_API_URL);
-
-  subscribers = signal<Profile[]>([]);
 
   /** Получить 5 тестовых пррофилей. */
   getTestAccounts() {
@@ -31,7 +30,7 @@ export class ProfileService {
 
   /** Метод, для обновления данных своего профиля. */
   updateMe(dto: ProfileUpdate) {
-    return this.http.patch<ProfileUpdate>(`${this.baseApiUrl}/account/me`, {dto});
+    return this.http.patch<Profile>(`${this.baseApiUrl}/account/me`, dto);
   }
 
   /** Метод, для загрузки изображения в свой профиль. */
@@ -45,8 +44,8 @@ export class ProfileService {
   }
 
   /** Метод, для получения всех профилей пользователей приложения. */
-  getAccounts() {
-    return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/accounts`);
+  getAccounts(params?: ProfileFilter) {
+    return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/accounts`, {params});
   }
 
   /** Метод, для получения определенного профиля по id. */
@@ -80,10 +79,7 @@ export class ProfileService {
   }
 
   /** Метод, для получения всех подписчиков. */
-  getSubscribers(subscribersLength?: number) {
-    return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscribers/`)
-      .pipe(map(res => {
-        return res.items.splice(0, subscribersLength);
-      }))
+  getSubscribers(params?: Record<string, any>) {
+    return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscribers/`, {params})
   }
 }
