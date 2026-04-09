@@ -2,9 +2,8 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {BASE_API_URL} from '@tt/tokens/base-api-url.token';
-import {Profile, ProfileFilter, ProfileUpdate} from './profile.interface';
+import {Profile, ProfileFilter, ProfileUpdate, SubscribeFilter} from './profile.interface';
 import {Pageable} from '@tt/data-access/shared';
-
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +42,8 @@ export class ProfileService {
     return this.http.delete(`${this.baseApiUrl}/account/image`);
   }
 
-  /** Метод, для получения всех профилей пользователей приложения. */
+  /** Метод, для получения всех профилей пользователей приложения.
+   * Query параметры служат для фильтрации, которая прикручена на беке.*/
   getAccounts(params?: ProfileFilter) {
     return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/accounts`, {params});
   }
@@ -55,25 +55,25 @@ export class ProfileService {
 
   /** Метод, для подписки на пользователя по id. */
   subscribe(account_id: number) {
-    return this.http.post<string>(`${this.baseApiUrl}/account/subscribe/${account_id}`, {});
+    return this.http.post<string>(`${this.baseApiUrl}/account/subscribe/${account_id}`, null);
   }
 
   /** Метод, для отписки пользователя по id. */
   unsubscribe(account_id: number) {
-    return this.http.delete<string>(`${this.baseApiUrl}/account/subscribe/${account_id}`, {});
+    return this.http.delete<string>(`${this.baseApiUrl}/account/subscribe/${account_id}`);
   }
 
-  /** Метод, для получения подписок по id. */
+  /** Метод, для получения подписок отдельного клиента по id. */
   getSubscriptionsForId(account_id: number) {
     return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscriptions/${account_id}`);
   }
 
   /** Метод, для получения всех подписок*/
-  getSubscriptions() {
-    return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscriptions/`);
+  getSubscriptions(params?: SubscribeFilter) {
+    return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscriptions/`, {params});
   }
 
-  /** Метод, для получения подписчиков по id. */
+  /** Метод, для получения подписчиков отдельного клиента по id. */
   getSubscribersForId(account_id: number) {
     return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscribers/${account_id}`);
   }

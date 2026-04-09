@@ -1,5 +1,15 @@
 :host {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 20px;
+}
+
+.tt-search-page {
+  &__profile-cards-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: scroll;
+    height: calc(100vh - 168px);
+  }
 }

@@ -4,6 +4,7 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 
 import {ProfileService} from '../profile.service';
 import {profileActions} from './actions';
+import {profileFeature} from '@tt/data-access/profile';
 
 @Injectable({providedIn: 'root'})
 
@@ -28,6 +29,15 @@ export class ProfileEffects {
       )
   })
 
+  getAccounts = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(profileActions.getAccounts),
+        switchMap(({accountsFilter}) => this.profileService.getAccounts(accountsFilter)),
+        map(accounts => profileActions.accountsLoaded({accounts: accounts.items}))
+      )
+  })
+
   getAccount = createEffect(() => {
     return this.actions$
       .pipe(
@@ -43,6 +53,15 @@ export class ProfileEffects {
         ofType(profileActions.updateMe),
         switchMap(({updateDto}) => this.profileService.updateMe(updateDto)),
         map(update => profileActions.updateMeSuccess({profile: update}))
+      )
+  })
+
+  getSubscriptions = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(profileActions.getSubscriptions),
+        switchMap(({subscriptionsFilter}) => this.profileService.getSubscriptions(subscriptionsFilter)),
+        map(subscriptions => profileActions.subscriptionsLoaded({subscriptions: subscriptions.items}))
       )
   })
 

@@ -71,7 +71,7 @@ export class SettingsPageComponent {
     return firstValueFrom(this.authService.logout());
   }
 
-  get toProfilePage() {
-    return this.router.navigate(['/profile', 'me'])
+  toProfilePage(id: number) {
+    return this.router.navigate(['/profile', id])
   }
 }

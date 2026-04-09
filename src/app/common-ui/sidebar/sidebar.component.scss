@@ -28,7 +28,6 @@
 
   &__item {
     border-radius: 2px;
-    padding: 8px 16px;
     cursor: pointer;
     font-size: 14px;
     @include mixin.main-transition-list((background-color, color));
@@ -43,6 +42,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    padding: 8px 16px;
     width: 100%;
   }
 

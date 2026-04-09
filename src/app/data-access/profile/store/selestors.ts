@@ -10,9 +10,20 @@ export const selectProfile = createSelector(
   (profile) => profile
 )
 
+/** Selector для получения всех аккаунтов пользователей. */
+export const selectAccounts = createSelector(
+  profileFeature.selectProfiles,
+  (accounts) => accounts
+)
+
 export const selectAccount = createSelector(
   profileFeature.selectAccount,
   (account) => account
+)
+
+export const selectSubscriptions = createSelector(
+  profileFeature.selectSubscriptions,
+  (subscriptions) => subscriptions
 )
 
 export const selectSubscribers = createSelector(

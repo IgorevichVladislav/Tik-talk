@@ -1,17 +1,24 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
-import {Router, RouterLink, RouterLinkActive} from '@angular/router';
-import {firstValueFrom} from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit,
+  signal
+} from '@angular/core';
+import {NavigationEnd, Router, RouterLink, RouterLinkActive} from '@angular/router';
+import {filter, firstValueFrom} from 'rxjs';
 import {Store} from '@ngrx/store';
 
 import {SvgIconComponent, TtAvatarCircleComponent, TtSubscriberCardComponent} from '@tt/ui-kit';
 import {
   profileActions,
-  ProfileService,
-  selectProfile, selectSubscribers, selectSubscribersLimit,
+  selectProfile, selectSubscribersLimit,
 } from '@tt/data-access/profile';
 import {AuthService} from '@tt/data-access/auth';
 import {ClickOutsideDirective} from '@tt/directives/click-outside.directive';
 import {NavigationList} from '@tt/data-access/shared';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'tt-sidebar',
@@ -25,18 +32,34 @@ import {NavigationList} from '@tt/data-access/shared';
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {'class': 'tt-sidebar'},
 })
 export class SidebarComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly store = inject(Store);
-  readonly router = inject(Router);
+  private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   readonly showFooterMenu = signal<boolean>(false);
 
   readonly me = this.store.selectSignal(selectProfile);
   readonly subscribersLimit = this.store.selectSignal(selectSubscribersLimit(3));
+
+  constructor() {
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        takeUntilDestroyed(),
+      ).subscribe(() => this.cdr.markForCheck);
+  }
+
+  get isActiveFooter() {
+    const id = this.me()?.id;
+    const url = this.router.url;
+
+    return url.includes(`/profile/${id}/settings`) || url.includes(`/profile/me/settings`);
+  }
 
   ngOnInit() {
     this.store.dispatch(profileActions.getMe());
