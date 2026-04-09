@@ -1,3 +1,7 @@
-@for (account of testAccountsStorage(); track account.id) {
-  <tt-profile-card [profile]="account"></tt-profile-card>
-}
+<tt-profile-filter [pageMode]="pageMode()" />
+
+<div class="tt-search-page__profile-cards-block">
+  @for (account of getRenderAccounts(); track account.id) {
+    <tt-profile-card [profile]="account"></tt-profile-card>
+  }
+</div>

@@ -47,7 +47,8 @@
       <ul class="tt-sidebar__footer-menu-list" ttClickOutside (onClickOutside)="showFooterMenu.set(false)">
 
         <li class="tt-sidebar__footer-menu-item">
-          <a class="tt-sidebar__footer-settings" [routerLink]="['profile', 'me', 'settings']" (click)="showFooterMenu.set(false)">
+          <a class="tt-sidebar__footer-settings" [routerLink]="['profile', 'me', 'settings']"
+             (click)="showFooterMenu.set(false)">
             <svg class="svg16" icon="settings"></svg>
             Настройка</a>
         </li>
@@ -62,7 +63,7 @@
     }
 
     <div class="tt-sidebar__footer-info"
-         [class.tt-sidebar__active-menu-item]="router.url === '/profile/' + me.id">
+         [class.active-footer-menu]="isActiveFooter">
 
       <tt-avatar-circle [avatarData]="me"/>
       <strong class="tt-sidebar__username">{{ me.username }}</strong>

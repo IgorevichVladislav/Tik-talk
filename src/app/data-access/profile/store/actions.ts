@@ -1,6 +1,6 @@
 import {createActionGroup, emptyProps, props} from '@ngrx/store';
 
-import {Profile, ProfileUpdate} from '../profile.interface';
+import {Profile, ProfileFilter, ProfileUpdate, SubscribeFilter} from '../profile.interface';
 
 export const profileActions = createActionGroup({
   source: 'profile',
@@ -15,6 +15,11 @@ export const profileActions = createActionGroup({
     /** Кладем в стор свой Get Me. */
     'getMeLoaded': props<{ profile: Profile }>(),
 
+    /** Action для получения всех аккаунтов пользователей. */
+    'get accounts': props<{ accountsFilter?: ProfileFilter }>(),
+    /** Кладем в стор все аккаунты пользователей. */
+    'accounts loaded': props<{ accounts: Profile[] }>(),
+
     /** Action для получения Account по id. */
     'get account': props<{ accountId: number }>(),
     /** Кладем Account по id в стор. */
@@ -25,13 +30,19 @@ export const profileActions = createActionGroup({
     /** Обновляем существующий профиль пользователя. */
     'update me success': props<{ profile: Profile }>(),
 
+    /** Action для получения Get Subscriptions. */
+    'get subscriptions': props<{ subscriptionsFilter?: SubscribeFilter }>(),
+    /** Кладем в стор Subscriptions. */
+    'subscriptions loaded': props<{ subscriptions: Profile[] }>(),
+
+
     /** Action для получения Get Subscribers. */
     'get subscribers': props<{
       subscribersFilter?: Partial<{
-        account_id?: number | null,
-        firstLastName?: string | null,
-        stack?: string | null,
-        city?: string | null,
+        account_id: number | null,
+        firstLastName: string | null,
+        stack: string[] | null,
+        city: string | null,
       }>
     }>(),
     /** Кладем в стор Subscribers. */
@@ -39,3 +50,10 @@ export const profileActions = createActionGroup({
 
   }
 });
+
+// subscribersFilter?: Partial<{
+//   account_id?: number | null,
+//   firstLastName?: string | null,
+//   stack?: string | null,
+//   city?: string | null,
+// }>

@@ -1,0 +1,15 @@
+@use "mixins" as mixin;
+
+:host {
+  @include mixin.dark-facade;
+  box-shadow: 4px 4px 0 0 rgba(255, 255, 255, 0.25);
+  padding: 16px 20px;
+}
+
+.tt-profile-filter {
+  &__form {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 40px;
+  }
+}

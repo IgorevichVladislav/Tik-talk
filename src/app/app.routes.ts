@@ -5,7 +5,7 @@ import {provideEffects} from '@ngrx/effects';
 import {LoginPageComponent} from '@tt/pages/login-page';
 import {canActivateAuth} from '@tt/data-access/auth/access.guard';
 import {ProfileEffects, profileFeature} from '@tt/data-access/profile';
-import {SearchPageComponent} from '@tt/pages/search-page';
+import {SearchPageMode} from '@tt/data-access/shared/interface/search-page-mode.interface';
 
 export const routes: Routes = [
   {
@@ -34,17 +34,16 @@ export const routes: Routes = [
       {
         path: 'search',
         loadComponent: () => import('@tt/pages/search-page').then(m => m.SearchPageComponent),
-        data: {pageMode: 'search'},
       },
       {
         path: 'subscribers',
         loadComponent: () => import('@tt/pages/search-page').then(m => m.SearchPageComponent),
-        data: {pageMode: 'subscribers'}
+        data: {pageMode: 'subscribers' as SearchPageMode}
       },
       {
         path: 'subscriptions',
         loadComponent: () => import('@tt/pages/search-page').then(m => m.SearchPageComponent),
-        data: {pageMode: 'subscriptions'}
+        data: {pageMode: 'subscriptions' as SearchPageMode}
       },
       {
         path: 'community',

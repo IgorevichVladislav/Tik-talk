@@ -37,6 +37,7 @@
 
   &__label {
     @include mixin.label-text;
+    color: var(--light-transparent);
     display: flex;
     flex-direction: column;
     gap: 4px;

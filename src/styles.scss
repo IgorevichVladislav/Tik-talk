@@ -57,6 +57,29 @@ a {
 
 //------------------------------------------ Reset
 
+/* стандартные свойства */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) var(--dark-hover-color);
+}
+
+/* для Chrome / Edge / Safari */
+@supports selector(::-webkit-scrollbar) {
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 4px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}
+
 body {
   height: 100dvh;
   font-family: 'JetBrains Mono', sans-serif;
@@ -80,6 +103,15 @@ body {
     border-radius: 2px;
     padding: 4px 8px;
     height: 24px;
+  }
+}
+
+.active-footer-menu {
+  background-color: var(--dark-hover-color);
+  color: var(--primary-color);
+
+  svg {
+    color: var(--primary-color);
   }
 }
 

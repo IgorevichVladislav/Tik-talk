@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
-import {switchMap} from 'rxjs';
+import {combineLatest, map, switchMap} from 'rxjs';
 import {Store} from '@ngrx/store';
 
 import {
@@ -41,10 +41,12 @@ export class ProfilePageComponent {
   readonly subscribersLimit = this.store.selectSignal(selectSubscribersLimit(6));
   readonly subscribers = this.store.selectSignal(selectSubscribers);
 
-  profile$ = this.route.params
-    .pipe(switchMap(({profileId}) => {
+  myId$ = this.store.select(selectProfile).pipe(map(p => p?.id));
 
-      if (profileId || profileId === 'me') {
+  profile$ = combineLatest([this.route.params, this.myId$])
+    .pipe(switchMap(([{profileId}, myId$]) => {
+
+      if (profileId === 'me' || Number(profileId) === myId$) {
         this.isMyPage.set(true);
         return this.store.select(selectProfile)
       }
@@ -60,7 +62,7 @@ export class ProfilePageComponent {
       return {
         description: 'Редактировать',
         icon: 'settings',
-        link: ['settings']
+        link: ['/profile', 'me', 'settings']
       }
     }
 

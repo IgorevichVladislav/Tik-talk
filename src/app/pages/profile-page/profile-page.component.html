@@ -1,8 +1,11 @@
 @if (profile$ | async; as profile) {
   <header class="tt-profile-page__header">
     <tt-profile-header [profile]="profile" positionInfo="horizontal"></tt-profile-header>
-    <tt-button class="tt-profile-page__header-button" [icon]="profileActionRedirect().icon">
-      <a [routerLink]="profileActionRedirect().link"> {{ profileActionRedirect().description }}</a>
+    <tt-button class="tt-profile-page__header-button"
+               [icon]="profileActionRedirect().icon"
+               [routerLink]="profileActionRedirect().link"
+    >
+      {{ profileActionRedirect().description }}
     </tt-button>
   </header>
 
@@ -27,9 +30,13 @@
               </a>
             </li>
           }
-          <a [routerLink]="['/search']">
-            <svg class="svg32 tt-profile-page__serach-link" icon="add-icon"></svg>
-          </a>
+          @if (isMyPage()) {
+            <a [routerLink]="['/search']">
+              <svg class="svg32 tt-profile-page__serach-link" icon="add-icon"></svg>
+            </a>
+          }
+
+
         </ul>
       </div>
 
