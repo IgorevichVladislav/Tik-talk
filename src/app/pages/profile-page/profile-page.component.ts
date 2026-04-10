@@ -1,15 +1,14 @@
 import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
-import {combineLatest, map, switchMap} from 'rxjs';
+import {combineLatest, filter, switchMap} from 'rxjs';
 import {Store} from '@ngrx/store';
 
 import {
   profileActions,
   selectAccount,
   selectProfile,
-  selectSubscribers,
-  selectSubscribersLimit
+  selectSubscribersById,
 } from '@tt/data-access/profile';
 import {ProfileHeaderComponent} from '@tt/common-ui';
 import {ButtonComponent, SvgIconComponent, TtAvatarCircleComponent} from '@tt/ui-kit';
@@ -38,26 +37,31 @@ export class ProfilePageComponent {
 
   readonly isMyPage = signal<boolean>(false);
 
-  readonly subscribersLimit = this.store.selectSignal(selectSubscribersLimit(6));
-  readonly subscribers = this.store.selectSignal(selectSubscribers);
+  readonly myProfile$ = this.store.select(selectProfile);
+  readonly subscribers = this.store.selectSignal(selectSubscribersById(6));
 
-  myId$ = this.store.select(selectProfile).pipe(map(p => p?.id));
+  readonly profile$ = combineLatest([this.route.params, this.myProfile$])
+    .pipe(
+      filter(([_, profile]) => profile?.id !== undefined),
+      switchMap(([{profileId}, profile]) => {
+        const myId = profile?.id;
+        const isMyRoute = profileId === 'me';
 
-  profile$ = combineLatest([this.route.params, this.myId$])
-    .pipe(switchMap(([{profileId}, myId$]) => {
+        const accountId = isMyRoute ? myId! : Number(profileId);
+        const isMyProfile = accountId === myId;
 
-      if (profileId === 'me' || Number(profileId) === myId$) {
-        this.isMyPage.set(true);
-        return this.store.select(selectProfile)
-      }
+        this.isMyPage.set(isMyProfile);
 
-      this.isMyPage.set(false);
-      this.store.dispatch(profileActions.getAccount({accountId: Number(profileId)}));
+        this.store.dispatch(profileActions.getSubscribersById({account_id: accountId}));
 
-      return this.store.select(selectAccount);
-    }))
+        if (isMyProfile) return this.store.select(selectProfile);
 
-  profileActionRedirect = computed<NavigationList>(() => {
+        this.store.dispatch(profileActions.getAccount({accountId: accountId}));
+
+        return this.store.select(selectAccount);
+      }))
+
+  readonly profileActionRedirect = computed<NavigationList>(() => {
     if (this.isMyPage()) {
       return {
         description: 'Редактировать',

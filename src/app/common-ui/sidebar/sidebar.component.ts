@@ -3,22 +3,21 @@ import {
   ChangeDetectorRef,
   Component,
   inject,
-  OnInit,
   signal
 } from '@angular/core';
 import {NavigationEnd, Router, RouterLink, RouterLinkActive} from '@angular/router';
-import {filter, firstValueFrom} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {filter, firstValueFrom, map, tap} from 'rxjs';
 import {Store} from '@ngrx/store';
 
 import {SvgIconComponent, TtAvatarCircleComponent, TtSubscriberCardComponent} from '@tt/ui-kit';
 import {
   profileActions,
-  selectProfile, selectSubscribersLimit,
+  selectProfile, selectSubscribersById,
 } from '@tt/data-access/profile';
 import {AuthService} from '@tt/data-access/auth';
 import {ClickOutsideDirective} from '@tt/directives/click-outside.directive';
 import {NavigationList} from '@tt/data-access/shared';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'tt-sidebar',
@@ -35,7 +34,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.Default,
   host: {'class': 'tt-sidebar'},
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
   private readonly authService = inject(AuthService);
   private readonly store = inject(Store);
   private readonly router = inject(Router);
@@ -44,14 +43,14 @@ export class SidebarComponent implements OnInit {
   readonly showFooterMenu = signal<boolean>(false);
 
   readonly me = this.store.selectSignal(selectProfile);
-  readonly subscribersLimit = this.store.selectSignal(selectSubscribersLimit(3));
+  readonly subscribersLimit = this.store.selectSignal(selectSubscribersById(3));
 
   constructor() {
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),
         takeUntilDestroyed(),
-      ).subscribe(() => this.cdr.markForCheck);
+      ).subscribe(() => this.cdr.markForCheck());
   }
 
   get isActiveFooter() {
@@ -63,10 +62,9 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(profileActions.getMe());
-    this.store.dispatch(profileActions.getSubscribers({}));
   }
 
-  menuItems: NavigationList[] = [
+  readonly menuItems: NavigationList[] = [
     {
       description: 'Моя страница',
       icon: 'home',

@@ -1,1 +1,1 @@
-export type SearchPageMode = 'subscribers' | 'subscriptions';
+export type SearchPageMode = 'search' | 'subscribers' | 'subscriptions';

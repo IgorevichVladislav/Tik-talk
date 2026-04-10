@@ -23,7 +23,7 @@ import {SearchPageMode} from '@tt/data-access/shared/interface/search-page-mode.
 export class SearchPageComponent {
   private readonly store = inject(Store);
 
-  readonly pageMode = input<SearchPageMode>();
+  readonly pageMode = input<SearchPageMode>('search');
 
   private readonly userAccounts = this.store.selectSignal(profileFeature.selectProfiles);
   private readonly subscribersAccounts = this.store.selectSignal(profileFeature.selectSubscribers);
@@ -36,18 +36,20 @@ export class SearchPageComponent {
         this.store.dispatch(profileActions.getSubscribers({}));
       } else if (pageMode === 'subscriptions') {
         this.store.dispatch(profileActions.getSubscriptions({}));
+      } else {
+        return this.store.dispatch(profileActions.getAccounts({}));
       }
-      return this.store.dispatch(profileActions.getAccounts({}));
     });
   }
 
-  getRenderAccounts = computed(() => {
+  readonly getRenderAccounts = computed(() => {
     const pageMode = this.pageMode();
     if (pageMode === 'subscribers') {
       return this.subscribersAccounts();
     } else if (pageMode === 'subscriptions') {
       return this.subscriptionsAccounts();
+    } else {
+      return this.userAccounts();
     }
-    return this.userAccounts();
   });
 }

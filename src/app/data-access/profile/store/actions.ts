@@ -5,48 +5,50 @@ import {Profile, ProfileFilter, ProfileUpdate, SubscribeFilter} from '../profile
 export const profileActions = createActionGroup({
   source: 'profile',
   events: {
-    /** Action для получения 5 тестовых профилей. */
+    /** Action для загрузки 5 тестовых профилей. */
     'get test accounts': emptyProps(),
-    /** Кладем 5 тестовых профилей в стор. */
+    /** Action успешной загрузки 5 тестовых профилей. */
     'test accounts loaded': props<{ profiles: Profile[] }>(),
 
-    /** Action для получения Get Me аккаунта. */
+    /** Action для загрузки текущего профиля пользователя. */
     'getMe': emptyProps(),
-    /** Кладем в стор свой Get Me. */
+    /** Action успешной загрузки текущего профиля пользователя. */
     'getMeLoaded': props<{ profile: Profile }>(),
 
-    /** Action для получения всех аккаунтов пользователей. */
+    /** Action для загрузки аккаунтов пользователей с необязательной фильтрацией. */
     'get accounts': props<{ accountsFilter?: ProfileFilter }>(),
-    /** Кладем в стор все аккаунты пользователей. */
+    /** Action успешной загрузки аккаунтов пользователей. */
     'accounts loaded': props<{ accounts: Profile[] }>(),
 
-    /** Action для получения Account по id. */
+    /** Action для загрузки аккаунта пользователя по id. */
     'get account': props<{ accountId: number }>(),
-    /** Кладем Account по id в стор. */
+    /** Action успешной загрузки аккаунта пользователя. */
     'account loaded': props<{ account: Profile }>(),
 
-    /** Action для обновления профиля пользователя. */
+    /** Action для обновления профиля текущего пользователя. */
     'update me': props<{ updateDto: ProfileUpdate }>(),
-    /** Обновляем существующий профиль пользователя. */
+    /** Action после успешного обновления профиля текущего пользователя. */
     'update me success': props<{ profile: Profile }>(),
 
-    /** Action для получения Get Subscriptions. */
+    /** Action для запроса подписок (Subscriptions) с необязательными параметрами фильтрации. */
     'get subscriptions': props<{ subscriptionsFilter?: SubscribeFilter }>(),
-    /** Кладем в стор Subscriptions. */
+    /** Action успешной загрузки подписок (Subscriptions) в store. */
     'subscriptions loaded': props<{ subscriptions: Profile[] }>(),
 
+    /** Action для запроса подписок (Subscriptions) с обязательной передачей account_id и необязательным параметром фильтрации. */
+    'get subscriptions by id': props<{ account_id: number, subscriptionsFilter?: SubscribeFilter }>(),
+    /** Action успешной загрузки подписчиков (Subscriptions) в store с обязательным параметром id. */
+    'subscriptions by id loaded': props<{ subscriptions: Profile[] }>(),
 
-    /** Action для получения Get Subscribers. */
-    'get subscribers': props<{
-      subscribersFilter?: Partial<{
-        account_id: number | null,
-        firstLastName: string | null,
-        stack: string[] | null,
-        city: string | null,
-      }>
-    }>(),
-    /** Кладем в стор Subscribers. */
-    'subscribers loaded': props<{ subscribers: Profile[] }>()
+    /** Action для запроса подписчиков (Subscribers) с необязательными параметрами фильтрации. */
+    'get subscribers': props<{ subscribersFilter?: SubscribeFilter }>(),
+    /** Action успешной загрузки подписчиков (Subscribers) в store. */
+    'subscribers loaded': props<{ subscribers: Profile[] }>(),
+
+    /** Action для запроса подписчиков (Subscribers) с обязательной передачей account_id и необязательным параметром фильтрации. */
+    'get subscribers by id': props<{ account_id: number, subscribersFilter?: SubscribeFilter }>(),
+    /** Action успешной загрузки подписчиков (Subscribers) в store с обязательным параметром id. */
+    'subscribers by id loaded': props<{ subscribers: Profile[] }>(),
 
   }
 });

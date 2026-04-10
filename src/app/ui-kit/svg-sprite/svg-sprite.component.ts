@@ -8,9 +8,9 @@ import {ChangeDetectionStrategy, Component, computed, input} from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SvgIconComponent {
-  icon = input<string | null>(null);
+  readonly icon = input<string | null>(null);
 
-  href = computed(() => {
+  readonly href = computed(() => {
     const icon = this.icon();
     return `/assets/svg/${icon}.svg#${icon}`;
   })

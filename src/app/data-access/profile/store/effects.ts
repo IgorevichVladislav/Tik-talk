@@ -4,7 +4,7 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 
 import {ProfileService} from '../profile.service';
 import {profileActions} from './actions';
-import {profileFeature} from '@tt/data-access/profile';
+import {profileFeature, selectSubscribers} from '@tt/data-access/profile';
 
 @Injectable({providedIn: 'root'})
 
@@ -12,14 +12,16 @@ export class ProfileEffects {
   private readonly profileService = inject(ProfileService);
   private readonly actions$ = inject(Actions);
 
+  /** Effect для загрузки 5 тестовых аккаунтов. */
   getTestAccounts = createEffect(() => {
     return this.actions$
       .pipe(ofType(profileActions.getTestAccounts),
         switchMap(() => this.profileService.getTestAccounts()),
         map(testProfiles => profileActions.testAccountsLoaded({profiles: testProfiles}))
       )
-  })
+  });
 
+  /** Effect для загрузки текущего профиля пользователя. */
   getMe = createEffect(() => {
     return this.actions$
       .pipe(
@@ -27,26 +29,9 @@ export class ProfileEffects {
         switchMap(() => this.profileService.getMe()),
         map(me => profileActions.getMeLoaded({profile: me}))
       )
-  })
+  });
 
-  getAccounts = createEffect(() => {
-    return this.actions$
-      .pipe(
-        ofType(profileActions.getAccounts),
-        switchMap(({accountsFilter}) => this.profileService.getAccounts(accountsFilter)),
-        map(accounts => profileActions.accountsLoaded({accounts: accounts.items}))
-      )
-  })
-
-  getAccount = createEffect(() => {
-    return this.actions$
-      .pipe(
-        ofType(profileActions.getAccount),
-        switchMap(({accountId}) => this.profileService.getAccount(accountId)),
-        map(account => profileActions.accountLoaded({account: account}))
-      )
-  })
-
+  /** Effect для для обновления аккаунта текущего пользователя. */
   updateMe = createEffect(() => {
     return this.actions$
       .pipe(
@@ -54,8 +39,41 @@ export class ProfileEffects {
         switchMap(({updateDto}) => this.profileService.updateMe(updateDto)),
         map(update => profileActions.updateMeSuccess({profile: update}))
       )
-  })
+  });
 
+  /** Effect для загрузки всех аккаунтов пользователей. */
+  getAccounts = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(profileActions.getAccounts),
+        switchMap(({accountsFilter}) => this.profileService.getAccounts(accountsFilter)),
+        map(accounts => profileActions.accountsLoaded({accounts: accounts.items}))
+      )
+  });
+
+  /** Effect для загрузки аккаунта пользователя по id. */
+  getAccount = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(profileActions.getAccount),
+        switchMap(({accountId}) => this.profileService.getAccount(accountId)),
+        map(account => profileActions.accountLoaded({account: account}))
+      )
+  });
+
+  /** Effect для загрузки списка подписок (Subscriptions) с обязательной передачей account_id. */
+  getSubscriptionsById = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(profileActions.getSubscriptionsById),
+      switchMap(({
+                   account_id,
+                   subscriptionsFilter
+                 }) => this.profileService.getSubscriptionsById(account_id, subscriptionsFilter)),
+      map(subscriptions => profileActions.subscriptionsByIdLoaded({subscriptions: subscriptions.items}))
+    )
+  });
+
+  /** Effect для загрузки списка подписок (Subscriptions). */
   getSubscriptions = createEffect(() => {
     return this.actions$
       .pipe(
@@ -63,8 +81,22 @@ export class ProfileEffects {
         switchMap(({subscriptionsFilter}) => this.profileService.getSubscriptions(subscriptionsFilter)),
         map(subscriptions => profileActions.subscriptionsLoaded({subscriptions: subscriptions.items}))
       )
-  })
+  });
 
+  /** Effect для загрузки списка подписчиков (Subscribers) с обязательной передачей account_id. */
+  getSubscribersById = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(profileActions.getSubscribersById),
+        switchMap(({
+                     account_id,
+                     subscribersFilter
+                   }) => this.profileService.getSubscribersById(account_id, subscribersFilter)),
+        map(subscribers => profileActions.subscribersByIdLoaded({subscribers: subscribers.items}))
+      )
+  });
+
+  /** Effect для загрузки списка подписчиков (Subscribers). */
   getSubscribers = createEffect(() => {
     return this.actions$
       .pipe(
@@ -72,5 +104,5 @@ export class ProfileEffects {
         switchMap(({subscribersFilter}) => this.profileService.getSubscribers(subscribersFilter)),
         map(subscribers => profileActions.subscribersLoaded({subscribers: subscribers.items}))
       )
-  })
+  });
 }

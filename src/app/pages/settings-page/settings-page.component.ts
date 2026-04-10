@@ -1,14 +1,14 @@
 import {ChangeDetectionStrategy, Component, effect, inject} from '@angular/core';
-import {Store} from '@ngrx/store';
-
-import {profileActions, ProfileUpdate, selectProfile} from '@tt/data-access/profile';
-import {ProfileHeaderComponent} from '@tt/common-ui';
-import {ButtonComponent, TtInputComponent} from '@tt/ui-kit';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {AvatarUploadComponent} from '../../common-ui/avatar-upload';
-import {AuthService} from '@tt/data-access/auth';
 import {firstValueFrom} from 'rxjs';
 import {Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+
+import {profileActions, selectProfile} from '@tt/data-access/profile';
+import {ProfileHeaderComponent} from '@tt/common-ui';
+import {ButtonComponent, TtInputComponent} from '@tt/ui-kit';
+import {AvatarUploadComponent} from '../../common-ui/avatar-upload';
+import {AuthService} from '@tt/data-access/auth';
 
 @Component({
   selector: 'tt-settings-page',
@@ -34,7 +34,7 @@ export class SettingsPageComponent {
 
   readonly profile = this.store.selectSignal(selectProfile);
 
-  settingsForm = new FormGroup({
+  readonly settingsForm = new FormGroup({
     firstName: new FormControl<string | null>(''),
     lastName: new FormControl<string | null>(''),
     username: new FormControl<string>('', Validators.required),
