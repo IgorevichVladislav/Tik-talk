@@ -35,18 +35,18 @@ export class TtInputComponent implements ControlValueAccessor {
   private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef, {self: true});
   cdr = inject(ChangeDetectorRef);
 
-  input = viewChild('input');
+  readonly input = viewChild('input');
 
-  label = input<string | null>(null);
-  type = input<'text' | 'password' | 'number'>('text');
-  placeholder = input<string>('Введите данные');
-  autocomplete = input<string>('');
-  name = input<string>('');
+  readonly label = input<string | null>(null);
+  readonly type = input<'text' | 'password' | 'number'>('text');
+  readonly placeholder = input<string>('Введите данные');
+  readonly autocomplete = input<string>('');
+  readonly name = input<string>('');
 
   /** Позволяет подсвечивать border-color, когда данные введены в input и пользователь ушел из формы. Используется для поисковых форм. */
-  filledActive = input(false, {transform: booleanAttribute});
+  readonly filledActive = input(false, {transform: booleanAttribute});
   /** Добавляет иконки в input */
-  mode = input<'search' | null>(null);
+  readonly mode = input<'search' | null>(null);
 
   private onChange = (_: any) => {
   };

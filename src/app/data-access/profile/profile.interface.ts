@@ -19,4 +19,5 @@ export type ProfileFilter = Record<keyof Pick<Profile, 'firstName' | 'lastName' 
 
 export type SubscribeFilter = ProfileFilter | {
   account_id: any;
+  firstLastName: any;
 };

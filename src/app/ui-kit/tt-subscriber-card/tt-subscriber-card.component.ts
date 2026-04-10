@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component, input} from '@angular/core';
+
 import {TtAvatarCircleComponent} from '@tt/ui-kit';
 import {Profile} from '@tt/data-access/profile';
 
@@ -15,5 +16,5 @@ import {Profile} from '@tt/data-access/profile';
   }
 })
 export class TtSubscriberCardComponent {
-  profile = input.required<Profile>();
+  readonly profile = input.required<Profile>();
 }

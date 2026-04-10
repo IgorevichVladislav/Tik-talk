@@ -12,15 +12,13 @@ import {ImgUrlPipe} from '../pipes/index';
   styleUrl: './tt-avatar-circle.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'tt-avatar-circle',
-    '[style.width.px]': 'size()',
-    '[style.height.px]': 'size()',
+    'class': 'tt-avatar-circle'
   }
 })
 export class TtAvatarCircleComponent {
-  avatarData = input<Avatar | null>(null);
+  readonly avatarData = input<Avatar | null>(null);
 
-  size = input(32, {
+  readonly size = input(32, {
     transform: (value: string) => Number(value),
   })
 }

@@ -63,22 +63,22 @@ export class ProfileService {
     return this.http.delete<string>(`${this.baseApiUrl}/account/subscribe/${account_id}`);
   }
 
-  /** Метод, для получения подписок отдельного клиента по id. */
-  getSubscriptionsForId(account_id: number) {
-    return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscriptions/${account_id}`);
+  /** Метод, для получения подписок отдельного клиента по id с необязательной фильтрацией. */
+  getSubscriptionsById(account_id: number, params?: SubscribeFilter) {
+    return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscriptions/${account_id}`, {params});
   }
 
-  /** Метод, для получения всех подписок*/
+  /** Метод, для получения всех подписок с необязательной фильтрацией*/
   getSubscriptions(params?: SubscribeFilter) {
     return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscriptions/`, {params});
   }
 
-  /** Метод, для получения подписчиков отдельного клиента по id. */
-  getSubscribersForId(account_id: number) {
-    return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscribers/${account_id}`);
+  /** Метод, для получения подписчиков отдельного клиента по id с необязательной фильтрацией. */
+  getSubscribersById(account_id: number, params?: SubscribeFilter) {
+    return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscribers/${account_id}`, {params});
   }
 
-  /** Метод, для получения всех подписчиков. */
+  /** Метод, для получения всех подписчиков с необязательной фильтрацией. */
   getSubscribers(params?: Record<string, any>) {
     return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscribers/`, {params})
   }

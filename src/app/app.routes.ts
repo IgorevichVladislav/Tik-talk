@@ -34,6 +34,7 @@ export const routes: Routes = [
       {
         path: 'search',
         loadComponent: () => import('@tt/pages/search-page').then(m => m.SearchPageComponent),
+        data: {pageMode: 'search' as SearchPageMode}
       },
       {
         path: 'subscribers',

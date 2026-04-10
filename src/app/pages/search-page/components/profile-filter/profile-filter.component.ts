@@ -5,7 +5,7 @@ import {debounceTime} from 'rxjs';
 import {Store} from '@ngrx/store';
 
 import {TtInputComponent} from '@tt/ui-kit';
-import {Profile, profileActions} from '@tt/data-access/profile';
+import {profileActions} from '@tt/data-access/profile';
 import {SearchPageMode} from '@tt/data-access/shared/interface/search-page-mode.interface';
 
 @Component({
@@ -25,8 +25,7 @@ export class ProfileFilterComponent {
   private readonly store = inject(Store);
   private readonly formBuilder = inject(FormBuilder);
 
-  readonly pageMode = input<SearchPageMode>();
-  readonly profile = input<Profile>();
+  readonly pageMode = input<SearchPageMode>('search');
 
   constructor() {
     this.searchForm.valueChanges
@@ -42,17 +41,20 @@ export class ProfileFilterComponent {
           this.store.dispatch(profileActions.getSubscribers({
             subscribersFilter: {
               ...value,
-              firstLastName: value.firstName || value.lastName
+              firstLastName: [value.firstName, value.lastName]
+                .filter(Boolean)
+                .join(' ')
             }
           }))
         } else if (pageMode === 'subscriptions') {
           this.store.dispatch(profileActions.getSubscriptions({subscriptionsFilter: value}));
+        } else {
+          this.store.dispatch(profileActions.getAccounts({accountsFilter: value}))
         }
-        this.store.dispatch(profileActions.getAccounts({accountsFilter: value}))
       })
   }
 
-  searchForm = this.formBuilder.group({
+  readonly searchForm = this.formBuilder.group({
     firstName: this.formBuilder.control<string>(''),
     lastName: this.formBuilder.control<string>(''),
     stack: this.formBuilder.control<string[]>([]),

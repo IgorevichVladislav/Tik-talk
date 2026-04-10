@@ -17,7 +17,7 @@ type ButtonType = 'button' | 'reset' | 'submit';
   }
 })
 export class ButtonComponent {
-  type = input<ButtonType>("button");
-  mode = input<'default' | 'black'>('default');
-  icon = input<string | null>(null);
+  readonly type = input<ButtonType>("button");
+  readonly mode = input<'default' | 'black'>('default');
+  readonly icon = input<string | null>(null);
 }

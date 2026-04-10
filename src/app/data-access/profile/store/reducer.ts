@@ -6,16 +6,20 @@ export interface ProfileState {
   account: Profile | null;
   profile: Profile | null;
   profiles: Profile[];
-  subscribers: Profile[];
   subscriptions: Profile[];
+  subscriptionsById: Profile[];
+  subscribers: Profile[];
+  subscribersById: Profile[];
 }
 
 export const profileInitialState: ProfileState = {
   account: null,
   profile: null,
   profiles: [],
-  subscribers: [],
   subscriptions: [],
+  subscriptionsById: [],
+  subscribers: [],
+  subscribersById: []
 }
 
 export const profileFeature = createFeature({
@@ -53,6 +57,13 @@ export const profileFeature = createFeature({
       }
     }),
 
+    on(profileActions.subscriptionsByIdLoaded, (state, {subscriptions}) => {
+      return {
+        ...state,
+        subscriptionsById: subscriptions
+      }
+    }),
+
     on(profileActions.subscriptionsLoaded, (state, {subscriptions}) => {
       return {
         ...state,
@@ -60,11 +71,19 @@ export const profileFeature = createFeature({
       }
     }),
 
-    on(profileActions.subscribersLoaded, (state, {subscribers}) => {
+    on(profileActions.subscribersByIdLoaded, (state, {subscribers}) => {
       return {
         ...state,
-        subscribers
+        subscribersById: subscribers
       }
-    })
+    }),
+
+    on(profileActions.subscribersLoaded, (state, {subscribers}) => {
+        return {
+          ...state,
+          subscribers
+        }
+      }
+    )
   ),
 })

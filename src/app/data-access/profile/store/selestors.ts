@@ -21,17 +21,22 @@ export const selectAccount = createSelector(
   (account) => account
 )
 
+export const selectSubscriptionsById = createSelector(
+  profileFeature.selectSubscriptionsById,
+  (subscriptions) => subscriptions
+)
+
 export const selectSubscriptions = createSelector(
   profileFeature.selectSubscriptions,
   (subscriptions) => subscriptions
 )
 
+export const selectSubscribersById = (subscribersLimit: number) => createSelector(
+  profileFeature.selectSubscribersById,
+  subscribers => subscribers.slice(0, subscribersLimit)
+)
+
 export const selectSubscribers = createSelector(
   profileFeature.selectSubscribers,
   (subscribers) => subscribers
-)
-
-export const selectSubscribersLimit = (subscribersLimit: number) => createSelector(
-  profileFeature.selectSubscribers,
-  (subscribers) => subscribers.slice(0, subscribersLimit)
 )
