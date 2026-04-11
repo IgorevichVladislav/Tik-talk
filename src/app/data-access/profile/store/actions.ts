@@ -15,6 +15,11 @@ export const profileActions = createActionGroup({
     /** Action успешной загрузки текущего профиля пользователя. */
     'getMeLoaded': props<{ profile: Profile }>(),
 
+    /** Action для обновления профиля текущего пользователя. */
+    'update me': props<{ updateDto: ProfileUpdate }>(),
+    /** Action после успешного обновления профиля текущего пользователя. */
+    'update me success': props<{ profile: Profile }>(),
+
     /** Action для загрузки аккаунтов пользователей с необязательной фильтрацией. */
     'get accounts': props<{ accountsFilter?: ProfileFilter }>(),
     /** Action успешной загрузки аккаунтов пользователей. */
@@ -25,10 +30,11 @@ export const profileActions = createActionGroup({
     /** Action успешной загрузки аккаунта пользователя. */
     'account loaded': props<{ account: Profile }>(),
 
-    /** Action для обновления профиля текущего пользователя. */
-    'update me': props<{ updateDto: ProfileUpdate }>(),
-    /** Action после успешного обновления профиля текущего пользователя. */
-    'update me success': props<{ profile: Profile }>(),
+    /** Action для подписки на текущего пользователя. */
+    'subscribe': props<{ account_id: number }>(),
+    /** Action для отписки от текущего пользователя. */
+    'unsubscribe': props<{ account_id: number }>(),
+    // /** Action содержащий все подписки текущего пользователя. */
 
     /** Action для запроса подписок (Subscriptions) с необязательными параметрами фильтрации. */
     'get subscriptions': props<{ subscriptionsFilter?: SubscribeFilter }>(),
