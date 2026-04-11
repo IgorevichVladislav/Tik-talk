@@ -32,9 +32,11 @@ export class ProfileService {
     return this.http.patch<Profile>(`${this.baseApiUrl}/account/me`, dto);
   }
 
-  /** Метод, для загрузки изображения в свой профиль. */
+  /** Метод, для загрузки изображения в профиль пользователя. */
   loadImage(image: string) {
-    return this.http.post<string>(`${this.baseApiUrl}/account/upload_image`, {image});
+    const fd = new FormData();
+    fd.append('image', image);
+    return this.http.post<string>(`${this.baseApiUrl}/account/upload_image`, {fd});
   }
 
   /** Метод, для удаления изображения из своего профиля. */
@@ -55,12 +57,12 @@ export class ProfileService {
 
   /** Метод, для подписки на пользователя по id. */
   subscribe(account_id: number) {
-    return this.http.post<string>(`${this.baseApiUrl}/account/subscribe/${account_id}`, null);
+    return this.http.post<Profile>(`${this.baseApiUrl}/account/subscribe/${account_id}`, {});
   }
 
   /** Метод, для отписки пользователя по id. */
   unsubscribe(account_id: number) {
-    return this.http.delete<string>(`${this.baseApiUrl}/account/subscribe/${account_id}`);
+    return this.http.delete<Profile>(`${this.baseApiUrl}/account/subscribe/${account_id}`);
   }
 
   /** Метод, для получения подписок отдельного клиента по id с необязательной фильтрацией. */

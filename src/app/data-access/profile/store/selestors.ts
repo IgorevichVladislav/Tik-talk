@@ -36,7 +36,7 @@ export const selectSubscribersById = (subscribersLimit: number) => createSelecto
   subscribers => subscribers.slice(0, subscribersLimit)
 )
 
-export const selectSubscribers = createSelector(
+export const selectSubscribers = (subscribersLimit: number) => createSelector(
   profileFeature.selectSubscribers,
-  (subscribers) => subscribers
+  (subscribers) => subscribers.slice(0, subscribersLimit)
 )

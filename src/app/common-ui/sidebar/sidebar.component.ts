@@ -13,7 +13,7 @@ import {Store} from '@ngrx/store';
 import {SvgIconComponent, TtAvatarCircleComponent, TtSubscriberCardComponent} from '@tt/ui-kit';
 import {
   profileActions,
-  selectProfile, selectSubscribersById,
+  selectProfile, selectSubscribers, selectSubscribersById,
 } from '@tt/data-access/profile';
 import {AuthService} from '@tt/data-access/auth';
 import {ClickOutsideDirective} from '@tt/directives/click-outside.directive';
@@ -43,7 +43,7 @@ export class SidebarComponent {
   readonly showFooterMenu = signal<boolean>(false);
 
   readonly me = this.store.selectSignal(selectProfile);
-  readonly subscribersLimit = this.store.selectSignal(selectSubscribersById(3));
+  readonly subscribersLimit = this.store.selectSignal(selectSubscribers(3));
 
   constructor() {
     this.router.events
@@ -62,6 +62,8 @@ export class SidebarComponent {
 
   ngOnInit() {
     this.store.dispatch(profileActions.getMe());
+    this.store.dispatch(profileActions.getSubscribers({}));
+    this.store.dispatch(profileActions.getSubscriptions({}));
   }
 
   readonly menuItems: NavigationList[] = [

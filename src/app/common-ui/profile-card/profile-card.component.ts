@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, computed, inject, input, signal} from '@angular/core';
-import {Profile, ProfileService} from '@tt/data-access/profile';
+import {Profile, profileActions, selectAccounts, selectSubscriptions} from '@tt/data-access/profile';
 import {ButtonComponent, TtAvatarCircleComponent} from '@tt/ui-kit';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {firstValueFrom} from 'rxjs';
 
@@ -18,9 +18,16 @@ import {firstValueFrom} from 'rxjs';
   host: {class: 'tt-profile-card'}
 })
 export class ProfileCardComponent {
-  private readonly profileService = inject(ProfileService);
+  private readonly store = inject(Store);
+  private readonly router = inject(Router);
 
-  isSubscriptionProfile = signal<boolean>(false);
+  private readonly accountsList = this.store.selectSignal(selectAccounts);
+  private readonly subscriptions = this.store.selectSignal(selectSubscriptions);
+
+  readonly isSubscriptionProfile = computed((): boolean => {
+    const profileId = this.profile().id;
+    return this.subscriptions().some(subscription => subscription.id === profileId);
+  });
 
   readonly profile = input.required<Profile>();
 
@@ -31,22 +38,25 @@ export class ProfileCardComponent {
       return {
         description: 'Написать',
         icon: 'send-message',
-      }
+        action: () => {this.router.navigate(['profile/me'])}
+      };
     }
 
     return {
       description: 'Подписаться',
       icon: 'subscribe',
-    }
-  })
+      action: () => this.subscribe(),
+    };
+  });
 
-  async subscribe(id: number) {
-    return await firstValueFrom(this.profileService.subscribe(id));
+
+  unsubscribe() {
+    this.store.dispatch(profileActions.unsubscribe({ account_id: this.profile().id }));
   }
 
-  async unsubscribe(id: number) {
-    return await firstValueFrom(this.profileService.unsubscribe(id));
-
+  subscribe() {
+    console.log('subscribe clicked', this.profile().id);
+    this.store.dispatch(profileActions.subscribe({ account_id: this.profile().id }));
   }
 
 }

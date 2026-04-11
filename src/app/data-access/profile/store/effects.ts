@@ -61,6 +61,24 @@ export class ProfileEffects {
       )
   });
 
+  subscribe = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(profileActions.subscribe),
+        switchMap(({account_id}) => this.profileService.subscribe(account_id)),
+        map(subscribe => profileActions.getSubscriptions({subscriptionsFilter: subscribe}))
+      )
+  });
+
+  unsubscribe = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(profileActions.unsubscribe),
+        switchMap(({account_id}) => this.profileService.unsubscribe(account_id)),
+        map(unsubscribe => profileActions.getSubscriptions({subscriptionsFilter: unsubscribe}))
+      )
+  });
+
   /** Effect для загрузки списка подписок (Subscriptions) с обязательной передачей account_id. */
   getSubscriptionsById = createEffect(() => {
     return this.actions$.pipe(

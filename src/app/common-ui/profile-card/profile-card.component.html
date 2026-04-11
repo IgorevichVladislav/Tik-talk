@@ -18,10 +18,13 @@
   </ul>
 
   <div class="tt-profile-card__button-wrapper">
-    @if (false) {
-      <span class="tt-profile-card__subscriber-icon"></span>
+    @if (isSubscriptionProfile()) {
+      <tt-button class="tt-profile-card__subscriber-icon" mode="black" icon="subscriber"
+                 (click)="unsubscribe()"></tt-button>
     }
-    <tt-button [icon]="getSubscriptionAction().icon">{{ getSubscriptionAction().description }}
+    <tt-button [icon]="getSubscriptionAction().icon"
+               (click)="getSubscriptionAction().action()">
+      {{ getSubscriptionAction().description }}
     </tt-button>
     <tt-button class="tt-profile-card__follow-links" icon="navigation-arrow" [routerLink]="['/profile', profile.id]">
     </tt-button>

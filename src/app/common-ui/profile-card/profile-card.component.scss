@@ -64,8 +64,12 @@
   }
 
   &__subscriber-icon {
-    background-color: var(--dark-color);
-    border: 1px solid var(--primary-color);
-    border-radius: 2px;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+
+    &:hover {
+      border-color: var(--light-color);
+      color: var(--light-color);
+    }
   }
 }
