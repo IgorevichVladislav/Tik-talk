@@ -1,10 +1,10 @@
 import {inject, Injectable} from '@angular/core';
-import {map, switchMap} from 'rxjs';
+import {catchError, map, switchMap} from 'rxjs';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 
 import {ProfileService} from '../profile.service';
 import {profileActions} from './actions';
-import {profileFeature, selectSubscribers} from '@tt/data-access/profile';
+import {profileFeature} from '@tt/data-access/profile';
 
 @Injectable({providedIn: 'root'})
 
@@ -65,8 +65,8 @@ export class ProfileEffects {
     return this.actions$
       .pipe(
         ofType(profileActions.subscribe),
-        switchMap(({account_id}) => this.profileService.subscribe(account_id)),
-        map(subscribe => profileActions.getSubscriptions({subscriptionsFilter: subscribe}))
+        switchMap(({profile}) => this.profileService.subscribe(profile.id)
+          .pipe(map(() => profileActions.subscribeSuccess({account_id: profile.id}))))
       )
   });
 
@@ -74,8 +74,9 @@ export class ProfileEffects {
     return this.actions$
       .pipe(
         ofType(profileActions.unsubscribe),
-        switchMap(({account_id}) => this.profileService.unsubscribe(account_id)),
-        map(unsubscribe => profileActions.getSubscriptions({subscriptionsFilter: unsubscribe}))
+        switchMap(({account_id}) => this.profileService.unsubscribe(account_id)
+          .pipe(map(() => profileActions.unsubscribeSuccess({account_id})))
+        )
       )
   });
 

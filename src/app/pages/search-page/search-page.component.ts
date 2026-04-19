@@ -3,8 +3,7 @@ import {Store} from '@ngrx/store';
 
 import {ProfileCardComponent} from '@tt/common-ui';
 import {
-  profileActions,
-  profileFeature,
+  profileActions, selectAccounts, selectSubscribers, selectSubscriptions,
 } from '@tt/data-access/profile';
 import {ProfileFilterComponent} from '@tt/pages/search-page/components/profile-filter/profile-filter.component';
 import {SearchPageMode} from '@tt/data-access/shared/interface/search-page-mode.interface';
@@ -25,9 +24,9 @@ export class SearchPageComponent {
 
   readonly pageMode = input<SearchPageMode>('search');
 
-  private readonly userAccounts = this.store.selectSignal(profileFeature.selectProfiles);
-  private readonly subscribersAccounts = this.store.selectSignal(profileFeature.selectSubscribers);
-  private readonly subscriptionsAccounts = this.store.selectSignal(profileFeature.selectSubscriptions);
+  private readonly userAccounts = this.store.selectSignal(selectAccounts);
+  private readonly subscribersAccounts = this.store.selectSignal(selectSubscribers);
+  private readonly subscriptionsAccounts = this.store.selectSignal(selectSubscriptions);
 
   constructor() {
     effect(() => {
