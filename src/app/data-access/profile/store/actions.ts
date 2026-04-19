@@ -31,10 +31,14 @@ export const profileActions = createActionGroup({
     'account loaded': props<{ account: Profile }>(),
 
     /** Action для подписки на текущего пользователя. */
-    'subscribe': props<{ account_id: number }>(),
+    'subscribe': props<{ profile: Profile }>(),
+    /** Action для успешной подписки на текущего пользователя. */
+    'subscribe success': props<{ account_id: number }>(),
+
     /** Action для отписки от текущего пользователя. */
     'unsubscribe': props<{ account_id: number }>(),
-    // /** Action содержащий все подписки текущего пользователя. */
+    /** Action для успешной подписки на текущего пользователя. */
+    'unsubscribe success': props<{ account_id: number }>(),
 
     /** Action для запроса подписок (Subscriptions) с необязательными параметрами фильтрации. */
     'get subscriptions': props<{ subscriptionsFilter?: SubscribeFilter }>(),

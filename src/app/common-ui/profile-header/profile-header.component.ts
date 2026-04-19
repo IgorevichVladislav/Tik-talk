@@ -18,5 +18,6 @@ import {Profile} from '@tt/data-access/profile';
 })
 export class ProfileHeaderComponent {
   readonly profile = input<Profile>();
+  readonly avatarSize = input<string>('112');
   readonly positionInfo = input<'horizontal' | 'vertical'>('horizontal');
 }
