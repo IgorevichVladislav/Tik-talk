@@ -1,10 +1,11 @@
 :root {
   --dark-color: #000000;
+  --dark-transparent: rgba(0, 0, 0, 0.5);
   --light-color: #ffffff;
+  --light-transparent: rgba(255, 255, 255, 0.75);
   --primary-color: #ae7aff;
   --green-primary-color: #98E9ab;
   --red-primary-color: #e99898;
-  --light-transparent: rgba(255, 255, 255, 0.75);
   --dark-hover-color: #161616;
   --dark-message: #404040;
   --light-border: 1px solid var(--light-color);

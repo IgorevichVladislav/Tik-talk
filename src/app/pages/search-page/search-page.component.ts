@@ -36,7 +36,7 @@ export class SearchPageComponent {
       } else if (pageMode === 'subscriptions') {
         this.store.dispatch(profileActions.getSubscriptions({}));
       } else {
-        return this.store.dispatch(profileActions.getAccounts({}));
+        this.store.dispatch(profileActions.getAccounts({}));
       }
     });
   }

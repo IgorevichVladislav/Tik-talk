@@ -1,0 +1,28 @@
+@if (avatarData(); as avatarData) {
+  <tt-avatar-circle
+    class="tt-avatar-upload__avatar"
+    [avatarData]="{
+      avatarUrl: avatarPreview() || avatarData.avatarUrl,
+      username: avatarData.username,
+      id: avatarData.id
+  }" size="140"/>
+  @if (removeAvatar()) {
+    <tt-button class="tt-avatar-upload__edit-button"
+               icon="edit" mode="black"
+               (click)="deleteAvatarHandler.emit()">Удалить
+    </tt-button>
+  }
+
+  <div class="tt-avatar-upload__drop-zone"
+       (click)="fileDrop.click()"
+       dnd
+       (fileDropped)="onDroppedFile($event)"
+  >
+    <svg class="svg18 tt-avatar-upload__icon" icon="upload"></svg>
+    <p class="tt-avatar-upload__description">Перетащите изображение или <span>Загрузите</span></p>
+    <p class="tt-avatar-upload__description">(разрешение до 5,000 x 5,000 px)</p>
+    <input class="tt-avatar-upload__hidden-input"
+           type="file" #fileDrop
+           (change)="onChooseImage($event)">
+  </div>
+}

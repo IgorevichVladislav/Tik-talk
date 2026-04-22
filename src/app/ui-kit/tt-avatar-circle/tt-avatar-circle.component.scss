@@ -1,7 +1,8 @@
-:host {
-  display: flex;
-  flex-shrink: 0;
-  border-radius: 50%;
-  overflow: hidden;
-  object-fit: cover;
+.tt-avatar-circle {
+  &__image {
+    display: flex;
+    border-radius: 50%;
+    overflow: hidden;
+    object-fit: cover;
+  }
 }

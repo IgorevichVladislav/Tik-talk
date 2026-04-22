@@ -19,6 +19,7 @@
 
 :host([data-mode="black"]) {
   background-color: var(--dark-color);
+border-color: #fff;
   @include mixin.main-transition(border-color);
 
   &:hover {
