@@ -1,7 +1,7 @@
 @if (avatarData(); as avatarData) {
   @if (avatarData.avatarUrl) {
-    <img [src]="avatarData.avatarUrl | imgUrl" [alt]="avatarData.username" [width]="size()" [height]="size()">
+    <img class="tt-avatar-circle__image" [src]="avatarData.avatarUrl | imgUrl" [alt]="avatarData.username" [width]="size()" [height]="size()">
   } @else {
-    <img src="/assets/svg/user-placeholder.svg" alt="Avatar" [width]="size()" [height]="size()">
+    <img class="tt-avatar-circle__image" src="/assets/svg/user-placeholder.svg" alt="Avatar" [width]="size()" [height]="size()">
   }
 }

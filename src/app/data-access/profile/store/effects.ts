@@ -5,6 +5,7 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {ProfileService} from '../profile.service';
 import {profileActions} from './actions';
 import {profileFeature} from '@tt/data-access/profile';
+import {createFeature} from '@ngrx/store';
 
 @Injectable({providedIn: 'root'})
 
@@ -31,6 +32,17 @@ export class ProfileEffects {
       )
   });
 
+  deleteMe = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(profileActions.deleteMe),
+        switchMap(() => this.profileService.deleteMe()
+          .pipe(
+            map(() => profileActions.deleteMeSuccess())
+          ))
+      )
+  });
+
   /** Effect для для обновления аккаунта текущего пользователя. */
   updateMe = createEffect(() => {
     return this.actions$
@@ -38,6 +50,26 @@ export class ProfileEffects {
         ofType(profileActions.updateMe),
         switchMap(({updateDto}) => this.profileService.updateMe(updateDto)),
         map(update => profileActions.updateMeSuccess({profile: update}))
+      )
+  });
+
+  uploadAvatar = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(profileActions.uploadAvatar),
+        switchMap(({avatarImage}) => this.profileService.uploadImage(avatarImage)),
+        map(profile => profileActions.uploadAvatarSuccess({profile}))
+      )
+  });
+
+  deleteAvatar = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(profileActions.deleteAvatar),
+        switchMap(() => this.profileService.deleteImage()
+          .pipe(
+            map(profile => profileActions.deleteAvatarSuccess({profile}))
+          ))
       )
   });
 

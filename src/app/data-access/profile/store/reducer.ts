@@ -41,12 +41,22 @@ export const profileFeature = createFeature({
 
     on(profileActions.getMeLoaded,
       profileActions.updateMeSuccess,
+      profileActions.uploadAvatarSuccess,
+      profileActions.deleteAvatarSuccess,
       (state, {profile}) => {
         return {
           ...state,
           profile
         }
       }),
+
+    on(profileActions.deleteMeSuccess, (state) => {
+      return {
+        ...state,
+        profile: null,
+        account: null
+      }
+    }),
 
     on(profileActions.accountsLoaded, (state, {accounts}) => {
       return {

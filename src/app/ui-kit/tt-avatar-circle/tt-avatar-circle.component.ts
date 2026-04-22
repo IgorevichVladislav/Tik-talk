@@ -20,5 +20,5 @@ export class TtAvatarCircleComponent {
 
   readonly size = input(32, {
     transform: (value: string) => Number(value),
-  })
+  });
 }

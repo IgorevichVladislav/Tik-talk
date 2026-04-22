@@ -30,7 +30,7 @@
       <textarea formControlName="description"></textarea>
     </label>
 
-    <tt-avatar-upload [avatarData]="profile"/>
+    <tt-avatar-upload [avatarData]="profile" (deleteAvatarHandler)="deleteAvatar()" />
 
     <tt-input class="tt-settings-page__input" formControlName="stack" label="Навыки" mode="search"/>
 
@@ -39,9 +39,9 @@
         <tt-button class="tt-settings-page__tt-buttons tt-settings-page__tt-buttons--delete-account"
                    icon="delete"
                    mode="black"></tt-button>
-        <tt-button class="tt-settings-page__tt-buttons"
+        <tt-button class="tt-settings-page__tt-buttons tt-settings-page__tt-buttons--logout"
                    icon="logout"
-                   mode="black" (click)="logout"></tt-button>
+                   mode="black" (click)="logout()"></tt-button>
       </li>
       <li class="tt-settings-page__buttons-item">
         <tt-button mode="black" (click)="toProfilePage(profile.id)">Отмена</tt-button>

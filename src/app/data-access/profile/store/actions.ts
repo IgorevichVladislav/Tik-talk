@@ -15,10 +15,25 @@ export const profileActions = createActionGroup({
     /** Action успешной загрузки текущего профиля пользователя. */
     'getMeLoaded': props<{ profile: Profile }>(),
 
+    /** Action для удаления текущего профиля пользователя. */
+    'delete me': emptyProps(),
+    /** Action для успешного удаления текущего профиля пользователя. */
+    'delete me success': emptyProps(),
+
     /** Action для обновления профиля текущего пользователя. */
     'update me': props<{ updateDto: ProfileUpdate }>(),
     /** Action после успешного обновления профиля текущего пользователя. */
     'update me success': props<{ profile: Profile }>(),
+
+    /** Action для добавления изображения аватара профиля текущего пользователя. */
+    'upload avatar': props<{ avatarImage: File }>(),
+    /** Action после успешного добавления аватара профиля текущего пользователя. */
+    'upload avatar success': props<{ profile: Profile }>(),
+
+    /** Action для для удаления изображения аватара профиля текущего пользователя. */
+    'delete avatar': emptyProps(),
+    /** Action после успешного удаления изображения аватара профиля текущего пользователя. */
+    'delete avatar success': props<{ profile: Profile }>(),
 
     /** Action для загрузки аккаунтов пользователей с необязательной фильтрацией. */
     'get accounts': props<{ accountsFilter?: ProfileFilter }>(),
@@ -62,10 +77,3 @@ export const profileActions = createActionGroup({
 
   }
 });
-
-// subscribersFilter?: Partial<{
-//   account_id?: number | null,
-//   firstLastName?: string | null,
-//   stack?: string | null,
-//   city?: string | null,
-// }>
