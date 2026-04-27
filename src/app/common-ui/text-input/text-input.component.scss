@@ -11,6 +11,19 @@
 }
 
 .tt-text-input {
+  &__textarea {
+    align-content: center;
+    color: var(--light-color);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    resize: none;
+
+    &::placeholder {
+      color: var(--light-transparent);
+    }
+  }
+
   &__smile-btn {
     color: red;
     border: transparent;

@@ -6,13 +6,15 @@ import {LoginPageComponent} from '@tt/pages/login-page';
 import {canActivateAuth} from '@tt/data-access/auth/access.guard';
 import {ProfileEffects, profileFeature} from '@tt/data-access/profile';
 import {SearchPageMode} from '@tt/data-access/shared/interface/search-page-mode.interface';
+import {PostEffects, postFeature} from '@tt/data-access/post/store';
 
 export const routes: Routes = [
   {
     path: '', loadComponent: () => import('@tt/common-ui').then(m => m.LayoutComponent),
     providers: [
       provideState(profileFeature),
-      provideEffects(ProfileEffects)
+      provideState(postFeature),
+      provideEffects(ProfileEffects, PostEffects),
     ], children: [
       {
         path: '',

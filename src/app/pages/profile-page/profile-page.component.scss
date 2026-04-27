@@ -13,8 +13,24 @@
     padding-bottom: 24px;
   }
 
+  &__header-button-wrapper {
+    display: flex;
+    gap: 6px;
+  }
+
   &__header-button {
     margin-right: 142px;
+  }
+
+  &__unsubscribe-button {
+    background-color: transparent;
+    border-color: var(--primary-color);
+    --color: var(--primary-color);
+    width: 44px;
+
+    &:hover {
+      background-color: var(--dark-transparent);
+    }
   }
 
   &__body {

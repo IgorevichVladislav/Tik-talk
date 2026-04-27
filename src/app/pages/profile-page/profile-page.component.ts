@@ -1,19 +1,20 @@
 import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
-import {combineLatest, filter, switchMap} from 'rxjs';
+import {combineLatest, filter, switchMap, tap} from 'rxjs';
 import {Store} from '@ngrx/store';
 
 import {
+  Profile,
   profileActions,
   selectAccount,
   selectProfile,
-  selectSubscribersById,
+  selectSubscribersById, selectSubscriptionsEntity,
 } from '@tt/data-access/profile';
-import {ProfileHeaderComponent} from '@tt/common-ui';
 import {ButtonComponent, SvgIconComponent, TtAvatarCircleComponent} from '@tt/ui-kit';
+import {PostFeedComponent, ProfileHeaderComponent} from '@tt/common-ui';
 import {NavigationList} from '@tt/data-access/shared';
-import {PostFeedComponent} from '../../common-ui/post';
+import {selectPosts} from '@tt/data-access/post/store';
 
 @Component({
   selector: 'tt-profile-page',
@@ -35,7 +36,9 @@ export class ProfilePageComponent {
   private readonly store = inject(Store);
   private readonly route = inject(ActivatedRoute);
 
+  private readonly subscriptionsEntity = this.store.selectSignal(selectSubscriptionsEntity);
   readonly isMyPage = signal<boolean>(false);
+  readonly subscriptionId = signal<number | null>(null);
 
   readonly myProfile$ = this.store.select(selectProfile);
   readonly subscribers = this.store.selectSignal(selectSubscribersById(6));
@@ -43,6 +46,7 @@ export class ProfilePageComponent {
   readonly profile$ = combineLatest([this.route.params, this.myProfile$])
     .pipe(
       filter(([_, profile]) => profile?.id !== undefined),
+      tap(profile => profile.map(res => console.log(res?.id))),
       switchMap(([{profileId}, profile]) => {
         const myId = profile?.id;
         const isMyRoute = profileId === 'me';
@@ -51,6 +55,7 @@ export class ProfilePageComponent {
         const isMyProfile = accountId === myId;
 
         this.isMyPage.set(isMyProfile);
+        this.subscriptionId.set(accountId);
 
         this.store.dispatch(profileActions.getSubscribersById({account_id: accountId}));
 
@@ -75,5 +80,26 @@ export class ProfilePageComponent {
       icon: 'send-message',
       link: ['']
     }
+  });
+
+  private readonly isSubscriptionProfile = computed(() => {
+    const id = this.subscriptionId();
+    if (!id) return;
+
+    return !!this.subscriptionsEntity()[id];
   })
+
+  accountActionRedirect(profile: Profile) {
+    if (this.isSubscriptionProfile()) {
+      return {
+        icon: 'subscriber',
+        action: () => this.store.dispatch(profileActions.unsubscribe({account_id: profile.id}))
+      }
+    }
+
+    return {
+      icon: 'subscribe',
+      action: () => this.store.dispatch(profileActions.subscribe({profile}))
+    }
+  }
 }

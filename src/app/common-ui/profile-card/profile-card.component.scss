@@ -64,12 +64,12 @@
   }
 
   &__subscriber-icon {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
+    --border-color: var(--primary-color);
+    --color: var(--primary-color);
 
     &:hover {
-      border-color: var(--light-color);
-      color: var(--light-color);
+      --border-color: var(--light-color);
+      --color: var(--light-color);
     }
   }
 }

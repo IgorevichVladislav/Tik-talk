@@ -1,17 +1,17 @@
 @if (avatarData(); as avatarData) {
-  <tt-avatar-circle
-    class="tt-avatar-upload__avatar"
-    [avatarData]="{
+  <div class="tt-avatar-upload__avatar-wrapper">
+    <tt-avatar-circle
+      class="tt-avatar-upload__avatar"
+      [avatarData]="{
       avatarUrl: avatarPreview() || avatarData.avatarUrl,
       username: avatarData.username,
       id: avatarData.id
   }" size="140"/>
-  @if (removeAvatar()) {
     <tt-button class="tt-avatar-upload__edit-button"
                icon="edit" mode="black"
                (click)="deleteAvatarHandler.emit()">Удалить
     </tt-button>
-  }
+  </div>
 
   <div class="tt-avatar-upload__drop-zone"
        (click)="fileDrop.click()"
