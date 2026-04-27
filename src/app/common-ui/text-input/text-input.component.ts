@@ -1,9 +1,7 @@
-import {ChangeDetectionStrategy, Component, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input, Renderer2} from '@angular/core';
 
 import {ButtonComponent, TtAvatarCircleComponent} from '@tt/ui-kit';
-import {Profile} from '@tt/data-access/profile';
-
-type Avatar = Pick<Profile, 'avatarUrl' | 'username' | 'id'>
+import {Avatar} from '@tt/data-access/profile';
 
 @Component({
   selector: 'tt-text-input',
@@ -19,5 +17,13 @@ type Avatar = Pick<Profile, 'avatarUrl' | 'username' | 'id'>
   }
 })
 export class TextInputComponent {
-  avatarData = input<Avatar>();
+  private readonly r2 = inject(Renderer2);
+
+  readonly avatarData = input<Avatar>();
+
+  onTextareaInput(event: Event) {
+    const textarea = event.target as HTMLInputElement;
+    this.r2.setStyle(textarea, 'height', 'auto');
+    this.r2.setStyle(textarea, 'height', textarea.scrollHeight + 'px');
+  }
 }

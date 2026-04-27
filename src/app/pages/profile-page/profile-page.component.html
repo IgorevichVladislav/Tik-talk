@@ -1,12 +1,21 @@
 @if (profile$ | async; as profile) {
   <header class="tt-profile-page__header">
     <tt-profile-header [profile]="profile" positionInfo="horizontal"></tt-profile-header>
-    <tt-button class="tt-profile-page__header-button"
-               [icon]="profileActionRedirect().icon"
-               [routerLink]="profileActionRedirect().link"
-    >
-      {{ profileActionRedirect().description }}
-    </tt-button>
+    <div class="tt-profile-page__header-button-wrapper">
+      @if (!isMyPage()) {
+        <tt-button class="tt-profile-page__unsubscribe-button"
+                   [icon]="accountActionRedirect(profile).icon"
+                   (click)="accountActionRedirect(profile).action()"
+        ></tt-button>
+      }
+
+      <tt-button class="tt-profile-page__header-button"
+                 [icon]="profileActionRedirect().icon"
+                 [routerLink]="profileActionRedirect().link"
+      >
+        {{ profileActionRedirect().description }}
+      </tt-button>
+    </div>
   </header>
 
   <main class="tt-profile-page__body">

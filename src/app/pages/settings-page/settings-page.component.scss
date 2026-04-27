@@ -61,7 +61,7 @@
     width: 44px;
 
     &--delete-account {
-      color: var(--red-primary-color);
+      --color: var(--red-primary-color);
 
       &:hover {
         color: var(--error-color);

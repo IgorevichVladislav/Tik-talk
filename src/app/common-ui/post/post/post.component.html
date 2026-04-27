@@ -1,1 +1,27 @@
-<p>post works!</p>
+@if (post(); as post) {
+  <tt-avatar-circle [avatarData]="post.author"/>
+  <div class="tt-post__body">
+    <ul class="tt-post__user-block">
+      <li class="tt-post__user-info">
+        <h2 class="tt-post__username">{{ post.author.firstName }} {{ post.author.lastName }}</h2>
+        <span class="tt-post__created-at">{{ post.createdAt | date: 'hh.mm.yyyy' }}</span>
+      </li>
+
+      <li class="tt-post__content">{{ post.content }}</li>
+
+      <li class="tt-post__reactions">
+        <div class="tt-post__reactions-btn-wrapper">
+          <tt-button class="tt-post__reactions-btn" icon="comment" mode="black"/>
+          <span class="tt-post__reactions-counter tt-post__reactions-counter--comment">{{ post.comments?.length }}</span>
+        </div>
+        <div class="tt-post__reactions-btn-wrapper">
+          <tt-button class="tt-post__reactions-btn" icon="like" mode="black"/>
+          <span class="tt-post__reactions-counter tt-post__reactions-counter--like">{{ post.likes }}</span>
+        </div>
+      </li>
+    </ul>
+    <tt-button class="tt-post__settings-btn" icon="dots" mode="black"/>
+  </div>
+
+
+}

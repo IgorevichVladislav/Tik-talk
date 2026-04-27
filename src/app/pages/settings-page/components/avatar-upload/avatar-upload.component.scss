@@ -1,4 +1,4 @@
-@use '../../../../../mixins' as mixin;
+@use 'mixins' as mixin;
 
 :host {
   display: grid;
@@ -8,20 +8,25 @@
 
 .tt-avatar-upload {
 
-  &__avatar {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
+  &__avatar-wrapper {
     position: relative;
+
+    &:hover {
+      .tt-avatar-upload__edit-button {
+        display: block;
+      }
+    }
   }
 
   &__edit-button {
-    background-color: var(--dark-transparent);
+    background-color: var(--dark-transparent) !important;
     font-weight: 500;
     font-size: 14px;
     line-height: 21px;
+    display: none;
     padding: 4px 8px;
     position: absolute;
+    top: 0;
   }
 
   &__remove_avatar {

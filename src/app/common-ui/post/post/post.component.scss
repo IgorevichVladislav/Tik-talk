@@ -1,10 +1,78 @@
-@use "../../../../mixins" as mixin;
+@use "mixins" as mixin;
 
 :host {
   @include mixin.dark-facade;
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-gap: 16px;
   padding: 20px;
 }
 
 .tt-post {
+  &__body {
+    display: flex;
+    justify-content: space-between;
+  }
 
+  &__user-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__username {
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  &__created-at {
+    @include mixin.label-text;
+    color: var(--light-transparent);
+  }
+
+  &__settings-btn {
+    width: 44px;
+    border-color: transparent;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+
+  &__reactions {
+    display: flex;
+    gap: 20px;
+  }
+
+  &__reactions-btn-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__reactions-btn {
+    border: none;
+    color: var(--light-color);
+    padding: 0;
+    width: 16px;
+    height: 16px;
+  }
+
+  &__reactions-counter {
+    line-height: 16px;
+
+    &--comment {
+      color: var(--primary-color);
+    }
+
+    &--like {
+
+    }
+  }
 }
