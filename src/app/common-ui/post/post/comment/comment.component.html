@@ -1,0 +1,13 @@
+@if (comment(); as comment) {
+  <tt-avatar-circle [avatarData]="comment.author"/>
+  <ul class="tt-comment__body">
+    <li class="tt-comment__info-block">
+      <p class="tt-comment__user">{{ comment.author.firstName }} {{ comment.author.lastName }}</p>
+      <span class="tt-comment__created-at">{{ comment.createdAt }}</span>
+    </li>
+    <li class="tt-comment__text-block">
+      <p class="tt-commet__text">{{ comment.text }}</p>
+      <tt-button class="tt-comment__update-icon" icon="dots"/>
+    </li>
+  </ul>
+}

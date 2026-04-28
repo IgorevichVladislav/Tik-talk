@@ -1,5 +1,5 @@
 import {Profile} from '../profile/profile.interface';
-import {Comment} from '../comments/comments.interface';
+import {PostComment} from '../comments/comment.interface';
 
 export interface PostCreateDto {
   title: string | null
@@ -19,5 +19,5 @@ export interface Post {
   updatedAt: string | null
   likes: number | null
   likesUsers: number[] | null
-  comments: Comment[] | null
+  comments: PostComment[] | null
 }

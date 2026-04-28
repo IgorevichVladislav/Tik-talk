@@ -6,7 +6,7 @@ import {postActions} from './actions';
 
 export const postAdapter = createEntityAdapter<Post>({
   selectId: post => post.id,
-  sortComparer: false
+  sortComparer: (a, b) => b.id - a.id
 })
 
 export interface PostState {

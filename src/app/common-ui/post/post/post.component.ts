@@ -3,13 +3,15 @@ import {DatePipe} from '@angular/common';
 
 import {ButtonComponent, TtAvatarCircleComponent} from '@tt/ui-kit';
 import {Post} from '@tt/data-access/post/post.interface';
+import {CommentComponent} from './comment/comment.component';
 
 @Component({
   selector: 'tt-post',
   imports: [
     TtAvatarCircleComponent,
     DatePipe,
-    ButtonComponent
+    ButtonComponent,
+    CommentComponent
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',

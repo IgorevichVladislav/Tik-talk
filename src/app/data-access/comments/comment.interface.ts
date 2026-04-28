@@ -7,7 +7,7 @@ export interface CommentCreateDto {
   commentId: number | null
 }
 
-export interface Comment {
+export interface PostComment {
   id: number
   text: string
   author: Profile

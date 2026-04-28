@@ -3,9 +3,10 @@
 
   <textarea class="tt-text-input__textarea"
             placeholder="Напишите сообщение"
-  (input)="onTextareaInput($event)"
+            (input)="onTextareaInput($event)"
+            [(ngModel)]="text"
   ></textarea>
 
   <tt-button class="tt-text-input__smile-btn" icon="smile" mode="black"></tt-button>
-  <tt-button icon="send-message"></tt-button>
+  <tt-button icon="send-message" (click)="onCreateText()"></tt-button>
 }

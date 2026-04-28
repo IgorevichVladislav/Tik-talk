@@ -5,6 +5,7 @@ import {TextInputComponent} from '../../text-input';
 import {PostComponent} from '../post/post.component';
 import {Profile} from '@tt/data-access/profile';
 import {postActions, selectPosts} from '@tt/data-access/post/store';
+import {PostCreateDto} from '@tt/data-access/post/post.interface';
 
 @Component({
   selector: 'tt-post-feed',
@@ -30,5 +31,9 @@ export class PostFeedComponent {
     effect(() => {
       this.store.dispatch(postActions.getPosts({user_id: this.profile()!.id}));
     });
+  }
+
+  onCreatePost(dto: PostCreateDto) {
+    this.store.dispatch(postActions.createPost({dto}))
   }
 }
