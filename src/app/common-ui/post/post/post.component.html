@@ -12,10 +12,11 @@
       <li class="tt-post__reactions">
         <div class="tt-post__reactions-btn-wrapper">
           <tt-button class="tt-post__reactions-btn" icon="comment" mode="black"/>
-          <span class="tt-post__reactions-counter tt-post__reactions-counter--comment">{{ post.comments?.length }}</span>
+          <span
+            class="tt-post__reactions-counter tt-post__reactions-counter--comment">{{ post.comments?.length }}</span>
         </div>
         <div class="tt-post__reactions-btn-wrapper">
-          <tt-button class="tt-post__reactions-btn" icon="like" mode="black"/>
+          <tt-button class="tt-post__reactions-btn tt-post__reactions-btn--like" icon="like" mode="black"/>
           <span class="tt-post__reactions-counter tt-post__reactions-counter--like">{{ post.likes }}</span>
         </div>
       </li>
@@ -23,5 +24,6 @@
     <tt-button class="tt-post__settings-btn" icon="dots" mode="black"/>
   </div>
 
+  <tt-comment [comment]=""/>
 
 }
