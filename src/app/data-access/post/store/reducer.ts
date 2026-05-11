@@ -31,11 +31,26 @@ export const postFeature = createFeature({
       }
     }),
 
-    on(postActions.createPostsSuccess, (state, {post}) => {
+    on(postActions.createPostSuccess, (state, {post}) => {
       return {
         ...state,
         posts: postAdapter.addOne(post, state.posts)
       }
-    })
+    }),
+
+    on(postActions.postLoaded, (state, {post}) => {
+      return {
+        ...state,
+        posts: postAdapter.upsertOne(post, state.posts)
+      }
+    }),
+
+    on(postActions.deletePostSuccess, (state, {post_id}) => {
+      return {
+        ...state,
+        posts: postAdapter.removeOne(post_id, state.posts)
+      }
+    }),
+
   )
 })

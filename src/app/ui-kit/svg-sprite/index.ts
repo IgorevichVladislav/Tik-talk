@@ -1,3 +1,1 @@
-import {SvgIconComponent} from './svg-sprite.component';
-
-export {SvgIconComponent};
+export {SvgIconComponent} from './svg-sprite.component';

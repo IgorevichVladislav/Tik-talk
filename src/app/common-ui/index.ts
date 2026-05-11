@@ -7,5 +7,3 @@ export * from './profile-header/index';
 export * from './post/index';
 
 export * from './sidebar/index';
-
-export * from './text-input/index';

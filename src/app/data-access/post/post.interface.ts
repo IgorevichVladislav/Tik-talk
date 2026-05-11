@@ -5,7 +5,7 @@ export interface PostCreateDto {
   title: string | null
   content: string | null
   authorId: number | null
-  communityId: number | null
+  communityId?: number | null
 }
 
 export interface Post {

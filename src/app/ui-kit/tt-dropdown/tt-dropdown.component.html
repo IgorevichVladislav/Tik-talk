@@ -1,0 +1,13 @@
+@if (isOpen()) {
+  @for (dropdown of dropdownList(); track $index) {
+    <tt-button
+      class="tt-dropdown__btn"
+      mode="black"
+      [icon]="dropdown.icon ?? null"
+      (click)="onItemClick(dropdown)"
+      reverseMode
+    >
+      {{ dropdown.description }}
+    </tt-button>
+  }
+}

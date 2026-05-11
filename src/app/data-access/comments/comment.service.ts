@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {BASE_API_URL} from '@tt/tokens/base-api-url.token';
-import {CommentCreateDto, PostComment} from '@tt/data-access/comments/comment.interface';
+import {CommentCreateDto, PostComment} from './comment.interface';
 
 @Injectable({providedIn: 'root'})
 
@@ -23,6 +23,6 @@ export class CommentService {
   }
 
   deleteComment(comment_id: number) {
-    return this.http.delete(`${this.baseApiUrl}/comment/${comment_id}`);
+    return this.http.delete<void>(`${this.baseApiUrl}/comment/${comment_id}`);
   }
 }

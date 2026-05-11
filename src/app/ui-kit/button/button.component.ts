@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, input} from '@angular/core';
+import {booleanAttribute, ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {SvgIconComponent} from '../svg-sprite/index';
 
 type ButtonType = 'button' | 'reset' | 'submit';
@@ -14,10 +14,12 @@ type ButtonType = 'button' | 'reset' | 'submit';
   host: {
     class: 'tt-button',
     '[attr.data-mode]': 'mode()',
+    '[class.tt-button--reverse]': 'reverseMode()'
   }
 })
 export class ButtonComponent {
   readonly type = input<ButtonType>("button");
   readonly mode = input<'default' | 'black'>('default');
+  readonly reverseMode = input(false, {transform: booleanAttribute});
   readonly icon = input<string | null>(null);
 }

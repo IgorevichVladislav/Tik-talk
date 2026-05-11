@@ -7,6 +7,8 @@ import {canActivateAuth} from '@tt/data-access/auth/access.guard';
 import {ProfileEffects, profileFeature} from '@tt/data-access/profile';
 import {SearchPageMode} from '@tt/data-access/shared/interface/search-page-mode.interface';
 import {PostEffects, postFeature} from '@tt/data-access/post/store';
+import {CommentEffects} from '@tt/data-access/comments/store/effects';
+import {commentFeature} from '@tt/data-access/comments/store/reducer';
 
 export const routes: Routes = [
   {
@@ -14,7 +16,8 @@ export const routes: Routes = [
     providers: [
       provideState(profileFeature),
       provideState(postFeature),
-      provideEffects(ProfileEffects, PostEffects),
+      provideState(commentFeature),
+      provideEffects(ProfileEffects, PostEffects, CommentEffects),
     ], children: [
       {
         path: '',

@@ -2,11 +2,11 @@
   <tt-avatar-circle [avatarData]="avatarData"></tt-avatar-circle>
 
   <textarea class="tt-text-input__textarea"
-            placeholder="Напишите сообщение"
+            [placeholder]="placeholder()"
             (input)="onTextareaInput($event)"
             [(ngModel)]="text"
   ></textarea>
 
   <tt-button class="tt-text-input__smile-btn" icon="smile" mode="black"></tt-button>
-  <tt-button icon="send-message" (click)="onCreateText()"></tt-button>
+  <tt-button icon="send-message" (click)="createText()"></tt-button>
 }

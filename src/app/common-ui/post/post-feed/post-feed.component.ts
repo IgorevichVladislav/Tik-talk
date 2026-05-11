@@ -1,18 +1,17 @@
-import {ChangeDetectionStrategy, Component, effect, inject, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input, viewChild} from '@angular/core';
 import {Store} from '@ngrx/store';
 
-import {TextInputComponent} from '../../text-input';
 import {PostComponent} from '../post/post.component';
 import {Profile} from '@tt/data-access/profile';
-import {postActions, selectPosts} from '@tt/data-access/post/store';
 import {PostCreateDto} from '@tt/data-access/post/post.interface';
+import {postActions, selectPosts} from '@tt/data-access/post/store';
+import {TtDropdownComponent, TtTextInputComponent} from '@tt/ui-kit';
 
 @Component({
   selector: 'tt-post-feed',
   imports: [
-    TextInputComponent,
+    TtTextInputComponent,
     PostComponent,
-    PostComponent
   ],
   templateUrl: './post-feed.component.html',
   styleUrl: './post-feed.component.scss',
@@ -27,13 +26,28 @@ export class PostFeedComponent {
   readonly profile = input<Profile>();
   readonly posts = this.store.selectSignal(selectPosts);
 
+  dropDown = viewChild<TtDropdownComponent>(TtDropdownComponent);
+
   constructor() {
     effect(() => {
       this.store.dispatch(postActions.getPosts({user_id: this.profile()!.id}));
     });
   }
 
-  onCreatePost(dto: PostCreateDto) {
+  ngAfterViewInit() {
+    console.log(this.dropDown(), 'dropdown')
+
+  }
+
+  onCreatePost(text: string) {
+    const authorId = this.profile()?.id;
+    if (!authorId) return;
+
+    const dto: PostCreateDto = {
+      title: 'Посты Reptail',
+      content: text,
+      authorId
+    }
     this.store.dispatch(postActions.createPost({dto}))
   }
 }

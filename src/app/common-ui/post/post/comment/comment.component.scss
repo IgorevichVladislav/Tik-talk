@@ -1,0 +1,58 @@
+@use "mixins" as mixin;
+
+:host {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-gap: 16px;
+}
+
+.tt-comment {
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__settings-dropdown {
+    display: none;
+
+    position: absolute;
+    top: 55px;
+    right: 5px;
+
+    &--open {
+      display: block;
+    }
+  }
+
+  &__info-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__user,
+  &__created-at {
+    @include mixin.label-text;
+    color: var(--light-transparent);
+  }
+
+  &__created-at {
+    display: block;
+  }
+
+  &__text-block {
+    @include mixin.label-text;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__update-icon {
+    border: none;
+    width: 44px;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+}

@@ -1,9 +1,8 @@
 @if (profile(); as profile) {
   <tt-text-input
     mode="post"
-    [profile]="profile"
     [avatarData]="profile"
-    (onCreatePostHandle)="onCreatePost($event)"
+    (textSubmitted)="onCreatePost($event)"
   />
 
   @for (post of posts(); track post.id) {

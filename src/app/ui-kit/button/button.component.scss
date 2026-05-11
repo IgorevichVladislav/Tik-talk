@@ -25,6 +25,12 @@
   color: var(--color, var(--light-color));
 }
 
+:host(.tt-button--reverse) {
+  .tt-button {
+    flex-direction: row-reverse;
+  }
+}
+
 .tt-button {
   display: flex;
   align-items: center;

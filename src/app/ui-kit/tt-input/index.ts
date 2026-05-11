@@ -1,3 +1,1 @@
-import {TtInputComponent} from './tt-input.component';
-
-export {TtInputComponent};
+export {TtInputComponent} from './tt-input.component';
