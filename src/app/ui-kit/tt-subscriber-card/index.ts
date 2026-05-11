@@ -1,3 +1,1 @@
-import {TtSubscriberCardComponent} from './tt-subscriber-card.component';
-
-export {TtSubscriberCardComponent};
+export {TtSubscriberCardComponent}from './tt-subscriber-card.component';

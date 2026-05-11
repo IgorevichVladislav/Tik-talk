@@ -30,6 +30,7 @@ export class ProfileEffects {
       )
   });
 
+  /** Effect для удаления аккаунта текущего пользователя. */
   deleteMe = createEffect(() => {
     return this.actions$
       .pipe(
@@ -41,7 +42,7 @@ export class ProfileEffects {
       )
   });
 
-  /** Effect для для обновления аккаунта текущего пользователя. */
+  /** Effect для обновления аккаунта текущего пользователя. */
   updateMe = createEffect(() => {
     return this.actions$
       .pipe(
@@ -51,6 +52,7 @@ export class ProfileEffects {
       )
   });
 
+  /** Effect для загрузки изображения Аватара пользователя. */
   uploadAvatar = createEffect(() => {
     return this.actions$
       .pipe(
@@ -60,6 +62,7 @@ export class ProfileEffects {
       )
   });
 
+  /** Effect для удаления изображения Аватара пользователя. */
   deleteAvatar = createEffect(() => {
     return this.actions$
       .pipe(
@@ -91,6 +94,7 @@ export class ProfileEffects {
       )
   });
 
+  /** Effect для подписки на аккаунт пользователя по id. */
   subscribe = createEffect(() => {
     return this.actions$
       .pipe(
@@ -100,6 +104,7 @@ export class ProfileEffects {
       )
   });
 
+  /** Effect для отписки на аккаунт пользователя по id. */
   unsubscribe = createEffect(() => {
     return this.actions$
       .pipe(

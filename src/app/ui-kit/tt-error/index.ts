@@ -1,3 +1,1 @@
-import {TtErrorComponent} from './tt-error.component';
-
-export {TtErrorComponent};
+export {TtErrorComponent}from './tt-error.component';

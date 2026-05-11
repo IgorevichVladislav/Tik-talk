@@ -6,21 +6,30 @@
   grid-template-columns: 32px 1fr;
   grid-gap: 16px;
   padding: 20px;
+  position: relative;
 }
 
 .tt-post {
   &__body {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 8px;
   }
 
-  &__user-block {
+  &__post-block {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+
+  }
+
+  &__profile-section {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
 
-  &__user-info {
+  &__profile-info {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -43,7 +52,21 @@
     &:hover {
       color: var(--primary-color);
     }
+
   }
+
+  &__settings-dropdown {
+    display: none;
+
+    position: absolute;
+    top: 55px;
+    right: 5px;
+
+    &--open {
+      display: block;
+    }
+  }
+
 
   &__reactions {
     display: flex;
@@ -54,16 +77,21 @@
     display: flex;
     align-items: center;
     gap: 6px;
+
+    &--my-reactions {
+      color: var(--primary-color);
+    }
   }
 
   &__reactions-btn {
     border: none;
-    color: var(--light-color);
+    color: inherit;
     padding: 0;
     width: 16px;
     height: 16px;
 
     &--like {
+
       &:hover {
         color: var(--primary-color);
       }
@@ -79,5 +107,12 @@
 
     &--like {
     }
+  }
+
+  &__comment-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 8px 0;
   }
 }

@@ -14,7 +14,6 @@ import {
 import {ButtonComponent, SvgIconComponent, TtAvatarCircleComponent} from '@tt/ui-kit';
 import {PostFeedComponent, ProfileHeaderComponent} from '@tt/common-ui';
 import {NavigationList} from '@tt/data-access/shared';
-import {selectPosts} from '@tt/data-access/post/store';
 
 @Component({
   selector: 'tt-profile-page',

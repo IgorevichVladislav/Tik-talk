@@ -1,13 +1,22 @@
 @if (comment(); as comment) {
   <tt-avatar-circle [avatarData]="comment.author"/>
+
+  <tt-dropdown
+    class="tt-comment__settings-dropdown"
+    [class.tt-comment__settings-dropdown--open]="isOpenSettings()"
+    [dropdownList]="dropdownPostList"
+    [isOpen]="isOpenSettings()"
+  />
+
   <ul class="tt-comment__body">
     <li class="tt-comment__info-block">
       <p class="tt-comment__user">{{ comment.author.firstName }} {{ comment.author.lastName }}</p>
-      <span class="tt-comment__created-at">{{ comment.createdAt }}</span>
+      <span class="tt-comment__created-at">{{ comment.createdAt | date: 'hh:mm dd.MM.yyyy' }}</span>
     </li>
     <li class="tt-comment__text-block">
-      <p class="tt-commet__text">{{ comment.text }}</p>
-      <tt-button class="tt-comment__update-icon" icon="dots"/>
+      <p class="tt-commnt__text">{{ comment.text }}</p>
+      <tt-button class="tt-comment__update-icon" icon="dots" mode="black"
+                 (click)="isOpenSettings.set(!isOpenSettings())"/>
     </li>
   </ul>
 }

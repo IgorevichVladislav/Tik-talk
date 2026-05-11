@@ -37,7 +37,7 @@ export class PostService {
 
   /** Метод, для удаления поста. */
   deletePost(post_id: number) {
-    return this.http.delete<string>(`${this.baseApiUrl}/post/${post_id}`);
+    return this.http.delete<number>(`${this.baseApiUrl}/post/${post_id}`);
   }
 
   /** Метод, загружает изображение и привязывает его к посту. */
@@ -54,7 +54,7 @@ export class PostService {
 
   /** Метод, создает лайк для поста. */
   createLike(post_id: number) {
-    return this.http.post<Post>(`${this.baseApiUrl}/post/like/${post_id}`, null);
+    return this.http.post<string>(`${this.baseApiUrl}/post/like/${post_id}`, null);
   }
 
   /** Метод, удаляет лайк для поста. */

@@ -13,3 +13,8 @@ export const selectCreatePost = createSelector(
   postFeature.selectPost,
   (post) => post
 )
+
+export const selectPost = createSelector(
+  postFeature.selectPost,
+  (post) => post
+)
