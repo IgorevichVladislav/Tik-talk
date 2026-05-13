@@ -1,9 +1,8 @@
-@use "../../../mixins" as mixin;
+@use "mixins" as mixin;
 
 :host {
   @include mixin.dark-facade;
-  display: grid;
-  grid-template-columns: 32px 1fr 40px 44px;
+  display: flex;
   gap: 8px;
   align-items: center;
   padding: 16px;
@@ -21,6 +20,7 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 21px;
+    flex: 1;
     resize: none;
 
     &::placeholder {
@@ -28,8 +28,37 @@
     }
   }
 
-  &__smile-btn {
-    color: red;
-    border: transparent;
+  &__prewiev-image {
+    width: 44px;
+    height: auto;
+  }
+
+  &__smile-btn,
+  &__add-image-btn {
+    border: none;
+    width: 44px;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+
+  &__sende-message {
+    width: 44px;
+  }
+
+  &__active-btn {
+    color: var(--primary-color);
+  }
+
+  &__emoji {
+    position: absolute;
+    top: 210px;
+    right: 85px;
+    z-index: 10;
+  }
+
+  &__file-input {
+    display: none;
   }
 }

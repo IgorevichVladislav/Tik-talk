@@ -15,6 +15,8 @@ export const postActions = createActionGroup({
     /** Action успешного создания поста пользователя. */
     'create post success': props<{ post: Post }>(),
 
+    'submit post': props<{ dto: PostCreateDto, image: File | null }>(),
+
     /** Action для получения постов подписчиков пользователя. */
     'get my subscriptions post': emptyProps(),
     /** Action успешного получения постов подписчиков пользователя. */

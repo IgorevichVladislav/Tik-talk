@@ -7,6 +7,35 @@
             [(ngModel)]="text"
   ></textarea>
 
-  <tt-button class="tt-text-input__smile-btn" icon="smile" mode="black"></tt-button>
-  <tt-button icon="send-message" (click)="createText()"></tt-button>
+  @if (imagePreview()) {
+    <img class="tt-text-input__prewiev-image" [src]="imagePreview()" alt="">
+  }
+
+  @if (mode() === 'post') {
+    <tt-button class="tt-text-input__add-image-btn" icon="add-image" mode="black" (click)="fileInput.click()"/>
+    <input class="tt-text-input__file-input"
+           type="file"
+           (change)="uploadFile($event)"
+           #fileInput>
+  }
+
+  <tt-button class="tt-text-input__smile-btn" icon="smile" mode="black"
+             [class.tt-text-input__active-btn]="showEmojiPicker()"
+             (click)="showEmojiPicker.set(!showEmojiPicker())"/>
+
+  @if (showEmojiPicker()) {
+    <emoji-mart
+      class="tt-text-input__emoji"
+      set="apple"
+      title="Выбери эмоджи"
+      [i18n]="emojiI18n"
+      [isNative]="false"
+      [darkMode]="true"
+      [enableSearch]="true"
+      [perLine]="8"
+      [emojiSize]="24"
+      (emojiClick)="addEmoji($event)"
+    ></emoji-mart>
+  }
+  <tt-button class="tt-text-input__sende-message" icon="send-message" (click)="createText()"/>
 }

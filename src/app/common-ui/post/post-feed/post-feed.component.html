@@ -2,7 +2,7 @@
   <tt-text-input
     mode="post"
     [avatarData]="profile"
-    (textSubmitted)="onCreatePost($event)"
+    (submitted)="onCreatePost($event)"
   />
 
   @for (post of posts(); track post.id) {

@@ -4,8 +4,8 @@ import {Store} from '@ngrx/store';
 import {PostComponent} from '../post/post.component';
 import {Profile} from '@tt/data-access/profile';
 import {PostCreateDto} from '@tt/data-access/post/post.interface';
-import {postActions, selectPosts} from '@tt/data-access/post/store';
-import {TtDropdownComponent, TtTextInputComponent} from '@tt/ui-kit';
+import {postActions, selectPost, selectPosts} from '@tt/data-access/post/store';
+import {SubmittedValue, TtDropdownComponent, TtTextInputComponent} from '@tt/ui-kit';
 
 @Component({
   selector: 'tt-post-feed',
@@ -25,6 +25,7 @@ export class PostFeedComponent {
 
   readonly profile = input<Profile>();
   readonly posts = this.store.selectSignal(selectPosts);
+  readonly post = this.store.selectSignal(selectPost);
 
   dropDown = viewChild<TtDropdownComponent>(TtDropdownComponent);
 
@@ -39,15 +40,15 @@ export class PostFeedComponent {
 
   }
 
-  onCreatePost(text: string) {
+  onCreatePost(event: SubmittedValue) {
     const authorId = this.profile()?.id;
     if (!authorId) return;
 
     const dto: PostCreateDto = {
       title: 'Посты Reptail',
-      content: text,
+      content: event.text,
       authorId
     }
-    this.store.dispatch(postActions.createPost({dto}))
+    this.store.dispatch(postActions.submitPost({dto, image: event.file ?? null}));
   }
 }

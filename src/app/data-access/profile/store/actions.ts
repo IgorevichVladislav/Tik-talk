@@ -74,6 +74,5 @@ export const profileActions = createActionGroup({
     'get subscribers by id': props<{ account_id: number, subscribersFilter?: SubscribeFilter }>(),
     /** Action успешной загрузки подписчиков (Subscribers) в store с обязательным параметром id. */
     'subscribers by id loaded': props<{ subscribers: Profile[] }>(),
-
   }
 });
