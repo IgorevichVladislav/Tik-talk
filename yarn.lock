@@ -1121,6 +1121,13 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
+"@ctrl/ngx-emoji-mart@^9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@ctrl/ngx-emoji-mart/-/ngx-emoji-mart-9.3.0.tgz#832563de2d265a413d11d1b604ca9b2a0eb0ddd9"
+  integrity sha512-9uFzAvlFT21OLsTfhL3ZEO5mp51qvL1F4ErIZVBIsvAlji46u6p2KGgVA60oIheFBX4JoZI7HBDGOkGnm9dTUQ==
+  dependencies:
+    tslib "^2.3.0"
+
 "@discoveryjs/json-ext@0.6.3":
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.6.3.tgz#f13c7c205915eb91ae54c557f5e92bddd8be0e83"

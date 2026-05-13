@@ -7,13 +7,14 @@
   grid-gap: 16px;
   padding: 20px;
   position: relative;
+  width: 100%;
 }
 
 .tt-post {
   &__body {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 20px;
   }
 
   &__post-block {
@@ -45,6 +46,43 @@
     color: var(--light-transparent);
   }
 
+  &__post-content {
+  }
+
+  &__post-images-list {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    position: relative;
+  }
+
+  &__post-images-item {
+    width: 100%;
+
+    &:hover {
+      .tt-post__delete-image-btn {
+        display: flex;
+      }
+    }
+  }
+
+  &__post-image {
+    width: inherit;
+  }
+
+  &__delete-image-btn {
+    background-color: transparent;
+    border-color: var(--error-color);
+    border-radius: 50%;
+    color: var(--error-color);
+    display: none;
+    position: absolute;
+    right: -25px;
+    top: -25px;
+    width: 44px;
+  }
+
   &__settings-btn {
     width: 44px;
     border-color: transparent;
@@ -52,15 +90,14 @@
     &:hover {
       color: var(--primary-color);
     }
-
   }
 
   &__settings-dropdown {
     display: none;
-
     position: absolute;
     top: 55px;
     right: 5px;
+    z-index: 10;
 
     &--open {
       display: block;

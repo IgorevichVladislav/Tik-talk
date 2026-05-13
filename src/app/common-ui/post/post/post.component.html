@@ -17,7 +17,29 @@
           <span class="tt-post__created-at">{{ post.createdAt | date: 'hh:mm dd.MM.yyyy' }}</span>
         </li>
 
-        <li class="tt-post__content">{{ post.content }}</li>
+        <li class="tt-post__content">
+          <ngx-emoji
+            [emoji]="post.title"
+            set="apple"
+            [isNative]="false"
+            [size]="20"
+          ></ngx-emoji>
+          {{ post.content }}
+
+          <ul class="tt-post__post-images-list">
+            @for (image of post.images; track image) {
+              <li class="tt-post__post-images-item">
+                <img class="tt-post__post-image" [src]="image | imgUrl " alt="Post Image">
+                <tt-button class="tt-post__delete-image-btn"
+                           type="button"
+                           icon="cross-close"
+                           mode="black"
+                (click)="deletePostImage(image)"/>
+              </li>
+            }
+          </ul>
+
+        </li>
 
         <li class="tt-post__reactions">
           <div class="tt-post__reactions-btn-wrapper">
@@ -45,12 +67,14 @@
       @for (comment of post.comments; track comment.id) {
         <tt-comment [comment]="comment"/>
       }
-      <tt-text-input
-        [avatarData]="post.author"
-        placeholder="Напишите комментарий"
-        mode="comment"
-        (textSubmitted)="createText($event)"
-      />
+      @if (me(); as me) {
+        <tt-text-input
+          [avatarData]="me"
+          placeholder="Напишите комментарий"
+          mode="comment"
+          (submitted)="createText($event)"
+        />
+      }
     </div>
 
   </div>

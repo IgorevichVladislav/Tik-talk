@@ -49,7 +49,7 @@ export class PostService {
 
   /** Метод, удаляет изображение из поста. */
   deleteImage(post_id: number, image_url: string) {
-    return this.http.delete<string>(`${this.baseApiUrl}/post/delete_image/${post_id}`, {params: {image_url}});
+    return this.http.delete<Post>(`${this.baseApiUrl}/post/delete_image/${post_id}`, {params: {image_url}});
   }
 
   /** Метод, создает лайк для поста. */

@@ -1,9 +1,10 @@
 import {ChangeDetectionStrategy, Component, computed, inject, input, signal} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {Store} from '@ngrx/store';
+import {EmojiComponent} from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 import {
-  ButtonComponent,
+  ButtonComponent, ImgUrlPipe, SubmittedValue,
   TtAvatarCircleComponent,
   TtDropdownComponent,
   TtDropdownList,
@@ -25,6 +26,8 @@ import {selectProfile} from '@tt/data-access/profile';
     CommentComponent,
     DatePipe,
     TtDropdownComponent,
+    EmojiComponent,
+    ImgUrlPipe,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
@@ -38,7 +41,7 @@ export class PostComponent {
 
   isOpenSettings = signal<boolean>(false);
 
-  private readonly myProfile = this.store.selectSignal(selectProfile);
+  readonly me = this.store.selectSignal(selectProfile);
   readonly post = input<Post>();
 
   dropdownPostList: TtDropdownList[] = [{
@@ -61,12 +64,12 @@ export class PostComponent {
     }
   ];
 
-  createText(text: string) {
+  createText(event: SubmittedValue) {
     const post = this.post();
     if (!post) return;
 
     const dto: CommentCreateDto = {
-      text: text,
+      text: event.text,
       authorId: post.author.id,
       postId: post.id,
       commentId: null
@@ -74,8 +77,12 @@ export class PostComponent {
     this.store.dispatch(commentActions.createComment({dto}));
   }
 
+  deletePostImage(image_url: string) {
+    this.store.dispatch(postActions.deleteImage({post_id: this.post()!.id, image_url}))
+  }
+
   isMyLike = computed(() => {
-    const profileId = this.myProfile()?.id;
+    const profileId = this.me()?.id;
     const likesUsers = this.post()?.likesUsers;
     if (!profileId || !likesUsers) return false;
 

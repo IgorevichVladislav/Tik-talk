@@ -52,5 +52,18 @@ export const postFeature = createFeature({
       }
     }),
 
+    on(postActions.loadImageSuccess, (state, {post}) => {
+      return {
+        ...state,
+        posts: postAdapter.upsertOne(post, state.posts)
+      }
+    }),
+
+    on(postActions.deleteImageSuccess, (state, {post}) => {
+      return {
+        ...state,
+        posts: postAdapter.upsertOne(post, state.posts)
+      }
+    }),
   )
 })

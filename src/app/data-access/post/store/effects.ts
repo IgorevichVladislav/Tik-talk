@@ -31,6 +31,28 @@ export class PostEffects {
       )
   });
 
+  submitPost = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(postActions.submitPost),
+        concatMap(({dto, image}) => this.postService.createPost(dto)
+          .pipe(
+            concatMap(post => {
+              if (!image) {
+                return [
+                  postActions.createPostSuccess({post}),
+                ]
+              }
+
+              return [
+                postActions.createPostSuccess({post}),
+                postActions.loadImage({post_id: post.id, image})
+              ]
+            })
+          ))
+      )
+  });
+
   /** Effect для загрузки одного поста пользователя по id. */
   getPost = createEffect(() => {
     return this.actions$
@@ -58,6 +80,24 @@ export class PostEffects {
         ofType(postActions.deletePost),
         switchMap(({post_id}) => this.postService.deletePost(post_id)
           .pipe(map(() => postActions.deletePostSuccess({post_id})))),
+      )
+  });
+
+  loadImage = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(postActions.loadImage),
+        switchMap(({post_id, image}) => this.postService.loadImage(post_id, image)),
+        map(post => postActions.loadImageSuccess({post}))
+      )
+  });
+
+  deleteImage = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(postActions.deleteImage),
+        switchMap(({post_id, image_url}) => this.postService.deleteImage(post_id, image_url)),
+        map(post => postActions.deleteImageSuccess({post}))
       )
   });
 
