@@ -1,0 +1,13 @@
+<tt-input
+  [formGroup]="filterChat"
+  class="tt-chat-list__search-input"
+  placeholder="Искать..."
+  type="text"
+  mode="search"
+  iconColor="light"
+  filledActive
+/>
+
+@for (chat of chats(); track chat.id) {
+  <button chats [chat]="chat"></button>
+}

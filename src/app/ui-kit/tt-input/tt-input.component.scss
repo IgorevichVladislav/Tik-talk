@@ -55,3 +55,21 @@
     }
   }
 }
+
+:host([data-icon-color='primary']) {
+  .tt-input__mode-icon {
+    color: var(--primary-color);
+  }
+}
+
+:host([data-icon-color='light']) {
+  .tt-input__mode-icon {
+    color: var(--light-color);
+  }
+}
+
+:host([data-icon-color='default']) {
+  .tt-input__mode-icon {
+    color: var(--light-transparent);
+  }
+}

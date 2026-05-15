@@ -15,8 +15,15 @@
     </li>
     <li class="tt-comment__text-block">
       <p class="tt-commnt__text">{{ comment.text }}</p>
-      <tt-button class="tt-comment__update-icon" icon="dots" mode="black"
-                 (click)="isOpenSettings.set(!isOpenSettings())"/>
+
+      @if (isMyCommentSettings()) {
+        <tt-button class="tt-comment__update-icon"
+                   icon="dots"
+                   mode="black"
+                   (click)="isOpenSettings.set(!isOpenSettings())"
+                   (ttClickOutside)="isOpenSettings.set(false)"/>
+      }
+
     </li>
   </ul>
 }

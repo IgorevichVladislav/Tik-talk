@@ -1,0 +1,18 @@
+@use "mixins" as mixin;
+
+:host {
+  @include mixin.dark-facade;
+  display: flex;
+  flex-direction: column;
+}
+
+.tt-chat-list {
+  &__search-input {
+    padding: 16px 20px;
+    border-bottom: var(--light-border);
+  }
+
+  &__chat-list {
+
+  }
+}

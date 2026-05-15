@@ -1,4 +1,16 @@
-import {ChangeDetectionStrategy, Component, computed, effect, inject, input} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  computed, DestroyRef,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  Renderer2
+} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {debounceTime, fromEvent} from 'rxjs';
 import {Store} from '@ngrx/store';
 
 import {ProfileCardComponent} from '@tt/common-ui';
@@ -19,8 +31,11 @@ import {SearchPageMode} from '@tt/data-access/shared/interface/search-page-mode.
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {'class': 'tt-search-page'},
 })
-export class SearchPageComponent {
+export class SearchPageComponent implements AfterViewInit {
   private readonly store = inject(Store);
+  private readonly r2 = inject(Renderer2);
+  private readonly hostElement = inject(ElementRef);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly pageMode = input<SearchPageMode>('search');
 
@@ -41,6 +56,14 @@ export class SearchPageComponent {
     });
   }
 
+  ngAfterViewInit() {
+    this.resizeSearchPage();
+
+    fromEvent(window, 'resize')
+      .pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.resizeSearchPage())
+  }
+
   readonly getRenderAccounts = computed(() => {
     const pageMode = this.pageMode();
     if (pageMode === 'subscribers') {
@@ -51,4 +74,11 @@ export class SearchPageComponent {
       return this.userAccounts();
     }
   });
+
+  private resizeSearchPage() {
+    const {top} = this.hostElement.nativeElement.getBoundingClientRect();
+    const height = window.innerHeight - top - 24;
+
+    this.r2.setStyle(this.hostElement.nativeElement, 'height', `${height}px`);
+  }
 }

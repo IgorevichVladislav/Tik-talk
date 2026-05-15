@@ -1,0 +1,22 @@
+:host {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  border-bottom: var(--light-border);
+  padding: 16px 24px;
+}
+
+.tt-chat-workspace-header {
+  &__close-chat {
+    transform: rotate(180deg);
+  }
+
+  &__settings {
+    transform: rotate(90deg);
+  }
+
+  &__close-chat:hover,
+  &__settings:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+}

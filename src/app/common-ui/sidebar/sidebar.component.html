@@ -44,7 +44,7 @@
 <footer class="tt-sidebar__footer">
   @if (me(); as me) {
     @if (showFooterMenu()) {
-      <ul class="tt-sidebar__footer-menu-list" ttClickOutside (onClickOutside)="showFooterMenu.set(false)">
+      <ul class="tt-sidebar__footer-menu-list" (ttClickOutside)="showFooterMenu.set(false)">
 
         <li class="tt-sidebar__footer-menu-item">
           <a class="tt-sidebar__footer-settings" [routerLink]="['profile', 'me', 'settings']"

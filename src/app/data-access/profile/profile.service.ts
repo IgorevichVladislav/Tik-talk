@@ -9,7 +9,7 @@ import {Pageable} from '@tt/data-access/shared';
   providedIn: 'root'
 })
 export class ProfileService {
-  private readonly http = inject(HttpClient);
+  private readonly http: HttpClient = inject(HttpClient);
   private readonly baseApiUrl = inject(BASE_API_URL);
 
   /** Получить 5 тестовых пррофилей. */

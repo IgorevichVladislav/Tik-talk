@@ -1,0 +1,8 @@
+:host {
+  background-color: var(--dark-color);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: var(--light-border);
+  border-left: none;
+}

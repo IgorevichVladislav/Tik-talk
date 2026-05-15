@@ -1,20 +1,17 @@
-import {Directive, ElementRef, inject, output} from '@angular/core';
+import {Directive, ElementRef, inject} from '@angular/core';
+import {outputFromObservable} from '@angular/core/rxjs-interop';
+import {filter, fromEvent} from 'rxjs';
 
 @Directive({
   selector: '[ttClickOutside]',
-  host: {
-    '(document:click)': 'onclick($event)'
-  }
 })
 export class ClickOutsideDirective {
   private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
 
-  onClickOutside = output();
-
-  onclick(event: MouseEvent) {
-    const targetElement = this.elementRef.nativeElement.contains(event.target as Element);
-    if (!targetElement) {
-      this.onClickOutside.emit();
-    }
-  }
+ttClickOutside = outputFromObservable(
+  fromEvent<MouseEvent>(document, 'click')
+    .pipe(
+      filter(event => !this.elementRef.nativeElement.contains(event.target as Node))
+    )
+);
 }

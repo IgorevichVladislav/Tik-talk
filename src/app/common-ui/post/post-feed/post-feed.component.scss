@@ -2,6 +2,13 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  height: calc(100vh - 184px);
-  overflow-y: scroll;
+}
+
+.tt-post-feed {
+  &__posts-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: scroll;
+  }
 }

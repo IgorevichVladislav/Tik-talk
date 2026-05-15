@@ -34,7 +34,7 @@
                            type="button"
                            icon="cross-close"
                            mode="black"
-                (click)="deletePostImage(image)"/>
+                           (click)="deletePostImage(image)"/>
               </li>
             }
           </ul>
@@ -58,8 +58,14 @@
           </div>
         </li>
       </ul>
-      <tt-button class="tt-post__settings-btn" icon="dots" mode="black"
-                 (click)="isOpenSettings.set(!isOpenSettings())"/>
+
+      @if (isMyPostSettings()) {
+        <tt-button class="tt-post__settings-btn"
+                   icon="dots"
+                   mode="black"
+                   (click)="isOpenSettings.set(!isOpenSettings())"
+                   (ttClickOutside)="isOpenSettings.set(false)"/>
+      }
 
     </div>
 
@@ -72,7 +78,7 @@
           [avatarData]="me"
           placeholder="Напишите комментарий"
           mode="comment"
-          (submitted)="createText($event)"
+          (submitted)="onCreateComment($event)"
         />
       }
     </div>
