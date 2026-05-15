@@ -16,6 +16,7 @@ import {commentActions} from '@tt/data-access/comments/store/actions';
 import {CommentCreateDto} from '@tt/data-access/comments/comment.interface';
 import {postActions} from '@tt/data-access/post/store';
 import {selectProfile} from '@tt/data-access/profile';
+import {ClickOutsideDirective} from '@tt/directives/click-outside.directive';
 
 @Component({
   selector: 'tt-post',
@@ -28,6 +29,7 @@ import {selectProfile} from '@tt/data-access/profile';
     TtDropdownComponent,
     EmojiComponent,
     ImgUrlPipe,
+    ClickOutsideDirective,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
@@ -43,6 +45,14 @@ export class PostComponent {
 
   readonly me = this.store.selectSignal(selectProfile);
   readonly post = input<Post>();
+
+  isMyPostSettings = computed(() => {
+    const postAuthorId = this.post()?.author.id;
+    const meId = this.me()?.id;
+    if (!postAuthorId || !meId) return;
+
+    return postAuthorId === meId;
+  })
 
   dropdownPostList: TtDropdownList[] = [{
     icon: 'edit',
@@ -64,13 +74,14 @@ export class PostComponent {
     }
   ];
 
-  createText(event: SubmittedValue) {
+  onCreateComment(event: SubmittedValue) {
     const post = this.post();
-    if (!post) return;
+    const me = this.me();
+    if (!post || !me) return;
 
     const dto: CommentCreateDto = {
       text: event.text,
-      authorId: post.author.id,
+      authorId: me.id,
       postId: post.id,
       commentId: null
     }

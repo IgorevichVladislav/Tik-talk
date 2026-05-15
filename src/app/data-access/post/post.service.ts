@@ -7,7 +7,7 @@ import {Post, PostCreateDto} from './post.interface';
 @Injectable({providedIn: 'root'})
 
 export class PostService {
-  private readonly http = inject(HttpClient);
+  private readonly http: HttpClient = inject(HttpClient);
   private readonly baseApiUrl = inject(BASE_API_URL);
 
   /** Метод, для получения постов всех пользователей. */

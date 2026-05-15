@@ -10,7 +10,9 @@ import {
   viewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+
 import {SvgIconComponent} from '@tt/ui-kit';
+import {IconColors} from '@tt/tokens/icon-colors.type';
 
 @Component({
   selector: 'tt-input',
@@ -28,6 +30,7 @@ import {SvgIconComponent} from '@tt/ui-kit';
   host: {
     'class': 'tt-input',
     '[attr.data-mode]': 'this.mode()',
+    '[attr.data-icon-color]': 'iconColor()',
     '[class.filled-active]': 'this.filledActive()'
   },
 })
@@ -47,6 +50,8 @@ export class TtInputComponent implements ControlValueAccessor {
   readonly filledActive = input(false, {transform: booleanAttribute});
   /** Добавляет иконки в input */
   readonly mode = input<'search' | null>(null);
+  /** Меняет цвет иконки в input */
+  readonly iconColor = input<IconColors>("default");
 
   private onChange = (_: any) => {
   };

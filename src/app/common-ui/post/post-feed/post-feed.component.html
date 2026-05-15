@@ -1,11 +1,15 @@
 @if (profile(); as profile) {
-  <tt-text-input
-    mode="post"
-    [avatarData]="profile"
-    (submitted)="onCreatePost($event)"
-  />
-
-  @for (post of posts(); track post.id) {
-    <tt-post [post]="post"></tt-post>
+  @if (isMePostInput()) {
+    <tt-text-input
+      mode="post"
+      [avatarData]="profile"
+      (submitted)="onCreatePost($event)"
+    />
   }
+
+  <div class="tt-post-feed__posts-wrapper">
+    @for (post of posts(); track post.id) {
+      <tt-post [post]="post"/>
+    }
+  </div>
 }

@@ -7,7 +7,7 @@ import {CommentCreateDto, PostComment} from './comment.interface';
 @Injectable({providedIn: 'root'})
 
 export class CommentService {
-  private readonly http = inject(HttpClient);
+  private readonly http: HttpClient = inject(HttpClient);
   private readonly baseApiUrl = inject(BASE_API_URL);
 
   createComment(dto: CommentCreateDto) {

@@ -11,7 +11,7 @@ import {BASE_API_URL} from '@tt/tokens/base-api-url.token';
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly http = inject(HttpClient);
+  private readonly http: HttpClient = inject(HttpClient);
   private readonly cookieService = inject(CookieService);
   private readonly router = inject(Router);
   private readonly baseApiUrl = inject(BASE_API_URL);

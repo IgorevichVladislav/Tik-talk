@@ -3,11 +3,12 @@
 :host {
   @include mixin.dark-facade;
   display: grid;
-  grid-template-columns: 32px 1fr;
+  grid-template-columns: 32px minmax(min-content, 1fr);
   grid-gap: 16px;
   padding: 20px;
   position: relative;
   width: 100%;
+  min-width: min-content;
 }
 
 .tt-post {
@@ -28,6 +29,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    overflow-wrap: anywhere;
   }
 
   &__profile-info {

@@ -9,6 +9,7 @@ import {SearchPageMode} from '@tt/data-access/shared/interface/search-page-mode.
 import {PostEffects, postFeature} from '@tt/data-access/post/store';
 import {CommentEffects} from '@tt/data-access/comments/store/effects';
 import {commentFeature} from '@tt/data-access/comments/store/reducer';
+import {ChatEffects, chatFeature} from '@tt/data-access/chats';
 
 export const routes: Routes = [
   {
@@ -17,7 +18,8 @@ export const routes: Routes = [
       provideState(profileFeature),
       provideState(postFeature),
       provideState(commentFeature),
-      provideEffects(ProfileEffects, PostEffects, CommentEffects),
+      provideState(chatFeature),
+      provideEffects(ProfileEffects, PostEffects, CommentEffects, ChatEffects),
     ], children: [
       {
         path: '',

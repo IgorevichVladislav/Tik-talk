@@ -1,10 +1,12 @@
-import {ChangeDetectionStrategy, Component, inject, input, signal,} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input, signal,} from '@angular/core';
 import {DatePipe} from '@angular/common';
 
 import {PostComment} from '@tt/data-access/comments/comment.interface';
 import {ButtonComponent, TtAvatarCircleComponent, TtDropdownComponent, TtDropdownList} from '@tt/ui-kit';
 import {Store} from '@ngrx/store';
 import {commentActions} from '@tt/data-access/comments/store';
+import {selectProfile} from '@tt/data-access/profile';
+import {ClickOutsideDirective} from '@tt/directives/click-outside.directive';
 
 @Component({
   selector: 'tt-comment',
@@ -13,6 +15,7 @@ import {commentActions} from '@tt/data-access/comments/store';
     ButtonComponent,
     DatePipe,
     TtDropdownComponent,
+    ClickOutsideDirective,
   ],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss',
@@ -22,9 +25,18 @@ import {commentActions} from '@tt/data-access/comments/store';
 export class CommentComponent {
   private readonly store = inject(Store);
 
+  private readonly me = this.store.selectSignal(selectProfile);
   comment = input<PostComment>();
 
   isOpenSettings = signal<boolean>(false);
+
+  isMyCommentSettings = computed(() => {
+    const commentId = this.comment()?.author.id;
+    const meId = this.me()?.id;
+    if (!commentId || !meId) return;
+
+    return commentId === meId;
+  })
 
   dropdownPostList: TtDropdownList[] = [{
     icon: 'edit',

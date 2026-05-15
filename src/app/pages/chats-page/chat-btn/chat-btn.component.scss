@@ -1,0 +1,51 @@
+:host {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-gap: 16px;
+  background-color: var(--dark-color);
+  border-bottom: var(--light-border);
+  height: 100%;
+  padding: 24px 20px;
+}
+
+.tt-chat-btn {
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__info-block,
+  &__last-text-block {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__last-text-block {
+    gap: 8px;
+  }
+
+  &__user,
+  &__created-at {
+    color: var(--light-transparent);
+  }
+
+  &__last-message-text {
+    color: var(--light-color);
+    text-align: start;
+    overflow-wrap: anywhere;
+  }
+
+  &__no-message-text {
+    color: var(--light-transparent);
+    font-style: italic;
+    text-align: start;
+  }
+
+  &__unread-messages-counter {
+    background-color: var(--primary-color);
+    height: min-content;
+    line-height: 16px;
+    padding: 1px 6px;
+  }
+}

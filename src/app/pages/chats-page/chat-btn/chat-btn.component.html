@@ -1,0 +1,20 @@
+@if (chat(); as chat) {
+  <tt-avatar-circle [avatarData]="chat.userFrom"/>
+
+  <ul class="tt-chat-btn__body">
+    <li class="tt-chat-btn__info-block">
+      <p class="tt-chat-btn__user">{{ chat.userFrom.firstName }} {{ chat.userFrom.lastName }}</p>
+      <span class="tt-chat-btn__created-at">{{ chat.createdAt | date: 'HH:mm dd.MM.yyyy' }}</span>
+    </li>
+    <li class="tt-chat-btn__last-text-block">
+      @if (chat.message) {
+      <p class="tt-chat-btn__last-message-text">{{ chat.message }} </p>
+      } @else {
+      <p class="tt-chat-btn__no-message-text">У вас пока нет сообщений. Напишите первым!</p>
+      }
+      @if (chat.unreadMessages) {
+        <span class="tt-chat-btn__unread-messages-counter">{{ chat.unreadMessages }}</span>
+      }
+    </li>
+  </ul>
+}
