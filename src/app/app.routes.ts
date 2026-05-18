@@ -10,6 +10,7 @@ import {PostEffects, postFeature} from '@tt/data-access/post/store';
 import {CommentEffects} from '@tt/data-access/comments/store/effects';
 import {commentFeature} from '@tt/data-access/comments/store/reducer';
 import {ChatEffects, chatFeature} from '@tt/data-access/chats';
+import {chatsRoutes} from '@tt/pages/chats-page/chatsRoutes';
 
 export const routes: Routes = [
   {
@@ -36,7 +37,7 @@ export const routes: Routes = [
       },
       {
         path: 'chats',
-        loadComponent: () => import('@tt/pages/chats-page').then(m => m.ChatsPageComponent),
+        loadChildren: () => chatsRoutes
       },
       {
         path: 'search',

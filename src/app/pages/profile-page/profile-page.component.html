@@ -4,16 +4,16 @@
     <div class="tt-profile-page__header-button-wrapper">
       @if (!isMyPage()) {
         <tt-button class="tt-profile-page__unsubscribe-button"
-                   [icon]="accountActionRedirect(profile).icon"
-                   (click)="accountActionRedirect(profile).action()"
+                   [icon]="isSubscriptionProfile() ? 'subscriber' : 'subscribe'"
+                   (click)="toggleSubscription(profile)"
         ></tt-button>
       }
 
       <tt-button class="tt-profile-page__header-button"
-                 [icon]="profileActionRedirect().icon"
-                 [routerLink]="profileActionRedirect().link"
+                 [icon]="profileButtonInfo().icon"
+                 (click)="onProfileActionClick(profile.id)"
       >
-        {{ profileActionRedirect().description }}
+        {{ profileButtonInfo().description }}
       </tt-button>
     </div>
   </header>

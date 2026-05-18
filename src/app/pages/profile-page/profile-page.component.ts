@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
 import {combineLatest, filter, switchMap, tap} from 'rxjs';
 import {Store} from '@ngrx/store';
@@ -13,7 +13,7 @@ import {
 } from '@tt/data-access/profile';
 import {ButtonComponent, SvgIconComponent, TtAvatarCircleComponent} from '@tt/ui-kit';
 import {PostFeedComponent, ProfileHeaderComponent} from '@tt/common-ui';
-import {NavigationList} from '@tt/data-access/shared';
+import {chatActions} from '@tt/data-access/chats';
 
 @Component({
   selector: 'tt-profile-page',
@@ -32,8 +32,9 @@ import {NavigationList} from '@tt/data-access/shared';
   host: {"class": "tt-profile-page"}
 })
 export class ProfilePageComponent {
-  private readonly store = inject(Store);
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly store = inject(Store);
 
   private readonly subscriptionsEntity = this.store.selectSignal(selectSubscriptionsEntity);
   readonly isMyPage = signal<boolean>(false);
@@ -51,7 +52,7 @@ export class ProfilePageComponent {
         const isMyRoute = profileId === 'me';
 
         const accountId = isMyRoute ? myId! : Number(profileId);
-        const isMyProfile = accountId === myId;
+        const isMyProfile = accountId === myId && profileId === 'me';
 
         this.isMyPage.set(isMyProfile);
         this.subscriptionId.set(accountId);
@@ -65,40 +66,42 @@ export class ProfilePageComponent {
         return this.store.select(selectAccount);
       }))
 
-  readonly profileActionRedirect = computed<NavigationList>(() => {
+  readonly profileButtonInfo = computed(() => {
     if (this.isMyPage()) {
       return {
         description: 'Редактировать',
         icon: 'settings',
-        link: ['/profile', 'me', 'settings']
       }
     }
 
     return {
       description: 'Написать',
       icon: 'send-message',
-      link: ['']
     }
   });
 
-  private readonly isSubscriptionProfile = computed(() => {
+  onProfileActionClick(userId: number) {
+    if (this.isMyPage()) {
+      this.router.navigate(['/profile', 'me', 'settings']);
+      return;
+    }
+    this.store.dispatch(chatActions.createPersonalChat({user_id: userId}));
+    //todo После dispatch идет перенаправление пользователя в активный чат через effect.
+    return;
+  }
+
+  readonly isSubscriptionProfile = computed(() => {
     const id = this.subscriptionId();
     if (!id) return;
 
     return !!this.subscriptionsEntity()[id];
-  })
+  });
 
-  accountActionRedirect(profile: Profile) {
+  toggleSubscription(profile: Profile) {
     if (this.isSubscriptionProfile()) {
-      return {
-        icon: 'subscriber',
-        action: () => this.store.dispatch(profileActions.unsubscribe({account_id: profile.id}))
-      }
+      this.store.dispatch(profileActions.unsubscribe({account_id: profile.id}))
     }
 
-    return {
-      icon: 'subscribe',
-      action: () => this.store.dispatch(profileActions.subscribe({profile}))
-    }
+    this.store.dispatch(profileActions.subscribe({profile}))
   }
 }

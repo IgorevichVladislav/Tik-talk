@@ -1,12 +1,12 @@
 import {createActionGroup, emptyProps, props} from '@ngrx/store';
 
-import {Chat, ChatCreateDto, ChatMessage} from '../chats.interface';
+import {Chat, ChatMessage, LastChatMessage} from '../chats.interface';
 
 export const chatActions = createActionGroup({
   source: 'chat',
   events: {
     /** Action для создания персонального чата пользователя по id. */
-    'create personal chat': props<{ user_id: number, dto: ChatCreateDto }>(),
+    'create personal chat': props<{ user_id: number }>(),
     /** Action успешного создания персонального чата пользователя. */
     'create chat success': props<{ chat: Chat }>(),
 
@@ -18,7 +18,7 @@ export const chatActions = createActionGroup({
     /** Action для получения всех чатов пользователя. */
     'get chats': emptyProps(),
     /** Action успешного получения всех чатов пользователя. */
-    'chats loaded': props<{ chats: Chat[] }>(),
+    'chats loaded': props<{ chats: LastChatMessage[] }>(),
 
     /** Action для отправки персонального сообщения пользователю по id. */
     'send message': props<{ chat_id: number, message: string }>(),

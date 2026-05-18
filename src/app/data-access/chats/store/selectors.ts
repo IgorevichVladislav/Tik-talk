@@ -1,10 +1,16 @@
 import {createSelector} from '@ngrx/store';
 
-import {chatAdapter, chatFeature} from './reducer';
+import {chatAdapter, chatFeature, chatMessageAdapter} from './reducer';
 
-const {selectAll} = chatAdapter.getSelectors();
+const {selectAll: selectAllForChat} = chatAdapter.getSelectors();
+const {selectAll: selectAllForChatMessages} = chatMessageAdapter.getSelectors();
 
 export const selectChats = createSelector(
   chatFeature.selectChats,
-  selectAll
+  selectAllForChat
+)
+
+export const selectChatsMessages = createSelector(
+  chatFeature.selectChatMessages,
+  selectAllForChatMessages
 )

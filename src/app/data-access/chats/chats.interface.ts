@@ -1,13 +1,13 @@
 import {Profile} from '../profile/profile.interface';
 
-export interface ChatCreateDto {
+export interface Chat {
   id: number;
   userFirst: Profile;
   userSecond: Profile;
-  message: ChatMessage[] | null;
+  messages: ChatMessage[] | null;
 }
 
-export interface Chat {
+export interface LastChatMessage {
   id: number;
   userFrom: Profile;
   message: string;
@@ -22,5 +22,5 @@ export interface ChatMessage {
   text: string;
   createdAt: string;
   isRead: boolean;
-  updatedAt: string;
+  updatedAt: string | null;
 }
