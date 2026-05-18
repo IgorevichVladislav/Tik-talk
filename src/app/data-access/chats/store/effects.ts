@@ -1,6 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {map, switchMap} from 'rxjs';
+import {map, switchMap, tap} from 'rxjs';
+import {Router} from '@angular/router';
 
 import {ChatsService} from '../chats.service';
 import {chatActions} from './actions';
@@ -10,16 +11,25 @@ import {chatActions} from './actions';
 export class ChatEffects {
   private readonly chatService = inject(ChatsService);
   private readonly actions$ = inject(Actions);
+  private readonly router = inject(Router);
 
   /** Effect для создания персонального чата пользователя по id. Отправляет dto в chatService и после успешного создания диспатчит createChatSuccess. */
   createPersonalChat = createEffect(() => {
     return this.actions$
       .pipe(
         ofType(chatActions.createPersonalChat),
-        switchMap(({user_id, dto}) => this.chatService.createPersonalChat(user_id, dto)),
+        switchMap(({user_id}) => this.chatService.createPersonalChat(user_id)),
         map(chat => chatActions.createChatSuccess({chat}))
       )
   });
+
+  /** Effect для перехода в созданный персональный чат после успешного создания. Новый action не диспатчит. */
+  redirectAfterCreateChat$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(chatActions.createChatSuccess),
+      tap(({chat}) => this.router.navigate(['/chats', chat.id]))
+    )
+  }, {dispatch: false});
 
   /** Effect для получения персонального чата по id. Запрашивает чат через chatService и после успешной загрузки диспатчит readChatSuccess. */
   readPersonalChat = createEffect(() => {

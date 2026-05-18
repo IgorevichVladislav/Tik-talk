@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {BASE_API_URL} from '@tt/tokens/base-api-url.token';
-import {Chat, ChatCreateDto, ChatMessage} from './chats.interface';
+import {Chat, ChatMessage, LastChatMessage} from './chats.interface';
 
 @Injectable({providedIn: 'root'})
 
@@ -10,8 +10,8 @@ export class ChatsService {
   private readonly http: HttpClient = inject(HttpClient);
   private readonly baseApiUtl = inject(BASE_API_URL);
 
-  createPersonalChat(user_id: number, dto: ChatCreateDto) {
-    return this.http.post<Chat>(`${this.baseApiUtl}/chat/${user_id}`, dto);
+  createPersonalChat(user_id: number) {
+    return this.http.post<Chat>(`${this.baseApiUtl}/chat/${user_id}`, null);
   }
 
   readPersonalChat(chat_id: number) {
@@ -19,7 +19,7 @@ export class ChatsService {
   }
 
   getChats() {
-    return this.http.get<Chat[]>(`${this.baseApiUtl}/chat/get_my_chats/`);
+    return this.http.get<LastChatMessage[]>(`${this.baseApiUtl}/chat/get_my_chats/`);
   }
 
   sendMessage(chat_id: number, message: string) {

@@ -2,10 +2,21 @@
   display: grid;
   grid-template-columns: 32px 1fr;
   grid-gap: 16px;
-  background-color: var(--dark-color);
   border-bottom: var(--light-border);
   height: 100%;
   padding: 24px 20px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--dark-hover-color);
+
+    .tt-chat-btn {
+      &__user,
+      &__created-at {
+        color: var(--primary-color);
+      }
+    }
+  }
 }
 
 .tt-chat-btn {
@@ -28,18 +39,24 @@
   &__user,
   &__created-at {
     color: var(--light-transparent);
+    transition: color 0.2s ease;
+  }
+
+  &__last-message-text,
+  &__no-message-text {
+    font-weight: 500;
+    line-height: 16px;
+    text-align: start;
   }
 
   &__last-message-text {
     color: var(--light-color);
-    text-align: start;
     overflow-wrap: anywhere;
   }
 
   &__no-message-text {
     color: var(--light-transparent);
     font-style: italic;
-    text-align: start;
   }
 
   &__unread-messages-counter {

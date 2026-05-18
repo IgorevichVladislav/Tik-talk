@@ -28,8 +28,4 @@ export class ChatsListComponent {
     firstName: '',
     lastName: '',
   })
-
-  ngOnInit() {
-    this.store.dispatch(chatActions.getChats());
   }
-}

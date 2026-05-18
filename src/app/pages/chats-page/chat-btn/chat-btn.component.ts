@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core'
 import { DatePipe } from '@angular/common';
 
 import {TtAvatarCircleComponent} from '@tt/ui-kit';
-import {Chat} from '@tt/data-access/chats';
+import {LastChatMessage} from '@tt/data-access/chats';
 
 @Component({
   selector: 'button[chats]',
@@ -16,6 +16,6 @@ import {Chat} from '@tt/data-access/chats';
   host: {'class': 'tt-chat-btn'}
 })
 export class ChatBtnComponent {
-  readonly chat = input<Chat>();
+  readonly chat = input<LastChatMessage>();
 
 }
