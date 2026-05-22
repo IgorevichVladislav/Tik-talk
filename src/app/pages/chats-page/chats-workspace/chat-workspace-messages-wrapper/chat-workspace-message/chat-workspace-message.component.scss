@@ -1,3 +1,70 @@
 :host {
-  flex: 1;
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-gap: 12px;
+}
+
+.tt-chat-workspace-message {
+  &__message-block {
+    display: grid;
+    gap: 8px;
+  }
+
+  &__user-info {
+    line-height: 16px;
+  }
+
+  &__created-at {
+    font-weight: 400;
+    line-height: 16px;
+  }
+
+  &__text {
+    background-color: var(--dark-message);
+    border-radius: 1px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    padding: 8px 16px;
+    overflow-wrap: anywhere;
+    width: fit-content;
+
+    clip-path: polygon(
+      10px 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 10px
+    );
+  }
+}
+
+:host(.tt-chat-workspace-message__my-message) {
+  grid-template-columns: 1fr 32px;
+  align-self: end;
+
+  .tt-chat-workspace-message {
+    &__user-info {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 4px;
+    }
+
+    &__message-block {
+      order: -1;
+    }
+
+    &__text {
+      justify-self: end;
+      background-color: var(--primary-color);
+      color: var(--dark-color);
+      clip-path: polygon(
+        0 0,
+        calc(100% - 10px) 0,
+        100% 10px,
+        100% 100%,
+        0 100%
+      );
+    }
+  }
 }

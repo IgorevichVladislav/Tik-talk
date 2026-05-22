@@ -1,11 +1,18 @@
 :host {
   display: grid;
   grid-template-columns: 44px 1fr 44px;
+  align-items: center;
   border-bottom: var(--light-border);
-  padding: 16px 24px;
+  padding: 17px 20px;
 }
 
 .tt-chat-workspace-header {
+  &__user-info {
+    display: flex;
+    justify-self: center;
+    gap: 12px;
+  }
+
   &__close-chat {
     transform: rotate(180deg);
   }

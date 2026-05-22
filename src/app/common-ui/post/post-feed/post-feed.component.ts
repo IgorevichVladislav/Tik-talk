@@ -1,21 +1,12 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed, DestroyRef,
-  effect,
-  ElementRef,
-  inject,
-  input, Renderer2,
-} from '@angular/core';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {debounceTime, fromEvent} from 'rxjs';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, input} from '@angular/core';
 import {Store} from '@ngrx/store';
 
 import {PostComponent} from '../post/post.component';
-import {Profile, selectProfile} from '@tt/data-access/profile';
 import {PostCreateDto} from '@tt/data-access/post/post.interface';
 import {postActions, selectPost, selectPosts} from '@tt/data-access/post/store';
+import {Profile, selectProfile} from '@tt/data-access/profile';
 import {SubmittedValue, TtTextInputComponent} from '@tt/ui-kit';
+import {AutoResizeDirective} from '@tt/directives/auto-resize.directive';
 
 @Component({
   selector: 'tt-post-feed',
@@ -26,15 +17,11 @@ import {SubmittedValue, TtTextInputComponent} from '@tt/ui-kit';
   templateUrl: './post-feed.component.html',
   styleUrl: './post-feed.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    'class': 'tt-post-feed',
-  }
+  host: {'class': 'tt-post-feed'},
+  hostDirectives: [AutoResizeDirective]
 })
 export class PostFeedComponent {
   private readonly store = inject(Store);
-  private readonly r2 = inject(Renderer2);
-  private readonly hostElement = inject(ElementRef);
-  private readonly destroyRef = inject(DestroyRef);
 
   readonly profile = input<Profile>();
 
@@ -55,21 +42,6 @@ export class PostFeedComponent {
     effect(() => {
       this.store.dispatch(postActions.getPosts({user_id: this.profile()!.id}));
     });
-  }
-
-  ngAfterViewInit() {
-    this.resizePostFeed()
-
-    fromEvent(window, 'resize')
-      .pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.resizePostFeed());
-  }
-
-  resizePostFeed() {
-    const {top} = this.hostElement.nativeElement.getBoundingClientRect();
-    const height = window.innerHeight - top - 24;
-
-    this.r2.setStyle(this.hostElement.nativeElement, 'height', `${height}px`);
   }
 
   onCreatePost(event: SubmittedValue) {

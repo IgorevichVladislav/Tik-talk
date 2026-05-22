@@ -1,5 +1,5 @@
 <tt-input
-  [formGroup]="filterChat"
+  [formControl]="filterChatControl"
   class="tt-chat-list__search-input"
   placeholder="Искать..."
   type="text"
@@ -8,6 +8,11 @@
   filledActive
 />
 
-@for (chat of chats(); track chat.id) {
-  <button chats [chat]="chat"></button>
+@for (chat of filteredChats(); track chat.id) {
+  <button
+    chats
+    [chat]="chat"
+    [routerLink]="[chat.id]"
+    routerLinkActive="tt-chat-btn__active-chat"
+  ></button>
 }

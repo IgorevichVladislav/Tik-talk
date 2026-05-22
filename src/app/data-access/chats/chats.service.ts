@@ -23,7 +23,7 @@ export class ChatsService {
   }
 
   sendMessage(chat_id: number, message: string) {
-    return this.http.post<ChatMessage>(`${this.baseApiUtl}/message/send/${chat_id}`, message);
+    return this.http.post<ChatMessage>(`${this.baseApiUtl}/message/send/${chat_id}`, null, {params: {message}});
   }
 
   getMyMessage(message_id: number) {

@@ -1,5 +1,41 @@
 <tt-chats-list/>
 
 <div>
-<router-outlet/>
+  <router-outlet #outlet="outlet"/>
+
+  @if (!outlet.isActivated) {
+    <div class="tt-chats-page__empty-chat">
+      <h2 class="">Ищите собеседника?</h2>
+      <p>Можете воспользоваться панелью чатов, перейти к нашей удобной форме поиска, либо глянуть в своих
+        подписчиках</p>
+      <div class="tt-chats-page__search-buttons">
+        <tt-button
+          class="tt-chats-page__search-btn"
+          icon="search"
+          type="button"
+          routerLink="/search"
+          reverseMode>
+          Найти собеседника
+        </tt-button>
+        <tt-button
+
+          icon="subscribe"
+          type="button"
+          mode="black"
+          routerLink="/subscribers"
+          reverseMode>
+          Мои подписчики
+        </tt-button>
+        <tt-button
+
+          icon="subscriber"
+          type="button"
+          mode="black"
+          routerLink="/subscriptions"
+          reverseMode>
+          Мои подписки
+        </tt-button>
+      </div>
+    </div>
+  }
 </div>

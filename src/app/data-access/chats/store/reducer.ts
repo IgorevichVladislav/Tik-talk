@@ -16,12 +16,16 @@ export interface ChatState {
   chats: EntityState<LastChatMessage>;
   chat: Chat | null;
   chatMessages: EntityState<ChatMessage>
+  chatMessage: ChatMessage | null;
+  searchFilter: string
 }
 
 export const chatInitialState: ChatState = {
   chats: chatAdapter.getInitialState(),
   chat: null,
   chatMessages: chatMessageAdapter.getInitialState(),
+  chatMessage: null,
+  searchFilter: ''
 }
 
 export const chatFeature = createFeature({
@@ -33,7 +37,13 @@ export const chatFeature = createFeature({
       chatActions.readChatSuccess, (state, {chat}) => {
         return {
           ...state,
-          chat
+
+          chat: {
+            ...chat,
+            messages: []
+          },
+
+          chatMessages: chatMessageAdapter.setAll(chat.messages ?? [], state.chatMessages)
         }
       }),
 
@@ -41,6 +51,13 @@ export const chatFeature = createFeature({
       return {
         ...state,
         chats: chatAdapter.setAll(chats, state.chats)
+      }
+    }),
+
+    on(chatActions.searchChatsFilter, (state, {searchValue}) => {
+      return {
+        ...state,
+        searchFilter: searchValue.toLowerCase()
       }
     }),
 
