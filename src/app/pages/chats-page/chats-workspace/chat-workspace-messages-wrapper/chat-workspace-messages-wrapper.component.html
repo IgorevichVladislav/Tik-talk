@@ -1,3 +1,15 @@
-<tt-chat-workspace-message/>
+@if (chat(); as chat) {
+  <div class="tt-chat-workspace-messages__wrapper" #chatMessagesWrapper>
+    @for (chatMessage of chat.messages; track chatMessage.id) {
+      <tt-chat-workspace-message [chatMessage]="chatMessage"/>
+    } @empty {
+      <p class="tt-chat-workspace-messages__empty-chat-message">В данном чате пока нет сообщений... Напишите первым!</p>
+    }
+  </div>
 
-<tt-text-input/>
+  @if (me(); as me) {
+    <tt-text-input
+      [avatarData]="me"
+      (submitted)="createChatMessage($event, chat.id)"/>
+  }
+}

@@ -1,13 +1,17 @@
+@use "mixins" as mixin;
+
 :host {
   display: grid;
   grid-template-columns: 32px 1fr;
   grid-gap: 16px;
   border-bottom: var(--light-border);
-  height: 100%;
+  height: auto;
   padding: 24px 20px;
-  transition: background-color 0.2s ease;
+  @include mixin.main-transition(background-color);
 
-  &:hover {
+  &:hover,
+  &:focus-visible,
+  &.tt-chat-btn__active-chat {
     background-color: var(--dark-hover-color);
 
     .tt-chat-btn {
@@ -39,7 +43,7 @@
   &__user,
   &__created-at {
     color: var(--light-transparent);
-    transition: color 0.2s ease;
+    @include mixin.main-transition(color);
   }
 
   &__last-message-text,

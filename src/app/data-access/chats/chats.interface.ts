@@ -5,6 +5,7 @@ export interface Chat {
   userFirst: Profile;
   userSecond: Profile;
   messages: ChatMessage[] | null;
+  companion: Profile;
 }
 
 export interface LastChatMessage {
@@ -23,4 +24,6 @@ export interface ChatMessage {
   createdAt: string;
   isRead: boolean;
   updatedAt: string | null;
+  user: Profile;
+  isMySide?: boolean;
 }

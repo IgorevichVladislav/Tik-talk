@@ -1,3 +1,6 @@
-<tt-chat-workspace-header/>
+@if (chat(); as chat) {
+  <tt-chat-workspace-header [companion]="chat.companion"/>
 
-<tt-chat-workspace-messages-wrapper/>
+  <tt-chat-workspace-messages-wrapper [chat]="chat"/>
+}
+

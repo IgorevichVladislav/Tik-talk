@@ -1,5 +1,15 @@
-<tt-button class="tt-chat-workspace-header__close-chat" icon="arrow" type="button" mode="black"/>
-<div class="user-info">
-  <tt-avatar-circle/>
-</div>
-<tt-button class="tt-chat-workspace-header__settings" icon="dots" type="button" mode="black"/>
+@if (companion(); as companion) {
+  <tt-button class="tt-chat-workspace-header__close-chat"
+             icon="arrow"
+             type="button"
+             mode="black"
+             routerLink="/chats"
+  />
+
+  <div class="tt-chat-workspace-header__user-info">
+    <tt-avatar-circle [avatarData]="companion"/>
+    {{ companion.firstName }} {{ companion.lastName }}
+  </div>
+  <tt-button class="tt-chat-workspace-header__settings" icon="dots" type="button" mode="black"/>
+
+}

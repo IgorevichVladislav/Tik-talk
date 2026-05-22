@@ -20,6 +20,9 @@ export const chatActions = createActionGroup({
     /** Action успешного получения всех чатов пользователя. */
     'chats loaded': props<{ chats: LastChatMessage[] }>(),
 
+    /** Action для сохранение результата поиска чатов в фильтре. */
+    'search chats filter': props<{searchValue: string}>(),
+
     /** Action для отправки персонального сообщения пользователю по id. */
     'send message': props<{ chat_id: number, message: string }>(),
     /** Action успешной отправки персонального сообщения пользователю. */

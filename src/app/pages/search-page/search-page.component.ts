@@ -1,16 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  computed, DestroyRef,
-  effect,
-  ElementRef,
-  inject,
-  input,
-  Renderer2
-} from '@angular/core';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {debounceTime, fromEvent} from 'rxjs';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, input} from '@angular/core';
 import {Store} from '@ngrx/store';
 
 import {ProfileCardComponent} from '@tt/common-ui';
@@ -19,6 +7,7 @@ import {
 } from '@tt/data-access/profile';
 import {ProfileFilterComponent} from '@tt/pages/search-page/components/profile-filter/profile-filter.component';
 import {SearchPageMode} from '@tt/data-access/shared/interface/search-page-mode.interface';
+import {AutoResizeDirective} from '@tt/directives/auto-resize.directive';
 
 @Component({
   selector: 'tt-search-page',
@@ -30,12 +19,10 @@ import {SearchPageMode} from '@tt/data-access/shared/interface/search-page-mode.
   styleUrl: './search-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {'class': 'tt-search-page'},
+  hostDirectives: [AutoResizeDirective]
 })
-export class SearchPageComponent implements AfterViewInit {
+export class SearchPageComponent {
   private readonly store = inject(Store);
-  private readonly r2 = inject(Renderer2);
-  private readonly hostElement = inject(ElementRef);
-  private readonly destroyRef = inject(DestroyRef);
 
   readonly pageMode = input<SearchPageMode>('search');
 
@@ -56,14 +43,6 @@ export class SearchPageComponent implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
-    this.resizeSearchPage();
-
-    fromEvent(window, 'resize')
-      .pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.resizeSearchPage())
-  }
-
   readonly getRenderAccounts = computed(() => {
     const pageMode = this.pageMode();
     if (pageMode === 'subscribers') {
@@ -74,11 +53,4 @@ export class SearchPageComponent implements AfterViewInit {
       return this.userAccounts();
     }
   });
-
-  private resizeSearchPage() {
-    const {top} = this.hostElement.nativeElement.getBoundingClientRect();
-    const height = window.innerHeight - top - 24;
-
-    this.r2.setStyle(this.hostElement.nativeElement, 'height', `${height}px`);
-  }
 }
