@@ -1,12 +1,12 @@
-import {ChangeDetectionStrategy, Component, computed, inject, input, signal,} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input, signal} from '@angular/core';
 import {DatePipe} from '@angular/common';
+import {Store} from '@ngrx/store';
 
 import {PostComment} from '@tt/data-access/comments/comment.interface';
-import {ButtonComponent, TtAvatarCircleComponent, TtDropdownComponent, TtDropdownList} from '@tt/ui-kit';
-import {Store} from '@ngrx/store';
+import {ButtonComponent, TtAvatarCircleComponent, TtDropdownComponent, TtDropdown} from '@tt/ui-kit';
 import {commentActions} from '@tt/data-access/comments/store';
 import {selectProfile} from '@tt/data-access/profile';
-import {ClickOutsideDirective} from '@tt/directives/click-outside.directive';
+import {DropdownDescription} from '@tt/shared';
 
 @Component({
   selector: 'tt-comment',
@@ -15,7 +15,6 @@ import {ClickOutsideDirective} from '@tt/directives/click-outside.directive';
     ButtonComponent,
     DatePipe,
     TtDropdownComponent,
-    ClickOutsideDirective,
   ],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss',
@@ -38,9 +37,9 @@ export class CommentComponent {
     return commentId === meId;
   })
 
-  dropdownPostList: TtDropdownList[] = [{
+  dropdownPostList: TtDropdown[] = [{
     icon: 'edit',
-    description: 'Редактировать',
+    description: DropdownDescription.Edit,
     action: () => this.store.dispatch(commentActions.updateComment({
         commentId: this.comment()!.id,
         text: this.comment()!.text
@@ -49,8 +48,9 @@ export class CommentComponent {
   },
     {
       icon: 'delete',
-      description: 'Удалить',
-      action: () => this.store.dispatch(commentActions.deleteComment({commentId: this.comment()!.id}))
+      description: DropdownDescription.Delete,
+      action: () => this.store.dispatch(commentActions.deleteComment({commentId: this.comment()!.id})),
+      hoverColor: 'error'
     }
   ]
 }

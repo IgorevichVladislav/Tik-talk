@@ -1,20 +1,21 @@
-import {ChangeDetectionStrategy, Component, input, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input, model, output} from '@angular/core';
 
 import {ButtonComponent} from '../button';
 import {ClickOutsideDirective} from '@tt/directives/click-outside.directive';
+import {TtColors} from '@tt/tokens/tt-colors.type';
 
-export interface TtDropdownList {
+export interface TtDropdown {
   icon?: string | null;
   description: string;
   action: () => void;
   disabled?: boolean;
-  hoverColor?: string;
+  hoverColor?: TtColors;
 }
 
 @Component({
   selector: 'tt-dropdown',
   imports: [
-    ButtonComponent
+    ButtonComponent,
   ],
   templateUrl: './tt-dropdown.component.html',
   styleUrl: './tt-dropdown.component.scss',
@@ -23,17 +24,26 @@ export interface TtDropdownList {
   hostDirectives: [ClickOutsideDirective]
 })
 export class TtDropdownComponent {
-  dropdownList = input<TtDropdownList[]>([]);
+  private readonly clickOutsideDirective = inject(ClickOutsideDirective);
 
-  itemClicked = output<TtDropdownList>();
+  readonly dropdownList = input<TtDropdown[]>([]);
+  readonly itemClicked = output<TtDropdown>();
 
-  isOpen = input<boolean>(false);
+  readonly isOpen = model<boolean>(false);
 
-  onItemClick(item: TtDropdownList) {
+  constructor() {
+    this.clickOutsideDirective.clickOutside.subscribe(() => {
+      if (!this.isOpen()) return;
+      this.isOpen.set(false)
+    });
+  }
+
+  onItemClick(item: TtDropdown) {
     if (item.disabled) return;
 
     item.action();
 
-    return this.itemClicked.emit(item);
+    this.itemClicked.emit(item);
+    this.isOpen.set(false);
   }
 }

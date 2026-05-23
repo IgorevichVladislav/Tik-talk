@@ -1,12 +1,29 @@
 @if (chatMessage(); as message) {
-  <tt-avatar-circle [avatarData]="message.user"/>
+  <div>
+    <tt-avatar-circle [avatarData]="message.user"/>
+    @if (isMySettings()) {
+      <tt-button class="tt-chat-workspace-message__settings-btn"
+                 mode="black"
+                 icon="dots"
+                 (click)="isDropdownSettings.set(true)"
+      />
+    }
+  </div>
 
   <div class="tt-chat-workspace-message__message-block">
     <p class="tt-chat-workspace-message__user-info">
       {{ message.user.firstName }}
       {{ message.user.lastName }}
-      <span class="tt-chat-workspace-message__created-at">{{ message.createdAt | date: 'HH:mm' }}</span>
+      <span class="tt-chat-workspace-message__created-at">{{ message.createdAt | timeAgo }}</span>
     </p>
     <p class="tt-chat-workspace-message__text">{{ message.text }}</p>
   </div>
+
+  @if (isDropdownSettings()) {
+    <tt-dropdown
+      class="tt-chat-workspace-message__dropdown"
+      [dropdownList]="chatMessageSettingsList"
+      [(isOpen)]="isDropdownSettings"
+    />
+  }
 }

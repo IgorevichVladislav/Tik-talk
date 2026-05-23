@@ -2,9 +2,15 @@
   display: grid;
   grid-template-columns: 32px 1fr;
   grid-gap: 12px;
+  position: relative;
 }
 
 .tt-chat-workspace-message {
+  &__settings-btn {
+    border: none;
+    padding: 0;
+  }
+
   &__message-block {
     display: grid;
     gap: 8px;
@@ -36,6 +42,14 @@
       0 100%,
       0 10px
     );
+  }
+
+  &__dropdown {
+    background-color: var(--dark-color);
+    position: absolute;
+    right: 3px;
+    top: 65px;
+    z-index: 5;
   }
 }
 

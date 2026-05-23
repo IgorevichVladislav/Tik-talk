@@ -96,17 +96,11 @@
   }
 
   &__settings-dropdown {
-    display: none;
     position: absolute;
     top: 55px;
     right: 5px;
     z-index: 10;
-
-    &--open {
-      display: block;
-    }
   }
-
 
   &__reactions {
     display: flex;

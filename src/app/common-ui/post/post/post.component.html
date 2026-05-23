@@ -1,12 +1,13 @@
 @if (post(); as post) {
   <tt-avatar-circle [avatarData]="post.author"/>
 
-  <tt-dropdown
-    class="tt-post__settings-dropdown"
-    [class.tt-post__settings-dropdown--open]="isOpenSettings()"
-    [dropdownList]="dropdownPostList"
-    [isOpen]="isOpenSettings()"
-  />
+  @if (isOpenSettings()) {
+    <tt-dropdown
+      class="tt-post__settings-dropdown"
+      [dropdownList]="dropdownPostList"
+      [(isOpen)]="isOpenSettings"
+    />
+  }
 
   <div class="tt-post__body">
     <div class="tt-post__post-block">
@@ -63,8 +64,8 @@
         <tt-button class="tt-post__settings-btn"
                    icon="dots"
                    mode="black"
-                   (click)="isOpenSettings.set(!isOpenSettings())"
-                   (clickOutside)="isOpenSettings.set(false)"/>
+                   (click)="isOpenSettings.set(true)"
+        />
       }
 
     </div>
