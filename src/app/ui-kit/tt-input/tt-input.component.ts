@@ -12,7 +12,7 @@ import {
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 import {SvgIconComponent} from '@tt/ui-kit';
-import {IconColors} from '@tt/tokens/icon-colors.type';
+import {TtColors} from '@tt/tokens/tt-colors.type';
 
 @Component({
   selector: 'tt-input',
@@ -51,7 +51,7 @@ export class TtInputComponent implements ControlValueAccessor {
   /** Добавляет иконки в input */
   readonly mode = input<'search' | null>(null);
   /** Меняет цвет иконки в input */
-  readonly iconColor = input<IconColors>("default");
+  readonly iconColor = input<TtColors>("default");
 
   private onChange = (_: any) => {
   };

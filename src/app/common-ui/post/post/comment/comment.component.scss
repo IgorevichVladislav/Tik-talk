@@ -16,15 +16,9 @@
   }
 
   &__settings-dropdown {
-    display: none;
-
     position: absolute;
     top: 55px;
     right: 5px;
-
-    &--open {
-      display: block;
-    }
   }
 
   &__info-block {

@@ -24,7 +24,9 @@
       "@tt/common-ui":["app/common-ui/index.ts"],
       "@tt/ui-kit": ["app/ui-kit/index.ts"],
       "@tt/directives/*": ["app/directives/*"],
+      "@tt/pipes/*": ["app/pipes/*"],
       "@tt/tokens/*": ["app/tokens/*"],
+      "@tt/shared": ["app/shared/index.ts"]
     },
   },
   "angularCompilerOptions": {

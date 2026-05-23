@@ -1,2 +1,2 @@
-export {TtDropdownComponent, type TtDropdownList} from './tt-dropdown.component';
+export {TtDropdownComponent, type TtDropdown} from './tt-dropdown.component';
 

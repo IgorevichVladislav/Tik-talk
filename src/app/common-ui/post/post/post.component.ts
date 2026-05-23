@@ -7,7 +7,7 @@ import {
   ButtonComponent, ImgUrlPipe, SubmittedValue,
   TtAvatarCircleComponent,
   TtDropdownComponent,
-  TtDropdownList,
+  TtDropdown,
   TtTextInputComponent
 } from '@tt/ui-kit';
 import {Post} from '@tt/data-access/post/post.interface';
@@ -16,7 +16,7 @@ import {commentActions} from '@tt/data-access/comments/store/actions';
 import {CommentCreateDto} from '@tt/data-access/comments/comment.interface';
 import {postActions} from '@tt/data-access/post/store';
 import {selectProfile} from '@tt/data-access/profile';
-import {ClickOutsideDirective} from '@tt/directives/click-outside.directive';
+import {DropdownDescription} from '@tt/shared';
 
 @Component({
   selector: 'tt-post',
@@ -29,7 +29,6 @@ import {ClickOutsideDirective} from '@tt/directives/click-outside.directive';
     TtDropdownComponent,
     EmojiComponent,
     ImgUrlPipe,
-    ClickOutsideDirective,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
@@ -54,10 +53,9 @@ export class PostComponent {
     return postAuthorId === meId;
   })
 
-  dropdownPostList: TtDropdownList[] = [{
+  dropdownPostList: TtDropdown[] = [{
     icon: 'edit',
-    hoverColor: 'var(--primary-color)',
-    description: 'Редактировать',
+    description: DropdownDescription.Edit,
     action: () => this.store.dispatch(postActions.updatePost({
         post_id: this.post()!.id,
         updateDto: {
@@ -69,7 +67,8 @@ export class PostComponent {
   },
     {
       icon: 'delete',
-      description: 'Удалить',
+      description: DropdownDescription.Delete,
+      hoverColor: 'error',
       action: () => this.store.dispatch(postActions.deletePost({post_id: this.post()!.id}))
     }
   ];

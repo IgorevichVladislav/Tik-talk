@@ -22,9 +22,15 @@
     line-height: 21px;
     flex: 1;
     resize: none;
+    transition: outline-color 0.2s ease;
 
     &::placeholder {
       color: var(--light-transparent);
+    }
+    &:not(:placeholder-shown),
+    &:hover,
+    &:focus-visible {
+      outline: 1px solid var(--primary-color);
     }
   }
 

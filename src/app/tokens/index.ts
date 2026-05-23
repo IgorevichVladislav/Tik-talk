@@ -1,1 +1,1 @@
-export * from './icon-colors.type';
+export * from './tt-colors.type';

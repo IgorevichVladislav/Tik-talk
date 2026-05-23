@@ -1,12 +1,13 @@
 @if (comment(); as comment) {
   <tt-avatar-circle [avatarData]="comment.author"/>
 
+  @if (isOpenSettings()) {
   <tt-dropdown
     class="tt-comment__settings-dropdown"
-    [class.tt-comment__settings-dropdown--open]="isOpenSettings()"
     [dropdownList]="dropdownPostList"
-    [isOpen]="isOpenSettings()"
+    [(isOpen)]="isOpenSettings"
   />
+  }
 
   <ul class="tt-comment__body">
     <li class="tt-comment__info-block">
@@ -20,8 +21,7 @@
         <tt-button class="tt-comment__update-icon"
                    icon="dots"
                    mode="black"
-                   (click)="isOpenSettings.set(!isOpenSettings())"
-                   (clickOutside)="isOpenSettings.set(false)"/>
+                   (click)="isOpenSettings.set(!isOpenSettings())"/>
       }
 
     </li>

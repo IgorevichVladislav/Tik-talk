@@ -2,6 +2,7 @@
   @for (dropdown of dropdownList(); track $index) {
     <tt-button
       class="tt-dropdown__btn"
+      [attr.data-hover-color]="dropdown.hoverColor ?? 'primary'"
       mode="black"
       [icon]="dropdown.icon ?? null"
       (click)="onItemClick(dropdown)"

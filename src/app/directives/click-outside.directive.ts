@@ -1,5 +1,5 @@
-import {Directive, ElementRef, inject} from '@angular/core';
-import {outputFromObservable} from '@angular/core/rxjs-interop';
+import {DestroyRef, Directive, ElementRef, inject} from '@angular/core';
+import {outputFromObservable, takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {filter, fromEvent} from 'rxjs';
 
 @Directive({
@@ -7,11 +7,12 @@ import {filter, fromEvent} from 'rxjs';
 })
 export class ClickOutsideDirective {
   private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
+  dr = inject(DestroyRef);
 
 clickOutside = outputFromObservable(
   fromEvent<MouseEvent>(document, 'click')
     .pipe(
-      filter(event => !this.elementRef.nativeElement.contains(event.target as Node))
-    )
+      takeUntilDestroyed(this.dr),
+      filter(event => !this.elementRef.nativeElement.contains(event.target as Node)))
 );
 }

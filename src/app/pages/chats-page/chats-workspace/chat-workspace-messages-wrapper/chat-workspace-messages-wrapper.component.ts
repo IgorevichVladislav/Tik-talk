@@ -13,7 +13,7 @@ import {Store} from '@ngrx/store';
 
 import {ChatWorkspaceMessageComponent} from './chat-workspace-message';
 import {SubmittedValue, TtTextInputComponent} from '@tt/ui-kit';
-import {Chat, chatActions, selectChatsMessages} from '@tt/data-access/chats';
+import {Chat, chatActions} from '@tt/data-access/chats';
 import {selectProfile} from '@tt/data-access/profile';
 
 @Component({
@@ -50,7 +50,7 @@ export class ChatWorkspaceMessagesWrapperComponent implements AfterViewInit {
     )
   }
 
-   createChatMessage(event: SubmittedValue, chatId: number) {
+    createChatMessage(event: SubmittedValue, chatId: number) {
     const chat_id = chatId;
     if (!chat_id) return;
 
