@@ -3,7 +3,8 @@ import {debounceTime, fromEvent} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Directive({
-  selector: '[autoResize]'
+  selector: '[autoResize]',
+  standalone: true,
 })
 
 export class AutoResizeDirective implements AfterViewInit {

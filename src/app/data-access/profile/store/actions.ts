@@ -1,6 +1,13 @@
 import {createActionGroup, emptyProps, props} from '@ngrx/store';
 
-import {Profile, ProfileFilter, ProfileUpdate, SubscribeFilter} from '../profile.interface';
+import {
+  Profile,
+  ProfileFilter,
+  ProfileUpdate,
+  savedProfileFilterSearch, savedSubscriberFilterSearch,
+  savedSubscriptionFilterSearch,
+  SubscribersFilter, SubscriptionFilter
+} from '../profile.interface';
 
 export const profileActions = createActionGroup({
   source: 'profile',
@@ -40,6 +47,10 @@ export const profileActions = createActionGroup({
     /** Action успешной загрузки аккаунтов пользователей. */
     'accounts loaded': props<{ accounts: Profile[] }>(),
 
+    /** Action для сохранения необязательной фильтрации accountsFilter в store.
+    * Фильтрация осуществляется в компоненте search */
+    'save profile filter search': props<{ searchFilter: savedProfileFilterSearch }>(),
+
     /** Action для загрузки аккаунта пользователя по id. */
     'get account': props<{ accountId: number }>(),
     /** Action успешной загрузки аккаунта пользователя. */
@@ -56,22 +67,30 @@ export const profileActions = createActionGroup({
     'unsubscribe success': props<{ account_id: number }>(),
 
     /** Action для запроса подписок (Subscriptions) с необязательными параметрами фильтрации. */
-    'get subscriptions': props<{ subscriptionsFilter?: SubscribeFilter }>(),
+    'get subscriptions': props<{ subscriptionsFilter?: SubscriptionFilter }>(),
     /** Action успешной загрузки подписок (Subscriptions) в store. */
     'subscriptions loaded': props<{ subscriptions: Profile[] }>(),
 
+    /** Action для сохранения необязательной фильтрации subscriptionsFilter в store.
+     * Фильтрация осуществляется в компоненте subscriptions */
+    'save subscription filter search': props<{ searchFilter: savedSubscriptionFilterSearch }>(),
+
     /** Action для запроса подписок (Subscriptions) с обязательной передачей account_id и необязательным параметром фильтрации. */
-    'get subscriptions by id': props<{ account_id: number, subscriptionsFilter?: SubscribeFilter }>(),
+    'get subscriptions by id': props<{ account_id: number, subscriptionsFilter?: SubscriptionFilter }>(),
     /** Action успешной загрузки подписчиков (Subscriptions) в store с обязательным параметром id. */
     'subscriptions by id loaded': props<{ subscriptions: Profile[] }>(),
 
     /** Action для запроса подписчиков (Subscribers) с необязательными параметрами фильтрации. */
-    'get subscribers': props<{ subscribersFilter?: SubscribeFilter }>(),
+    'get subscribers': props<{ subscribersFilter?: SubscribersFilter }>(),
     /** Action успешной загрузки подписчиков (Subscribers) в store. */
     'subscribers loaded': props<{ subscribers: Profile[] }>(),
 
+    /** Action для сохранения необязательной фильтрации subscriptionsFilter в store.
+     * Фильтрация осуществляется в компоненте subscriptions */
+    'save subscriber filter search': props<{ searchFilter: savedSubscriberFilterSearch }>(),
+
     /** Action для запроса подписчиков (Subscribers) с обязательной передачей account_id и необязательным параметром фильтрации. */
-    'get subscribers by id': props<{ account_id: number, subscribersFilter?: SubscribeFilter }>(),
+    'get subscribers by id': props<{ account_id: number, subscribersFilter?: SubscribersFilter }>(),
     /** Action успешной загрузки подписчиков (Subscribers) в store с обязательным параметром id. */
     'subscribers by id loaded': props<{ subscribers: Profile[] }>(),
   }

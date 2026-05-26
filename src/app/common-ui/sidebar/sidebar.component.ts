@@ -16,7 +16,7 @@ import {
   selectProfile, selectSubscribersLimitList,
 } from '@tt/data-access/profile';
 import {AuthService} from '@tt/data-access/auth';
-import {ClickOutsideDirective} from '@tt/directives/click-outside.directive';
+import {ClickOutsideDirective} from '@tt/directives';
 import {NavigationList} from '@tt/data-access/shared';
 
 @Component({

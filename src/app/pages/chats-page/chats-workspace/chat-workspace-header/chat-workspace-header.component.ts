@@ -4,7 +4,7 @@ import {Store} from '@ngrx/store';
 
 import {ButtonComponent, TtAvatarCircleComponent, TtDropdown, TtDropdownComponent} from '@tt/ui-kit';
 import {Profile, profileActions, selectSubscriptionsEntity} from '@tt/data-access/profile';
-import {DropdownDescription} from '@tt/shared';
+import {UiAction} from '@tt/shared';
 
 @Component({
   selector: 'tt-chat-workspace-header',
@@ -40,12 +40,12 @@ export class ChatWorkspaceHeaderComponent {
       return [
         {
           icon: 'subscriber',
-          description: DropdownDescription.GoToProfile,
+          description: UiAction.GoToProfile,
           action: () => this.router.navigate(['/profile', companion.id])
         },
         {
           icon: isSubscribed ? 'unsubscribe' : 'subscribe',
-          description: isSubscribed ? DropdownDescription.Unsubscribe : DropdownDescription.Subscribe,
+          description: isSubscribed ? UiAction.Unsubscribe : UiAction.Subscribe,
           action: () => {
             if (isSubscribed) {
               this.store.dispatch(profileActions.unsubscribe({account_id: companion.id}))

@@ -2,12 +2,10 @@ import {ChangeDetectionStrategy, Component, computed, effect, inject, input} fro
 import {Store} from '@ngrx/store';
 
 import {ProfileCardComponent} from '@tt/common-ui';
-import {
-  profileActions, selectAccounts, selectSubscribers, selectSubscriptions,
-} from '@tt/data-access/profile';
+import {AutoResizeDirective} from '@tt/directives';
+import {profileActions, selectAccounts, selectSubscribers, selectSubscriptions} from '@tt/data-access/profile';
 import {ProfileFilterComponent} from '@tt/pages/search-page/components/profile-filter/profile-filter.component';
 import {SearchPageMode} from '@tt/data-access/shared/interface/search-page-mode.interface';
-import {AutoResizeDirective} from '@tt/directives/auto-resize.directive';
 
 @Component({
   selector: 'tt-search-page',

@@ -4,6 +4,7 @@ import {filter, fromEvent} from 'rxjs';
 
 @Directive({
   selector: '[clickOutside]',
+  standalone: true,
 })
 export class ClickOutsideDirective {
   private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);

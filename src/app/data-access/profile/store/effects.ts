@@ -1,14 +1,17 @@
 import {inject, Injectable} from '@angular/core';
-import {map, switchMap} from 'rxjs';
+import {map, switchMap, tap} from 'rxjs';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 
 import {ProfileService} from '../profile.service';
 import {profileActions} from './actions';
+import {WebStorageService} from '../../storage/web-storage.service';
+import {hasStorageValue, StorageSearchFilterKeys, StorageType} from '@tt/shared';
 
 @Injectable({providedIn: 'root'})
 
 export class ProfileEffects {
   private readonly profileService = inject(ProfileService);
+  private readonly webStorage = inject(WebStorageService);
   private readonly actions$ = inject(Actions);
 
   /** Effect для загрузки 5 тестовых аккаунтов. */
@@ -79,6 +82,14 @@ export class ProfileEffects {
     return this.actions$
       .pipe(
         ofType(profileActions.getAccounts),
+        tap(({accountsFilter}) => {
+          const searchProfileFilterKey = StorageSearchFilterKeys.ProfileSearchFilterKey;
+          if (accountsFilter && hasStorageValue(accountsFilter)) {
+            this.webStorage.setItem(searchProfileFilterKey, accountsFilter, StorageType.Session);
+          } else {
+            this.webStorage.removeItem(searchProfileFilterKey, StorageType.Session);
+          }
+        }),
         switchMap(({accountsFilter}) => this.profileService.getAccounts(accountsFilter)),
         map(accounts => profileActions.accountsLoaded({accounts: accounts.items}))
       )
@@ -132,6 +143,14 @@ export class ProfileEffects {
     return this.actions$
       .pipe(
         ofType(profileActions.getSubscriptions),
+        tap(({subscriptionsFilter}) => {
+          const searchSubscriptionsFilterKey = StorageSearchFilterKeys.SubscriptionsSearchFilterKey;
+          if (subscriptionsFilter && hasStorageValue(subscriptionsFilter)) {
+            this.webStorage.setItem(searchSubscriptionsFilterKey, subscriptionsFilter, StorageType.Session);
+          } else {
+            this.webStorage.removeItem(searchSubscriptionsFilterKey, StorageType.Session);
+          }
+        }),
         switchMap(({subscriptionsFilter}) => this.profileService.getSubscriptions(subscriptionsFilter)),
         map(subscriptions => profileActions.subscriptionsLoaded({subscriptions: subscriptions.items}))
       )
@@ -155,6 +174,14 @@ export class ProfileEffects {
     return this.actions$
       .pipe(
         ofType(profileActions.getSubscribers),
+        tap(({subscribersFilter}) => {
+          const searchSubscribersFilterKey = StorageSearchFilterKeys.SubscribersSearchFilterKey;
+          if (subscribersFilter && hasStorageValue(subscribersFilter)) {
+            this.webStorage.setItem(searchSubscribersFilterKey, subscribersFilter, StorageType.Session);
+          } else {
+            this.webStorage.removeItem(searchSubscribersFilterKey, StorageType.Session);
+          }
+        }),
         switchMap(({subscribersFilter}) => this.profileService.getSubscribers(subscribersFilter)),
         map(subscribers => profileActions.subscribersLoaded({subscribers: subscribers.items}))
       )

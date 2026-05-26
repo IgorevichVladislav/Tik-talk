@@ -21,7 +21,7 @@ export const chatActions = createActionGroup({
     'chats loaded': props<{ chats: LastChatMessage[] }>(),
 
     /** Action для сохранение результата поиска чатов в фильтре. */
-    'search chats filter': props<{searchValue: string}>(),
+    'search chats filter': props<{searchValue: string | null | undefined}>(),
 
     /** Action для отправки персонального сообщения пользователю по id. */
     'send message': props<{ chat_id: number, message: string }>(),

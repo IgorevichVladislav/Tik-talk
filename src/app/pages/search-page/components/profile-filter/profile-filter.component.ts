@@ -1,11 +1,15 @@
-import {ChangeDetectionStrategy, Component, inject, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, input} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {debounceTime} from 'rxjs';
+import {debounceTime, startWith} from 'rxjs';
 import {Store} from '@ngrx/store';
 
 import {TtInputComponent} from '@tt/ui-kit';
-import {profileActions} from '@tt/data-access/profile';
+import {
+  profileActions,
+  selectSavedSearchProfileFilter, selectSavedSearchSubscribersFilter,
+  selectSavedSearchSubscriptionFilter
+} from '@tt/data-access/profile';
 import {SearchPageMode} from '@tt/data-access/shared/interface/search-page-mode.interface';
 
 @Component({
@@ -25,11 +29,35 @@ export class ProfileFilterComponent {
   private readonly store = inject(Store);
   private readonly formBuilder = inject(FormBuilder);
 
+  savedProfileSearchFilters = this.store.selectSignal(selectSavedSearchProfileFilter);
+  savedSubscriptionSearchFilters = this.store.selectSignal(selectSavedSearchSubscriptionFilter);
+  savedSubscribersSearchFilter = this.store.selectSignal(selectSavedSearchSubscribersFilter);
+
   readonly pageMode = input<SearchPageMode>('search');
 
+  readonly searchForm = this.formBuilder.group({
+    firstName: this.formBuilder.control<string>(''),
+    lastName: this.formBuilder.control<string>(''),
+    stack: this.formBuilder.control<string[]>([]),
+    city: this.formBuilder.control<string>(''),
+  })
+
   constructor() {
+    effect(() => {
+      const pageMode = this.pageMode();
+
+      if (pageMode === 'subscribers') {
+        this.searchForm.patchValue(this.savedSubscribersSearchFilter(), {emitEvent: false});
+      } else if (pageMode === 'subscriptions') {
+        this.searchForm.patchValue(this.savedSubscriptionSearchFilters(), {emitEvent: false});
+      } else {
+        this.searchForm.patchValue(this.savedProfileSearchFilters(), {emitEvent: false});
+      }
+    });
+
     this.searchForm.valueChanges
       .pipe(
+        startWith(this.searchForm.getRawValue()),
         debounceTime(300),
         takeUntilDestroyed()
       )
@@ -53,12 +81,4 @@ export class ProfileFilterComponent {
         }
       })
   }
-
-  readonly searchForm = this.formBuilder.group({
-    firstName: this.formBuilder.control<string>(''),
-    lastName: this.formBuilder.control<string>(''),
-    stack: this.formBuilder.control<string[]>([]),
-    city: this.formBuilder.control<string>(''),
-  })
-
 }

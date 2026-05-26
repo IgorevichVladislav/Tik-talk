@@ -6,7 +6,7 @@ import {PostComment} from '@tt/data-access/comments/comment.interface';
 import {ButtonComponent, TtAvatarCircleComponent, TtDropdownComponent, TtDropdown} from '@tt/ui-kit';
 import {commentActions} from '@tt/data-access/comments/store';
 import {selectProfile} from '@tt/data-access/profile';
-import {DropdownDescription} from '@tt/shared';
+import {UiAction} from '@tt/shared';
 
 @Component({
   selector: 'tt-comment',
@@ -39,7 +39,7 @@ export class CommentComponent {
 
   dropdownPostList: TtDropdown[] = [{
     icon: 'edit',
-    description: DropdownDescription.Edit,
+    description: UiAction.Edit,
     action: () => this.store.dispatch(commentActions.updateComment({
         commentId: this.comment()!.id,
         text: this.comment()!.text
@@ -48,7 +48,7 @@ export class CommentComponent {
   },
     {
       icon: 'delete',
-      description: DropdownDescription.Delete,
+      description: UiAction.Delete,
       action: () => this.store.dispatch(commentActions.deleteComment({commentId: this.comment()!.id})),
       hoverColor: 'error'
     }
