@@ -6,7 +6,7 @@ import {PostCreateDto} from '@tt/data-access/post/post.interface';
 import {postActions, selectPost, selectPosts} from '@tt/data-access/post/store';
 import {Profile, selectProfile} from '@tt/data-access/profile';
 import {SubmittedValue, TtTextInputComponent} from '@tt/ui-kit';
-import {AutoResizeDirective} from '@tt/directives/auto-resize.directive';
+import {AutoResizeDirective} from '@tt/directives';
 
 @Component({
   selector: 'tt-post-feed',

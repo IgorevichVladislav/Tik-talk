@@ -16,7 +16,7 @@ import {commentActions} from '@tt/data-access/comments/store/actions';
 import {CommentCreateDto} from '@tt/data-access/comments/comment.interface';
 import {postActions} from '@tt/data-access/post/store';
 import {selectProfile} from '@tt/data-access/profile';
-import {DropdownDescription} from '@tt/shared';
+import {UiAction} from '@tt/shared';
 
 @Component({
   selector: 'tt-post',
@@ -55,7 +55,7 @@ export class PostComponent {
 
   dropdownPostList: TtDropdown[] = [{
     icon: 'edit',
-    description: DropdownDescription.Edit,
+    description: UiAction.Edit,
     action: () => this.store.dispatch(postActions.updatePost({
         post_id: this.post()!.id,
         updateDto: {
@@ -67,7 +67,7 @@ export class PostComponent {
   },
     {
       icon: 'delete',
-      description: DropdownDescription.Delete,
+      description: UiAction.Delete,
       hoverColor: 'error',
       action: () => this.store.dispatch(postActions.deletePost({post_id: this.post()!.id}))
     }

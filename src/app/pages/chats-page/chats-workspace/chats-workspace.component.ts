@@ -4,7 +4,7 @@ import {Store} from '@ngrx/store';
 import {ChatWorkspaceHeaderComponent} from './chat-workspace-header/index';
 import {ChatWorkspaceMessagesWrapperComponent} from './chat-workspace-messages-wrapper/index';
 import {chatActions, selectChat} from '@tt/data-access/chats';
-import {AutoResizeDirective} from '@tt/directives/auto-resize.directive';
+import {AutoResizeDirective} from '@tt/directives';
 
 @Component({
   selector: 'tt-chats-workspace',

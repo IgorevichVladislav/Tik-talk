@@ -14,6 +14,7 @@ import {
 import {ButtonComponent, SvgIconComponent, TtAvatarCircleComponent} from '@tt/ui-kit';
 import {PostFeedComponent, ProfileHeaderComponent} from '@tt/common-ui';
 import {chatActions} from '@tt/data-access/chats';
+import {UiAction} from '@tt/shared';
 
 @Component({
   selector: 'tt-profile-page',
@@ -69,13 +70,13 @@ export class ProfilePageComponent {
   readonly profileButtonInfo = computed(() => {
     if (this.isMyPage()) {
       return {
-        description: 'Редактировать',
+        description: UiAction.Edit,
         icon: 'settings',
       }
     }
 
     return {
-      description: 'Написать',
+      description: UiAction.Write,
       icon: 'send-message',
     }
   });

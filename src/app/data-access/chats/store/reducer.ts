@@ -17,7 +17,7 @@ export interface ChatState {
   chat: Chat | null;
   chatMessages: EntityState<ChatMessage>
   chatMessage: ChatMessage | null;
-  searchFilter: string
+  searchFilter: string | null | undefined;
 }
 
 export const chatInitialState: ChatState = {
@@ -57,7 +57,7 @@ export const chatFeature = createFeature({
     on(chatActions.searchChatsFilter, (state, {searchValue}) => {
       return {
         ...state,
-        searchFilter: searchValue.toLowerCase()
+        searchFilter: searchValue?.toLowerCase()
       }
     }),
 

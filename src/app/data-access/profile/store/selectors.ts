@@ -13,6 +13,10 @@ export const selectTestAccounts = createSelector(
 /** Selector возвращает текущей профиль пользователя. */
 export const selectProfile = profileFeature.selectProfile;
 
+export const selectSavedSearchProfileFilter = profileFeature.selectSearchProfileFilter;
+export const selectSavedSearchSubscriptionFilter = profileFeature.selectSearchSubscriptionFilter;
+export const selectSavedSearchSubscribersFilter = profileFeature.selectSearchSubscriberFilter;
+
 /** Selector возвращает список всех аккаунтов (профилей). */
 export const selectAccounts = createSelector(
   profileFeature.selectProfiles,

@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 
 import {ChatsService} from '../chats.service';
 import {chatActions} from './actions';
+import {StorageSearchFilterKeys, StorageType, hasStorageValue} from '@tt/shared';
+import {WebStorageService} from '@tt/data-access/storage/web-storage.service';
 
 @Injectable({providedIn: 'root'})
 
@@ -12,6 +14,7 @@ export class ChatEffects {
   private readonly chatService = inject(ChatsService);
   private readonly actions$ = inject(Actions);
   private readonly router = inject(Router);
+  private readonly webService = inject(WebStorageService);
 
   /** Effect для создания персонального чата пользователя по id. Отправляет dto в chatService и после успешного создания диспатчит createChatSuccess. */
   createPersonalChat = createEffect(() => {
@@ -93,5 +96,20 @@ export class ChatEffects {
         )
       )
   });
+
+  addSearchValueForStorage = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(chatActions.searchChatsFilter),
+        tap(({searchValue}) => {
+          const searchChatsFilterKey = StorageSearchFilterKeys.ChatSearchFilterKey;
+          if (searchValue && hasStorageValue(searchValue)) {
+            this.webService.setItem(searchChatsFilterKey, searchValue, StorageType.Session);
+          } else {
+            this.webService.removeItem(searchChatsFilterKey, StorageType.Session);
+          }
+        })
+      )
+  }, {dispatch: false});
 
 }

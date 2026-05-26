@@ -2,6 +2,7 @@ import {Directive, output} from '@angular/core';
 
 @Directive({
   selector: '[dnd]',
+  standalone: true,
   host: {
     '(dragover)': 'onDragover($event)',
     '(drop)': 'onDrop($event)',

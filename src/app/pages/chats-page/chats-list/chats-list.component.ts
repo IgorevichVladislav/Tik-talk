@@ -7,8 +7,10 @@ import {Store} from '@ngrx/store';
 
 import {ChatBtnComponent} from '../chat-btn/chat-btn.component';
 import {TtInputComponent} from '@tt/ui-kit';
+import {AutoResizeDirective} from '@tt/directives';
+import {StorageSearchFilterKeys, StorageType} from '@tt/shared';
 import {chatActions, selectChats, selectSearchFilter} from '@tt/data-access/chats';
-import {AutoResizeDirective} from '@tt/directives/auto-resize.directive';
+import {WebStorageService} from '@tt/data-access/storage/web-storage.service';
 
 @Component({
   selector: 'tt-chats-list',
@@ -27,32 +29,25 @@ import {AutoResizeDirective} from '@tt/directives/auto-resize.directive';
 })
 export class ChatsListComponent {
   private readonly store = inject(Store);
+  private readonly webStorage = inject(WebStorageService);
 
-  private readonly SEARCH_FILTER_VALUE_KEY = 'searchValue';
-  private readonly getSearchValue = localStorage.getItem(this.SEARCH_FILTER_VALUE_KEY) ?? '';
+  private readonly searchFilterKey = StorageSearchFilterKeys.ChatSearchFilterKey;
+  private readonly getSearchValue = this.webStorage.getItem(this.searchFilterKey, StorageType.Session) ?? '';
 
   private readonly chatsSearchFilter = this.store.selectSignal(selectSearchFilter);
   readonly chats = this.store.selectSignal(selectChats);
 
-  readonly filterChatControl = new FormControl<string>(this.getSearchValue, {
-    nonNullable: true,
-  });
+  readonly filterChatControl = new FormControl<string>(this.getSearchValue);
 
   constructor() {
 
     this.filterChatControl.valueChanges
       .pipe(
-        startWith(this.filterChatControl.value),
+        startWith(this.filterChatControl.getRawValue()),
         debounceTime(300),
         takeUntilDestroyed()
       )
       .subscribe(searchValue => {
-        if (searchValue) {
-          localStorage.setItem(this.SEARCH_FILTER_VALUE_KEY, searchValue);
-        } else {
-          localStorage.removeItem(this.SEARCH_FILTER_VALUE_KEY);
-        }
-
         this.store.dispatch(chatActions.searchChatsFilter({searchValue}
         ))
       });

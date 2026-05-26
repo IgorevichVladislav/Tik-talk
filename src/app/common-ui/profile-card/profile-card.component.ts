@@ -2,12 +2,9 @@ import {ChangeDetectionStrategy, Component, computed, inject, input} from '@angu
 import {Router, RouterLink} from '@angular/router';
 import {Store} from '@ngrx/store';
 
-import {
-  Profile,
-  profileActions,
-  selectSubscriptionsEntity
-} from '@tt/data-access/profile';
+import {Profile, profileActions, selectSubscriptionsEntity} from '@tt/data-access/profile';
 import {ButtonComponent, TtAvatarCircleComponent} from '@tt/ui-kit';
+import {UiAction} from '@tt/shared';
 
 @Component({
   selector: 'tt-profile-card',
@@ -52,7 +49,7 @@ export class ProfileCardComponent {
   readonly getSubscriptionAction = computed(() => {
     if (this.isSubscriptionProfile()) {
       return {
-        description: 'Написать',
+        description: UiAction.Write,
         icon: 'send-message',
         action: () => {
           this.router.navigate(['profile/me'])
@@ -61,7 +58,7 @@ export class ProfileCardComponent {
     }
 
     return {
-      description: 'Подписаться',
+      description: UiAction.Subscribe,
       icon: 'subscribe',
       action: () => this.subscribe(),
     };

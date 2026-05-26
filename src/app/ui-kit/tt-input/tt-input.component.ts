@@ -13,11 +13,13 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 import {SvgIconComponent} from '@tt/ui-kit';
 import {TtColors} from '@tt/tokens/tt-colors.type';
+import {TrimSpacesDirective} from '@tt/directives';
 
 @Component({
   selector: 'tt-input',
   imports: [
-    SvgIconComponent
+    SvgIconComponent,
+    TrimSpacesDirective
   ],
   templateUrl: './tt-input.component.html',
   styleUrl: './tt-input.component.scss',

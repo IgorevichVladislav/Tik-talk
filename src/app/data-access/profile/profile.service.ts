@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {BASE_API_URL} from '@tt/tokens/base-api-url.token';
-import {Profile, ProfileFilter, ProfileUpdate, SubscribeFilter} from './profile.interface';
+import {Profile, ProfileFilter, ProfileUpdate, SubscribersFilter, SubscriptionFilter} from './profile.interface';
 import {Pageable} from '@tt/data-access/shared';
 
 @Injectable({
@@ -66,22 +66,22 @@ export class ProfileService {
   };
 
   /** Метод, для получения подписок отдельного клиента по id с необязательной фильтрацией. */
-  getSubscriptionsById(account_id: number, params?: SubscribeFilter) {
+  getSubscriptionsById(account_id: number, params?: SubscriptionFilter) {
     return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscriptions/${account_id}`, {params});
   };
 
   /** Метод, для получения всех подписок с необязательной фильтрацией*/
-  getSubscriptions(params?: SubscribeFilter) {
+  getSubscriptions(params?: SubscriptionFilter) {
     return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscriptions/`, {params});
   };
 
   /** Метод, для получения подписчиков отдельного клиента по id с необязательной фильтрацией. */
-  getSubscribersById(account_id: number, params?: SubscribeFilter) {
+  getSubscribersById(account_id: number, params?: SubscribersFilter) {
     return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscribers/${account_id}`, {params});
   };
 
   /** Метод, для получения всех подписчиков с необязательной фильтрацией. */
-  getSubscribers(params?: Record<string, any>) {
+  getSubscribers(params?: SubscribersFilter) {
     return this.http.get<Pageable<Profile>>(`${this.baseApiUrl}/account/subscribers/`, {params})
   };
 }

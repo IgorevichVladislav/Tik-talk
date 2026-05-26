@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, inject, input, model, output} from '@angular/core';
 
 import {ButtonComponent} from '../button';
-import {ClickOutsideDirective} from '@tt/directives/click-outside.directive';
+import {ClickOutsideDirective} from '@tt/directives';
 import {TtColors} from '@tt/tokens/tt-colors.type';
 
 export interface TtDropdown {

@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, input, output, signal,} from '@angul
 
 import {ButtonComponent, SvgIconComponent, TtAvatarCircleComponent} from '@tt/ui-kit';
 import {Avatar} from '@tt/data-access/profile';
-import {DndDirective} from '@tt/directives/dnd.directive';
+import {DndDirective} from '@tt/directives';
 
 @Component({
   selector: 'tt-avatar-upload',

@@ -4,7 +4,7 @@ import {Store} from '@ngrx/store';
 import {chatActions, ChatMessage} from '@tt/data-access/chats';
 import {ButtonComponent, TtAvatarCircleComponent, TtDropdown, TtDropdownComponent} from '@tt/ui-kit';
 import {TimeAgoPipe} from '@tt/pipes/time-age.pipe';
-import {DropdownDescription} from '@tt/shared';
+import {UiAction} from '@tt/shared';
 import {selectProfile} from '@tt/data-access/profile';
 
 @Component({
@@ -40,7 +40,7 @@ export class ChatWorkspaceMessageComponent {
 
   readonly chatMessageSettingsList: TtDropdown[] = [{
     icon: 'edit',
-    description: DropdownDescription.Edit,
+    description: UiAction.Edit,
     action: () => this.store.dispatch(chatActions.patchMessage({
         message_id: this.chatMessage().id,
         text: this.chatMessage().text
@@ -49,7 +49,7 @@ export class ChatWorkspaceMessageComponent {
   },
     {
       icon: 'delete',
-      description: DropdownDescription.Delete,
+      description: UiAction.Delete,
       action: () => this.store.dispatch(chatActions.deleteMessage({message_id: this.chatMessage().id})),
       hoverColor: 'error',
     }

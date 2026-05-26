@@ -5,6 +5,7 @@ export interface Profile {
   subscribersAmount: number | null
   firstName: string | null
   lastName: string | null
+  firstLastName?: string | null
   isActive: boolean | null
   stack: string[] | null
   city: string | null
@@ -16,8 +17,10 @@ export type Avatar = Pick<Profile, 'avatarUrl' | 'username' | 'id'>;
 export type ProfileUpdate = Partial<Pick<Profile, 'firstName' | 'lastName' | 'stack' | 'city' | 'description'>>;
 
 export type ProfileFilter = Record<keyof Pick<Profile, 'firstName' | 'lastName' | 'city' | 'stack'>, any>;
+export type savedProfileFilterSearch = Partial<Pick<Profile, 'firstName' | 'lastName' | 'stack' | 'city'>>;
 
-export type SubscribeFilter = ProfileFilter | {
-  account_id: any;
-  firstLastName: any;
-};
+export type SubscriptionFilter = ProfileFilter;
+export type savedSubscriptionFilterSearch = savedProfileFilterSearch;
+
+export type SubscribersFilter = Record<keyof Pick<Profile, 'firstLastName' | 'city' | 'stack'>, any>;
+export type savedSubscriberFilterSearch = SubscribersFilter;
