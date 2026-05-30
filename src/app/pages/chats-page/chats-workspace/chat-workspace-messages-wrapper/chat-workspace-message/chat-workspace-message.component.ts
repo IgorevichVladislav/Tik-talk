@@ -2,10 +2,10 @@ import {ChangeDetectionStrategy, Component, computed, inject, input, signal} fro
 import {Store} from '@ngrx/store';
 
 import {chatActions, ChatMessage} from '@tt/data-access/chats';
+import {selectProfile} from '@tt/data-access/profile';
 import {ButtonComponent, TtAvatarCircleComponent, TtDropdown, TtDropdownComponent} from '@tt/ui-kit';
 import {TimeAgoPipe} from '@tt/pipes/time-age.pipe';
-import {UiAction} from '@tt/shared';
-import {selectProfile} from '@tt/data-access/profile';
+import {UiAction} from '@tt/shared/constants';
 
 @Component({
   selector: 'tt-chat-workspace-message',
@@ -38,22 +38,25 @@ export class ChatWorkspaceMessageComponent {
     return this.me()?.id === chatMessage.userFromId;
   })
 
-  readonly chatMessageSettingsList: TtDropdown[] = [{
-    icon: 'edit',
-    description: UiAction.Edit,
-    action: () => this.store.dispatch(chatActions.patchMessage({
-        message_id: this.chatMessage().id,
-        text: this.chatMessage().text
-      }
-    ))
-  },
-    {
-      icon: 'delete',
-      description: UiAction.Delete,
-      action: () => this.store.dispatch(chatActions.deleteMessage({message_id: this.chatMessage().id})),
-      hoverColor: 'error',
-    }
-  ];
+  readonly chatMessageSettingsList = computed<TtDropdown[]>(() => {
+    const chatMessage = this.chatMessage();
+
+    return [{
+      icon: 'edit',
+      description: UiAction.Edit,
+      action: () => this.store.dispatch(chatActions.patchMessage({
+          message_id: chatMessage.id,
+          text: chatMessage.text
+        }
+      ))
+    },
+      {
+        icon: 'delete',
+        description: UiAction.Delete,
+        action: () => this.store.dispatch(chatActions.deleteMessage({message_id: chatMessage.id})),
+        hoverColor: 'error',
+      }];
+  });
 
   get isMyMessage() {
     return this.chatMessage().isMySide;

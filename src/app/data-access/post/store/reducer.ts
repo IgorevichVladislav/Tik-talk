@@ -11,12 +11,14 @@ export const postAdapter = createEntityAdapter<Post>({
 
 export interface PostState {
   post: Post | null;
-  posts: EntityState<Post>
+  posts: EntityState<Post>;
+  subscriptionsPosts: EntityState<Post>;
 }
 
 export const postInitialState: PostState = {
   post: null,
-  posts: postAdapter.getInitialState()
+  posts: postAdapter.getInitialState(),
+  subscriptionsPosts: postAdapter.getInitialState()
 }
 
 export const postFeature = createFeature({
@@ -28,6 +30,13 @@ export const postFeature = createFeature({
       return {
         ...state,
         posts: postAdapter.setAll(posts, state.posts),
+      }
+    }),
+
+    on(postActions.subscriptionsPostLoaded, (state, {subscriptionsPosts}) => {
+      return {
+        ...state,
+        subscriptionsPosts: postAdapter.setAll(subscriptionsPosts, state.subscriptionsPosts)
       }
     }),
 

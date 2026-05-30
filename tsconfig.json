@@ -26,7 +26,7 @@
       "@tt/directives": ["app/directives/index.ts"],
       "@tt/pipes/*": ["app/pipes/*"],
       "@tt/tokens/*": ["app/tokens/*"],
-      "@tt/shared": ["app/shared/index.ts"]
+      "@tt/shared/*": ["app/shared/*"]
     },
   },
   "angularCompilerOptions": {

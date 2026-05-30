@@ -6,11 +6,11 @@ import {debounceTime, startWith} from 'rxjs';
 import {Store} from '@ngrx/store';
 
 import {ChatBtnComponent} from '../chat-btn/chat-btn.component';
-import {TtInputComponent} from '@tt/ui-kit';
-import {AutoResizeDirective} from '@tt/directives';
-import {StorageSearchFilterKeys, StorageType} from '@tt/shared';
 import {chatActions, selectChats, selectSearchFilter} from '@tt/data-access/chats';
 import {WebStorageService} from '@tt/data-access/storage/web-storage.service';
+import {StorageSearchFilterKeys, StorageType} from '@tt/shared/constants';
+import {AutoResizeDirective} from '@tt/directives';
+import {TtInputComponent} from '@tt/ui-kit';
 
 @Component({
   selector: 'tt-chats-list',

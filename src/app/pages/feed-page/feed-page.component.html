@@ -1,0 +1,8 @@
+@if (subscriptionsPosts(); as subscriptionsPosts) {
+
+  <div class="tt-feed__wrapper">
+    @for (subscriptionPost of subscriptionsPosts; track subscriptionPost.id) {
+      <tt-post [post]="subscriptionPost"/>
+    }
+  </div>
+}

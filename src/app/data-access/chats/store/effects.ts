@@ -3,10 +3,12 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {map, switchMap, tap} from 'rxjs';
 import {Router} from '@angular/router';
 
-import {ChatsService} from '../chats.service';
+import {ChatsService} from '../services/chats.service';
 import {chatActions} from './actions';
-import {StorageSearchFilterKeys, StorageType, hasStorageValue} from '@tt/shared';
+
 import {WebStorageService} from '@tt/data-access/storage/web-storage.service';
+import {StorageSearchFilterKeys, StorageType} from '@tt/shared/constants';
+import {savedSearchFilter} from '@tt/data-access/storage';
 
 @Injectable({providedIn: 'root'})
 
@@ -103,11 +105,7 @@ export class ChatEffects {
         ofType(chatActions.searchChatsFilter),
         tap(({searchValue}) => {
           const searchChatsFilterKey = StorageSearchFilterKeys.ChatSearchFilterKey;
-          if (searchValue && hasStorageValue(searchValue)) {
-            this.webService.setItem(searchChatsFilterKey, searchValue, StorageType.Session);
-          } else {
-            this.webService.removeItem(searchChatsFilterKey, StorageType.Session);
-          }
+          savedSearchFilter(this.webService, searchChatsFilterKey, searchValue, StorageType.Session);
         })
       )
   }, {dispatch: false});

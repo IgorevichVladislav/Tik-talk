@@ -22,7 +22,7 @@
   @if (isDropdownSettings()) {
     <tt-dropdown
       class="tt-chat-workspace-message__dropdown"
-      [dropdownList]="chatMessageSettingsList"
+      [dropdownList]="chatMessageSettingsList()"
       [(isOpen)]="isDropdownSettings"
     />
   }

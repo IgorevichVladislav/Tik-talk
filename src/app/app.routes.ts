@@ -5,54 +5,50 @@ import {provideEffects} from '@ngrx/effects';
 import {LoginPageComponent} from '@tt/pages/login-page';
 import {canActivateAuth} from '@tt/data-access/auth/access.guard';
 import {ProfileEffects, profileFeature} from '@tt/data-access/profile';
-import {SearchPageMode} from '@tt/data-access/shared/interface/search-page-mode.interface';
-import {PostEffects, postFeature} from '@tt/data-access/post/store';
-import {CommentEffects} from '@tt/data-access/comments/store/effects';
-import {commentFeature} from '@tt/data-access/comments/store/reducer';
-import {ChatEffects, chatFeature} from '@tt/data-access/chats';
-import {chatsRoutes} from '@tt/pages/chats-page/chatsRoutes';
+import {SearchPageMode} from "./shared";
 
 export const routes: Routes = [
   {
     path: '', loadComponent: () => import('@tt/common-ui').then(m => m.LayoutComponent),
     providers: [
       provideState(profileFeature),
-      provideState(postFeature),
-      provideState(commentFeature),
-      provideState(chatFeature),
-      provideEffects(ProfileEffects, PostEffects, CommentEffects, ChatEffects),
+      provideEffects(ProfileEffects),
     ], children: [
       {
         path: '',
+        title: 'Главная страница',
         redirectTo: 'profile/me',
         pathMatch: 'full',
       },
       {
-        path: 'profile/:profileId',
-        loadComponent: () => import('@tt/pages/profile-page').then(m => m.ProfilePageComponent),
-      },
-      {
-        path: 'profile/:profileId/settings',
-        loadComponent: () => import('@tt/pages/settings-page').then(m => m.SettingsPageComponent),
+        path: 'profile',
+        loadChildren: () => import('@tt/pages/profile-page/profileRoutes').then(m => m.profileRoutes)
       },
       {
         path: 'chats',
-        loadChildren: () => chatsRoutes
+        loadChildren: () => import('@tt/pages/chats-page/chatsRoutes').then(m => m.chatsRoutes)
       },
       {
         path: 'search',
+        title: 'Страница поиска пользователей',
         loadComponent: () => import('@tt/pages/search-page').then(m => m.SearchPageComponent),
-        data: {pageMode: 'search' as SearchPageMode}
+        data: {pageMode: SearchPageMode.Search}
       },
       {
         path: 'subscribers',
+        title: 'Страница поиска подписчиков пользователя',
         loadComponent: () => import('@tt/pages/search-page').then(m => m.SearchPageComponent),
-        data: {pageMode: 'subscribers' as SearchPageMode}
+        data: {pageMode: SearchPageMode.Subscribers}
       },
       {
         path: 'subscriptions',
+        title: 'Страница поиска подписок пользователя',
         loadComponent: () => import('@tt/pages/search-page').then(m => m.SearchPageComponent),
-        data: {pageMode: 'subscriptions' as SearchPageMode}
+        data: {pageMode: SearchPageMode.Subscriptions}
+      },
+      {
+        path: 'feed',
+        loadChildren: () => import('@tt/pages/feed-page/feedRoutes').then(m => m.feedRoutes),
       },
       {
         path: 'community',

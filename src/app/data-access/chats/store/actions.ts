@@ -1,6 +1,6 @@
 import {createActionGroup, emptyProps, props} from '@ngrx/store';
 
-import {Chat, ChatMessage, LastChatMessage} from '../chats.interface';
+import {Chat, ChatMessage, LastChatMessage} from '../interfaces/chats.interface';
 
 export const chatActions = createActionGroup({
   source: 'chat',
