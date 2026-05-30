@@ -53,6 +53,16 @@ export class PostEffects {
       )
   });
 
+  /** Effect для загрузки всех постов пользователя. */
+  getMySubscriptionsPost = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(postActions.getMySubscriptionsPost),
+        switchMap(() => this.postService.getMySubscriptionsPost()),
+        map(subscriptionsPosts => postActions.subscriptionsPostLoaded({subscriptionsPosts}))
+      )
+  });
+
   /** Effect для загрузки одного поста пользователя по id. */
   getPost = createEffect(() => {
     return this.actions$

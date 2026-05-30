@@ -3,11 +3,11 @@ import {createEntityAdapter, EntityState} from '@ngrx/entity';
 
 import {PostComment} from '../comment.interface';
 import {commentActions} from './actions';
-import {postActions} from '@tt/data-access/post/store';
+import {postActions} from '../../post/index';
 
 export const commentAdapter = createEntityAdapter<PostComment>({
   selectId: postComment => postComment.id,
-  sortComparer: (a, b) => b.id - a.id
+  sortComparer: (a, b) => a.id - b.id
 })
 
 export interface PostCommentState {
@@ -49,6 +49,15 @@ export const commentFeature = createFeature({
       }
     }),
 
+    /** Получаем в comment state комментарии из SubscriptionsPost */
+    on(postActions.subscriptionsPostLoaded, (state, {subscriptionsPosts}) => {
+      const subscriptionsComments = subscriptionsPosts.flatMap(subPost => subPost.comments ?? []);
+
+      return {
+        ...state,
+        comments: commentAdapter.setAll(subscriptionsComments, state.comments)
+      }
+    }),
 
     on(commentActions.updateCommentSuccess, (state, {commentId, text}) => {
       return {

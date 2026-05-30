@@ -23,4 +23,4 @@ export type SubscriptionFilter = ProfileFilter;
 export type savedSubscriptionFilterSearch = savedProfileFilterSearch;
 
 export type SubscribersFilter = Record<keyof Pick<Profile, 'firstLastName' | 'city' | 'stack'>, any>;
-export type savedSubscriberFilterSearch = SubscribersFilter;
+export type savedSubscriberFilterSearch = Partial<SubscribersFilter>;

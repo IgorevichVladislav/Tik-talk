@@ -73,6 +73,11 @@ export class SidebarComponent {
       link: ['/profile', 'me']
     },
     {
+      description: 'Лента',
+      icon: 'feed',
+      link: ['/feed']
+    },
+    {
       description: 'Чаты',
       icon: 'chat',
       link: ['chats']
@@ -83,7 +88,7 @@ export class SidebarComponent {
       link: ['search']
     },
     {
-      description: 'Сообщество',
+      description: 'Сообщества',
       icon: 'community',
       link: ['community']
     }

@@ -4,7 +4,8 @@ import {Store} from '@ngrx/store';
 
 import {Profile, profileActions, selectSubscriptionsEntity} from '@tt/data-access/profile';
 import {ButtonComponent, TtAvatarCircleComponent} from '@tt/ui-kit';
-import {UiAction} from '@tt/shared';
+import {UiAction} from '@tt/shared/constants';
+
 
 @Component({
   selector: 'tt-profile-card',

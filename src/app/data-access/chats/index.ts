@@ -1,2 +1,2 @@
-export * from './chats.interface';
+export * from './interfaces/chats.interface';
 export * from './store/index';

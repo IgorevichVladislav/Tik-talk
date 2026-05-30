@@ -4,7 +4,7 @@
   @if (isOpenSettings()) {
   <tt-dropdown
     class="tt-comment__settings-dropdown"
-    [dropdownList]="dropdownPostList"
+    [dropdownList]="dropdownPostList()"
     [(isOpen)]="isOpenSettings"
   />
   }

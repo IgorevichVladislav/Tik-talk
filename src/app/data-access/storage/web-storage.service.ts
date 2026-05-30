@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {StorageType} from '@tt/shared';
+
+import {StorageType} from '@tt/shared/constants';
 
 @Injectable({
   providedIn: 'root'

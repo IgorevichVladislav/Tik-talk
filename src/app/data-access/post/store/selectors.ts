@@ -9,6 +9,11 @@ export const selectPosts = createSelector(
   selectAll
 )
 
+export const selectSubscriptionsPosts = createSelector(
+  postFeature.selectSubscriptionsPosts,
+  selectAll
+)
+
 export const selectCreatePost = createSelector(
   postFeature.selectPost,
   (post) => post

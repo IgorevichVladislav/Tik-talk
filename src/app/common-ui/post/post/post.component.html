@@ -4,7 +4,7 @@
   @if (isOpenSettings()) {
     <tt-dropdown
       class="tt-post__settings-dropdown"
-      [dropdownList]="dropdownPostList"
+      [dropdownList]="dropdownPostList()"
       [(isOpen)]="isOpenSettings"
     />
   }
@@ -46,7 +46,7 @@
           <div class="tt-post__reactions-btn-wrapper">
             <tt-button class="tt-post__reactions-btn" icon="comment" mode="black"/>
             <span class="tt-post__reactions-counter tt-post__reactions-counter--comment">
-            {{ post.comments?.length }}
+            {{ comments()?.length }}
           </span>
           </div>
           <div class="tt-post__reactions-btn-wrapper"
@@ -71,7 +71,7 @@
     </div>
 
     <div class="tt-post__comment-block">
-      @for (comment of post.comments; track comment.id) {
+      @for (comment of comments(); track comment.id) {
         <tt-comment [comment]="comment"/>
       }
       @if (me(); as me) {

@@ -6,7 +6,8 @@ import {PostComment} from '@tt/data-access/comments/comment.interface';
 import {ButtonComponent, TtAvatarCircleComponent, TtDropdownComponent, TtDropdown} from '@tt/ui-kit';
 import {commentActions} from '@tt/data-access/comments/store';
 import {selectProfile} from '@tt/data-access/profile';
-import {UiAction} from '@tt/shared';
+import {UiAction} from '@tt/shared/constants';
+
 
 @Component({
   selector: 'tt-comment',
@@ -25,7 +26,8 @@ export class CommentComponent {
   private readonly store = inject(Store);
 
   private readonly me = this.store.selectSignal(selectProfile);
-  comment = input<PostComment>();
+
+  readonly comment = input<PostComment>();
 
   isOpenSettings = signal<boolean>(false);
 
@@ -37,20 +39,26 @@ export class CommentComponent {
     return commentId === meId;
   })
 
-  dropdownPostList: TtDropdown[] = [{
-    icon: 'edit',
-    description: UiAction.Edit,
-    action: () => this.store.dispatch(commentActions.updateComment({
-        commentId: this.comment()!.id,
-        text: this.comment()!.text
-      }
-    ))
-  },
-    {
-      icon: 'delete',
-      description: UiAction.Delete,
-      action: () => this.store.dispatch(commentActions.deleteComment({commentId: this.comment()!.id})),
-      hoverColor: 'error'
-    }
-  ]
+  dropdownPostList = computed<TtDropdown[]>(() => {
+    const comment = this.comment();
+    if (!comment) return [];
+
+    return [{
+      icon: 'edit',
+      description: UiAction.Edit,
+      action: () => this.store.dispatch(commentActions.updateComment({
+          commentId: comment.id,
+          text: comment.text
+        }
+      ))
+    },
+      {
+        icon: 'delete',
+        description: UiAction.Delete,
+        action: () => this.store.dispatch(commentActions.deleteComment({
+          commentId: comment.id,
+        })),
+        hoverColor: 'error'
+      }]
+  })
 }

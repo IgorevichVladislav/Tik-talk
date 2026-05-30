@@ -17,7 +17,7 @@ import {AutoResizeDirective} from '@tt/directives';
   templateUrl: './post-feed.component.html',
   styleUrl: './post-feed.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {'class': 'tt-post-feed'},
+  host: {'class': 'tt-post-feed-page'},
   hostDirectives: [AutoResizeDirective]
 })
 export class PostFeedComponent {
@@ -40,7 +40,10 @@ export class PostFeedComponent {
 
   constructor() {
     effect(() => {
-      this.store.dispatch(postActions.getPosts({user_id: this.profile()!.id}));
+      const profile = this.profile();
+      if (!profile) return;
+
+      this.store.dispatch(postActions.getPosts({user_id: profile.id}));
     });
   }
 

@@ -4,7 +4,7 @@ import {Store} from '@ngrx/store';
 
 import {ButtonComponent, TtAvatarCircleComponent, TtDropdown, TtDropdownComponent} from '@tt/ui-kit';
 import {Profile, profileActions, selectSubscriptionsEntity} from '@tt/data-access/profile';
-import {UiAction} from '@tt/shared';
+import {UiAction} from '@tt/shared/constants';
 
 @Component({
   selector: 'tt-chat-workspace-header',

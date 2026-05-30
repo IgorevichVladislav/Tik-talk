@@ -48,7 +48,7 @@ export const profileActions = createActionGroup({
     'accounts loaded': props<{ accounts: Profile[] }>(),
 
     /** Action для сохранения необязательной фильтрации accountsFilter в store.
-    * Фильтрация осуществляется в компоненте search */
+     * Фильтрация осуществляется в компоненте search */
     'save profile filter search': props<{ searchFilter: savedProfileFilterSearch }>(),
 
     /** Action для загрузки аккаунта пользователя по id. */
@@ -93,5 +93,13 @@ export const profileActions = createActionGroup({
     'get subscribers by id': props<{ account_id: number, subscribersFilter?: SubscribersFilter }>(),
     /** Action успешной загрузки подписчиков (Subscribers) в store с обязательным параметром id. */
     'subscribers by id loaded': props<{ subscribers: Profile[] }>(),
+
+    'restore search filtration': emptyProps(),
+
+    'restore search filtration success': props<{
+      profileFilter: savedProfileFilterSearch,
+      subscribersFilter: SubscribersFilter,
+      subscriptionFilter: savedSubscriptionFilterSearch,
+    }>(),
   }
 });

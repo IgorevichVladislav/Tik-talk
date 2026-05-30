@@ -16,7 +16,8 @@ import {commentActions} from '@tt/data-access/comments/store/actions';
 import {CommentCreateDto} from '@tt/data-access/comments/comment.interface';
 import {postActions} from '@tt/data-access/post/store';
 import {selectProfile} from '@tt/data-access/profile';
-import {UiAction} from '@tt/shared';
+import {selectCommentByPostId} from '@tt/data-access/comments';
+import {UiAction} from '@tt/shared/constants';
 
 @Component({
   selector: 'tt-post',
@@ -33,9 +34,7 @@ import {UiAction} from '@tt/shared';
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    'class': 'tt-post',
-  }
+  host: {'class': 'tt-post'}
 })
 export class PostComponent {
   private readonly store = inject(Store);
@@ -43,7 +42,15 @@ export class PostComponent {
   isOpenSettings = signal<boolean>(false);
 
   readonly me = this.store.selectSignal(selectProfile);
+
   readonly post = input<Post>();
+
+  comments = computed(() => {
+    const postId = this.post()?.id;
+    if (!postId) return;
+
+    return this.store.selectSignal(selectCommentByPostId(postId))();
+  })
 
   isMyPostSettings = computed(() => {
     const postAuthorId = this.post()?.author.id;
@@ -53,25 +60,31 @@ export class PostComponent {
     return postAuthorId === meId;
   })
 
-  dropdownPostList: TtDropdown[] = [{
-    icon: 'edit',
-    description: UiAction.Edit,
-    action: () => this.store.dispatch(postActions.updatePost({
-        post_id: this.post()!.id,
-        updateDto: {
-          title: this.post()!.title,
-          content: this.post()!.content
+  dropdownPostList = computed<TtDropdown[]>(() => {
+      const post = this.post();
+      if (!post) return [];
+
+      return [{
+        icon: 'edit',
+        description: UiAction.Edit,
+        action: () => this.store.dispatch(postActions.updatePost({
+            post_id: post.id,
+            updateDto: {
+              title: post.title,
+              content: post.content
+            }
+          }
+        ))
+      },
+        {
+          icon: 'delete',
+          description: UiAction.Delete,
+          hoverColor: 'error',
+          action: () => this.store.dispatch(postActions.deletePost({post_id: post.id}))
         }
-      }
-    ))
-  },
-    {
-      icon: 'delete',
-      description: UiAction.Delete,
-      hoverColor: 'error',
-      action: () => this.store.dispatch(postActions.deletePost({post_id: this.post()!.id}))
+      ]
     }
-  ];
+  );
 
   onCreateComment(event: SubmittedValue) {
     const post = this.post();
@@ -84,11 +97,15 @@ export class PostComponent {
       postId: post.id,
       commentId: null
     }
+
     this.store.dispatch(commentActions.createComment({dto}));
   }
 
   deletePostImage(image_url: string) {
-    this.store.dispatch(postActions.deleteImage({post_id: this.post()!.id, image_url}))
+    const post_id = this.post()?.id;
+    if (!post_id) return;
+
+    this.store.dispatch(postActions.deleteImage({post_id, image_url}));
   }
 
   isMyLike = computed(() => {
@@ -104,14 +121,14 @@ export class PostComponent {
   });
 
   toggleLike() {
-    const post = this.post();
+    const post_id = this.post()?.id;
 
-    if (!post) return;
+    if (!post_id) return;
 
     if (this.isMyLike()) {
-      this.store.dispatch(postActions.deleteLike({post_id: post.id}));
+      this.store.dispatch(postActions.deleteLike({post_id}));
     } else {
-      this.store.dispatch(postActions.createLike({post_id: post.id}));
+      this.store.dispatch(postActions.createLike({post_id}));
     }
   }
 }

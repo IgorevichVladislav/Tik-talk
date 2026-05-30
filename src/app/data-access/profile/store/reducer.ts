@@ -7,12 +7,6 @@ import {
   savedSubscriptionFilterSearch
 } from '../profile.interface';
 import {profileActions} from './actions';
-import {StorageSearchFilterKeys} from '@tt/shared';
-
-const getSavedFilter = (filterKey: StorageSearchFilterKeys): any => {
-  const saved = sessionStorage.getItem(filterKey);
-  return saved ? JSON.parse(saved) : {};
-};
 
 export const profilesAdapter = createEntityAdapter<Profile>({
   selectId: profile => profile.id,
@@ -48,9 +42,9 @@ export const profileInitialState: ProfileState = {
   subscribers: profilesAdapter.getInitialState(),
   subscribersById: profilesAdapter.getInitialState(),
 
-  searchProfileFilter: getSavedFilter(StorageSearchFilterKeys.ProfileSearchFilterKey),
-  searchSubscriptionFilter: getSavedFilter(StorageSearchFilterKeys.SubscriptionsSearchFilterKey),
-  searchSubscriberFilter: getSavedFilter(StorageSearchFilterKeys.SubscribersSearchFilterKey),
+  searchProfileFilter: {},
+  searchSubscriptionFilter: {},
+  searchSubscriberFilter: {}
 }
 
 export const profileFeature = createFeature({
@@ -160,5 +154,18 @@ export const profileFeature = createFeature({
         }
       }
     ),
+
+    on(profileActions.restoreSearchFiltrationSuccess, (state, {
+      profileFilter,
+      subscribersFilter,
+      subscriptionFilter
+    }) => {
+      return {
+        ...state,
+        searchProfileFilter: profileFilter,
+        searchSubscriberFilter: subscribersFilter,
+        searchSubscriptionFilter: subscriptionFilter
+      }
+    })
   )
 });

@@ -2,7 +2,7 @@ import {createFeature, createReducer, on} from '@ngrx/store';
 import {createEntityAdapter, EntityState} from '@ngrx/entity';
 
 import {chatActions} from './actions';
-import {Chat, ChatMessage, LastChatMessage} from '../chats.interface';
+import {Chat, ChatMessage, LastChatMessage} from '../interfaces/chats.interface';
 
 export const chatAdapter = createEntityAdapter<LastChatMessage>({
   selectId: chat => chat.id,
